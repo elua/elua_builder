@@ -22,6 +22,11 @@ function confirmDeleteBuild(id)
 		window.location.href="<%=makeURL({control= "builder", act="delete"})%>&id="+id;
 	}
 }
+
+function selectBuild(id)
+{	
+	window.location.href="<%=makeURL({control="builder", act="files"})%>&id="+id;
+}
 </script>
 
 <h4><%=locale_index.labels.greeting%>, <%= current_user.name %> </h4>
@@ -34,9 +39,9 @@ function confirmDeleteBuild(id)
 	<%
 		local columns_builds = {
 							{key="id", label = locale_index.label_remove, width=40, formatter="myActionsRemove"},
-							{key="title", label= locale_index.labels.title ,  sortable=true,minWidth=1024, maxAutoWidth=150},
-							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},
-							{key="configs", label=locale_index.labels.configs, sortable=true, minWidth=1024, maxAutoWidth=150},
+							{key="title", label= locale_index.labels.title ,  sortable=true,minWidth=1024, maxAutoWidth=80, formatter="myActionsSelect"},
+							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=80},
+							{key="configs", label=locale_index.labels.configs, sortable=true, minWidth=1024, maxAutoWidth=650},
 		}
 		extraFormatters = [[
                                 
@@ -44,7 +49,12 @@ function confirmDeleteBuild(id)
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
                                     elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'>]]..locale_index.label_remove..[[</a> "
                                 };
-                                YAHOO.widget.DataTable.Formatter.myActionsRemove = this.actions;                       
+                                YAHOO.widget.DataTable.Formatter.myActionsRemove = this.actions;    
+		
+								this.view = function(elLiner, oRecord, oColumn, oData) {
+                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='selectBuild("+oRecord.getData("id")+")'>"+oData+"</a>";
+                                };
+                                YAHOO.widget.DataTable.Formatter.myActionsSelect = this.view;                   
         ]]
 		local configs_builds = {
 						dataSetID = "dataSet",

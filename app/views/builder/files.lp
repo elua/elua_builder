@@ -12,8 +12,12 @@
 	<%= flash.get("validationMessagesBuild")%>
 <% end %>
 <div>
-	<%= f.form({action=makeURL({control='builder',act='files'})}) %>
-		<h2> <%= locale_index.labels.title_build %></h2><%= f.text_field({class="field2", name='title',size=10}) %> <br><br>
+	<%= f.form({action = makeURL({control='builder',act='files'})}) %>
+		<%= f.hidden_field({name='id', value=id}) %>
+		<%= f.hidden_field({name='created_at', value=build.created_at}) %>
+		<h2> <%= locale_index.labels.title_build %></h2>
+		
+		<%= f.text_field({class="field2", name='title',size=10, value=build.title}) %> <br><br>
 		<h2><%=locale_index.files_title%></h2><br>
 		<div>
 			<%
@@ -44,8 +48,80 @@
 				dt.showDataTable(configs_files, columns_files, datasource_files, nil, extraFormatters)	
 			%>
 		</div><br>
-		<a href="<%= makeURL({control= "builder", act="index"})%>"> <%=locale_index.label_back%> </a>
-		<%= f.submit({value=locale_index.label_progress})%>
+		<h2><%= locale_components.target_title %> </h2>
+		<label for="target"> <%= locale_components.labels.target %>:</label> 
+		<div> <%= f.select({name='target',prompt = locale_components.target_prompt},BuildModel.TARGETS, build.configs.target) %></div><br>
+		<h2><%= locale_components.component_title %> </h2>	
+		<table class="table_center"> 
+			<tbody> 
+				<tr> 
+					<th style="text-align: left;">Check</th> 
+					<th style="text-align: center;">Components</th> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_xmodem'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
+					</td> 
+					<td><%= locale_components.labels.build_xmodem %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_shell'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_shell}) %>
+					</td> 
+					<td><%= locale_components.labels.build_shell %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_romfs'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_romfs}) %>
+					</td> 
+					<td><%= locale_components.labels.build_romfs %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_term'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
+					</td> 
+					<td><%= locale_components.labels.build_term %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_uip'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
+					</td> 
+					<td><%= locale_components.labels.build_uip %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_dhcpc'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
+					</td> 
+					<td><%= locale_components.labels.build_dhcpc %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_dns'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
+					</td> 
+					<td><%= locale_components.labels.build_dns %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_con_generic'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_generic}) %>
+					</td> 
+					<td><%= locale_components.labels.build_con_generic %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_con_tcp'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_tcp}) %>
+					</td> 
+					<td><%= locale_components.labels.build_con_tcp %>	</td> 
+				</tr> 
+				<tr> 
+					<td class="espaco">
+						<%= f.check_box({name='build_adc'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_adc}) %>
+					</td> 
+					<td><%= locale_components.labels.build_adc %>	</td> 
+				</tr>
+			</tbody>
+		</table><br>
+		<%= f.submit({value = locale_components.label_submit}) %>
 	<%= f.form_close() %>
 </div>
+<div class="link"> <h2></h2><a href="<%= makeURL({control= "builder", act="index"})%>"> <big><%=locale_index.label_back%></big> </a> </h2></div>
 <% render("footer.lp","_shared") %>

@@ -3,7 +3,7 @@ CONFIG = {}
 CONFIG.PATH = [[C:/aptana/elua_builder]]
 CONFIG.APP_NAME = "elua"
 CONFIG.ENABLE_SESSIONS = true
-CONFIG.MAX_FILE_SIZE = 6000 * 1024    -- in bytes
+CONFIG.MAX_FILE_SIZE = 60000 * 1024    -- in bytes
 CONFIG.LANGUAGE     = "en-us"
 
 -- enable this option when you want to use mapped URLs , like : "../app_name/controller/action/ID"

@@ -47,5 +47,6 @@ function delete()
 	local path = CONFIG.MVC_UPLOAD..user.login.."/"..filename
 	os.remove(path)
 	local files = db:delete ("files","id = "..id)
+	local files_build = db:delete ("builds_files", "file_id="..id)
 	redirect({control="builder", act="index"})
 end

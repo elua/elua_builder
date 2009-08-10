@@ -7,73 +7,63 @@
 
 function index()
 	local UserModel = require "user.model"
+	local BuildModel = require "builder.model"
 	current_user = UserModel.getCurrentUser()
 	render("index.lp")
 end
 
 function files()
-	build = cgilua.POST or {}
-	local BuildModel = require "builder.model"
+	build =  {}
+	id = cgilua.QUERY.id
+	UserModel = require "user.model"
+	local user = UserModel.getCurrentUser()
+	BuildModel = require "builder.model"
+	
+	for _,v in pairs(BuildModel.TARGETS) do 
+		v.option = v.value
+	end
 	local val = require "validation"
 	local validator = val.implement.new(build)
 	
-	if isPOST() then
-		build.file_id = (build.file_id == nil) and "" or build.file_id 
-			
-		validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
-		validator:validate('title',locale_index.validator.checkNotExistBuild, BuildModel.checkNotExistBuild)
-		validator:validate('file_id', locale_index.validator.file_id, val.checks.isNotEmpty)
+	if tonumber(id) then
+		build = BuildModel.getBuild(id)
 		
-		if(validator:isValid())then
-			local build_obj = BuildModel.save(build)
-			if (type(build.file_id) == "table") then
-				for _,file_id in pairs(build.file_id)do
-					BuildModel.saveBuildFile(file_id,build_obj.id)
-				end
-			else
-				BuildModel.saveBuildFile(build.file_id,build_obj.id)
-			end
-			redirect({control="builder", act="components"})
-		else
-			flash.set('validationMessagesBuild',validator:htmlMessages())
-			render("files.lp")
+		if (build.configs ~= nil and type(build.configs) == "string") then
+			build.configs = assert(loadstring("return "..build.configs)())
 		end
-	else
 		render("files.lp")
-	end
-end
-
-function components()
-	id = cgilua.QUERY.id
-	BuilderModel = require "builder.model"
-	for _,v in pairs(BuilderModel.TARGETS) do 
-		v.option = v.value
-	end
-	render("components.lp")
-end
-
-function generate()
-	components = cgilua.POST
-	local BuildModel = require "builder.model"
-	local val = require "validation"
-	local validator = val.implement.new(components)
-	
-	validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
-	
-	if(validator:isValid())then
-		
-		local config_str = "config = {"
-		for i,v in pairs(components) do
-			config_str = config_str.. i.."='"..tostring(v).."',"
-		end
-		config_str = config_str .."}"	
-		build = BuildModel.update(config_str, components.build_id)
-		redirect({control="builder", act="index"})
+	else
+		build.configs = {}
+		if isPOST() then
+			build = cgilua.POST
+			build = BuildModel.setDefaultValues(build)
+			build.file_id = (build.file_id == nil) and "" or build.file_id 
+			--cgilua.put(tableToString(cgilua.POST))
+			
+			build.configs = tableToString(build)
+			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
+			validator:validate('title',locale_index.validator.checkNotExistBuild, BuildModel.checkNotExistBuild)
+			validator:validate('file_id', locale_index.validator.file_id, val.checks.isNotEmpty)
+			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
+			if(validator:isValid())then
+				
+				local build_obj = BuildModel.save(build)
+				if (type(build.file_id) == "table") then
+					for _,file_id in pairs(build.file_id)do
+						BuildModel.saveBuildFile(file_id,build_obj.id)
+					end
+				else
+					BuildModel.saveBuildFile(build.file_id,build_obj.id)
+				end
+				redirect({control='builder',act='index'})
+			else
+				flash.set('validationMessagesBuild',validator:htmlMessages())
+				render("files.lp")
+			end
 		else
-			flash.set('validationMessagesBuild',validator:htmlMessages())
 			render("files.lp")
 		end
-	render "generated.lp"
+	end
 end
 
 function repository()

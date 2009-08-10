@@ -213,11 +213,24 @@ function populateTable(t)
 	
 	return tempParams
 end
--- Draft convert day to date
---[[
-	 temp1 = os.time({year=2008, month=11, day=30})
- 	 temp2 = 60 * 60 * 24 * alert_days
- 	 os.difftime(temp1, temp2)
- 	 result = os.difftime(temp1, temp2)
- 	 os.date("%d/%m/%Y", result)
-]]
+
+function tableToString(tb)
+	if (type(tb) == "table") then
+		local str = "{"
+		for i,v in pairs(tb) do
+			local value = ""
+			if (type(v) == "table") then
+				str = str.. i.."="..tableToString(v)..","
+			else
+				local value = tonumber(v) ~= nil and tonumber(v) or "'"..tostring(v).."'"
+				if(tonumber(i))then
+					str = str..value..","
+				else
+					str = str.. i.."="..value..","
+				end
+			end
+			
+		end
+		return str .."}"
+	end
+end

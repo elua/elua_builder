@@ -12,12 +12,23 @@ function getBuilds()
 	return builds
 end
 
+function getBuild(id)
+	local build = db:selectall("*","builds","id = "..id)
+	return build[1]
+end
+
 function save(values)
 	local UserModel = require"user.model"
 	local user = UserModel.getCurrentUser()
 	values.user_id = user.id
+	if tonumber(values.id) == nil then
+		values.id = nil
+	else
+		values.created_at = values.created_at
+	end
+	
 	local build = Build:new(values)
-	build:save()
+	obj, ok, err = build:save()
 	return build
 end
 
@@ -40,6 +51,14 @@ function checkNotExistBuild(title)
 	return true
 end
 
+function setDefaultValues(build)
+	local COMPONENT_DEFAULT_VALUE = {build_xmodem = 'false', build_shell = 'false', build_romfs = 'false', build_term = 'false', build_uip = 'false', build_dhcpc = 'false', build_dns = 'false', build_con_generic = 'false', build_con_tcp = 'false', build_adc = 'false'}
+	for i,v in pairs(COMPONENT_DEFAULT_VALUE) do
+		build[i] = build[i] == nil and v or build[i]
+	end
+	return build
+end
+
 TARGETS = {
 			{value ="EK-LM3S8962", disabled = false},
 			{value ="EK-LM3S6965", disabled = false},
@@ -55,3 +74,6 @@ TARGETS = {
 			{value ="EAGLE-100", disabled = true},
 		}
 CHECK_DEFAULT_VALUE = {{label = "", value = "true"}}
+
+
+
