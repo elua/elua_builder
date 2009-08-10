@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>LuaDoc</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="../modules/luawebforms.html">luawebforms</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+<h1>Files</h1>
+<ul>
+
+	<li><strong>luawebforms.lua</strong></li>
+	
+</ul>
+
+
+
+
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1>File <code>luawebforms.lua</code></h1>
+
+
+<p>LuaWebForms is a Lua library developed to create and manipulate HTML forms. Some methods were based on Ruby on Rails Form Tag Helper, but new features were included to manipulate better "select", "radiobox" and "checkbox" tags. </p>
+
+
+
+
+<p><small><b>Release:</b> $Id: luaWebForms.lua,v 1.0 beta 2008/07/02 15:17:00 Vagner Nascimento Exp $ </small></p>
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name" nowrap><a href="#button">button</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a form button tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#check_box">check_box</a>&nbsp;(arg, values, checked_values, spacer, left_labels)</td>
+	<td class="summary">Returns a string with a group of check boxs tags.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#file_field">file_field</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a file field form tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#form">form</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a open form tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#form_close">form_close</a>&nbsp;()</td>
+	<td class="summary">Returns a string with &lt;/form&gt;, to close the tag form </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#hidden_field">hidden_field</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a hidden form tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#image_submit">image_submit</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a image submit button tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#label">label</a>&nbsp;(arg, value)</td>
+	<td class="summary">Returns a string with a label tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#password_field">password_field</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a password field form tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#radio_button">radio_button</a>&nbsp;(arg, values, checked_value, spacer, left_labels, checked_values)</td>
+	<td class="summary">Returns a string with a group of radio buttons.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#select">select</a>&nbsp;(arg, values, selected_value)</td>
+	<td class="summary">Returns a string with a select form tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#submit">submit</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a submit button form tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#text_area">text_area</a>&nbsp;(arg, value)</td>
+	<td class="summary">Returns a string with a text-area form tag.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#text_field">text_field</a>&nbsp;(arg)</td>
+	<td class="summary">Returns a string with a input form tag.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="button"></a><strong>button</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a form button tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with button parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.button({name="bt1", value="Hello", onclick="alert('Hello')"}) 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="check_box"></a><strong>check_box</strong>&nbsp;(arg, values, checked_values, spacer, left_labels)</dt>
+<dd>
+Returns a string with a group of check boxs tags.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with check box parameters
+	</li>
+	
+	<li>
+	  values: Accepts a table in the format:	{{value="apple",label="Apple"},{value="orange", label="Orange"},{value="grape", label="Grapes"}}
+	</li>
+	
+	<li>
+	  checked_values: Accepts a table in the format:	{"apple","grape"}
+	</li>
+	
+	<li>
+	  spacer: Puts the string sent after or before the check box. The default value is a " "(space)
+	</li>
+	
+	<li>
+	  left_labels: If the value is true, the labels are positioned before the check box. The default is the right side
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.check_box({name="fruits"},{{value="ap",label="Apple"},{value="or", label="Orange"}}, {"or","ap"})
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="file_field"></a><strong>file_field</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a file field form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with file input parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.file_field({name="file"}) 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="form"></a><strong>form</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a open form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with form parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.form({action="sender.lua"})
+
+
+
+<h3>Return value:</h3>
+If no method was defined, it is used the default "Post", ex: &lt;form action="sender.lua" method="post"&gt;
+
+
+
+</dd>
+
+
+
+
+<dt><a name="form_close"></a><strong>form_close</strong>&nbsp;()</dt>
+<dd>
+Returns a string with &lt;/form&gt;, to close the tag form
+
+
+
+
+
+<h3>Usage:</h3>
+obj.form_close()
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="hidden_field"></a><strong>hidden_field</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a hidden form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with hidden input parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.hidden_field({name="hidden1", value="xpto"}) 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="image_submit"></a><strong>image_submit</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a image submit button tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with image submit parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.image_submit({name="bt_img", value="ok", src="/img/bt.gif"}) 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="label"></a><strong>label</strong>&nbsp;(arg, value)</dt>
+<dd>
+Returns a string with a label tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with label parameters
+	</li>
+	
+	<li>
+	  value: String with label content
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.label({name="label1"},"Field Label1") 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="password_field"></a><strong>password_field</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a password field form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with password input parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.password_field({name="passwd", value="1234"}) 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="radio_button"></a><strong>radio_button</strong>&nbsp;(arg, values, checked_value, spacer, left_labels, checked_values)</dt>
+<dd>
+Returns a string with a group of radio buttons.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with radio button parameters
+	</li>
+	
+	<li>
+	  values: Accepts a table in the format:	{{value="br",label="Brazil"},{value="es", label="Spain"},{value="us", label="USA"}}
+	</li>
+	
+	<li>
+	  checked_value: 
+	</li>
+	
+	<li>
+	  spacer: Puts the string sent after or before the radio button. The default value is a " "(space)
+	</li>
+	
+	<li>
+	  left_labels: If the value is true, the labels are positioned before the radio button. The default is the right side
+	</li>
+	
+	<li>
+	  checked_values: Accepts a string or number to be selected
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.radio_button({{value="br",label="Brazil"},{value="es", label="Spain"}}, "es")
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="select"></a><strong>select</strong>&nbsp;(arg, values, selected_value)</dt>
+<dd>
+Returns a string with a select form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with select parameters
+	</li>
+	
+	<li>
+	  values: Accepts a table in the format: {{value="xxx",option="xxoptionxx"},{value="zzz", option="zzoptionzz"}}
+	</li>
+	
+	<li>
+	  selected_value: Accepts a string or number to be selected
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.select({name="drop1"},{{value=1,option="value1},{value="b",option="value b"}},"b")
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="submit"></a><strong>submit</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a submit button form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with submit parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.submit({name="send", value="send"}) 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="text_area"></a><strong>text_area</strong>&nbsp;(arg, value)</dt>
+<dd>
+Returns a string with a text-area form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with text-area parameters
+	</li>
+	
+	<li>
+	  value: String with text-area content
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.text_area({name="text1"},"very long text or string variable") 
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="text_field"></a><strong>text_field</strong>&nbsp;(arg)</dt>
+<dd>
+Returns a string with a input form tag.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  arg: Lua table with text input parameters
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+obj.text_field({name="field1", value="xpto", readonly=true}) 
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

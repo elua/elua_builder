@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>LuaDoc</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="../modules/dataTable.html">dataTable</a>
+	</li>
+
+	<li>
+		<a href="../modules/dataTable.repository.html">dataTable.repository</a>
+	</li>
+
+	<li><strong>dataTable.show</strong></li>
+	
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>dataTable.show</code></h1>
+
+<p>This module manipulates and generates visualization scripts for YUI Datatable</p>
+
+
+
+<p><small><b>Release:</b> $Id: show.lua,v1.0  2009/02/19 Vagner Nascimento Exp $ </small></p>
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name" nowrap><a href="#printDataTableCSS">printDataTableCSS</a>&nbsp;(urlPath)</td>
+	<td class="summary">Prints the DataTable CSS header </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#printJSheaders">printJSheaders</a>&nbsp;(urlPath)</td>
+	<td class="summary">Prints the required javascript headers </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#printYuiCSS">printYuiCSS</a>&nbsp;(urlPath)</td>
+	<td class="summary">Prints the required CSS headers </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#showDataTable">showDataTable</a>&nbsp;(configs, columns, dataSource, dataSourceType, insertBefore, insertAfter)</td>
+	<td class="summary">Prints the appropriated DataTable visualization script for the settings informed </td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="printDataTableCSS"></a><strong>printDataTableCSS</strong>&nbsp;(urlPath)</dt>
+<dd>
+Prints the DataTable CSS header
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  urlPath: String with the relative path for CSS library
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> dt = require("dataTable.show")<br> dt.printDataTableCSS('yui/css/') </pre>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="printJSheaders"></a><strong>printJSheaders</strong>&nbsp;(urlPath)</dt>
+<dd>
+Prints the required javascript headers
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  urlPath: String with relative path for JS libraries
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> dt.printJSheaders('yui/js/') </pre>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="printYuiCSS"></a><strong>printYuiCSS</strong>&nbsp;(urlPath)</dt>
+<dd>
+Prints the required CSS headers
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  urlPath: String with relative path for CSS libraries
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> dt.printYuiCSS('yui/css/') </pre>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="showDataTable"></a><strong>showDataTable</strong>&nbsp;(configs, columns, dataSource, dataSourceType, insertBefore, insertAfter)</dt>
+<dd>
+Prints the appropriated DataTable visualization script for the settings informed
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  configs: Accepts a lua table with these optional arguments:<pre class='example'style='padding: 0px 0px 0px 0px;' ><ul> <li>paginatorID: String or Lua Table with the HTML ids for the paginator DIV container.<br>The default value is 'paginator';</li> <li>paginatorPosition: String with the paginator position. Accepts 'top','bottom' and 'both'.<br>The default value is 'top';</li> <li>dataSetID: String with the HTML id for the dataTable DIV container.<br>The default value is 'dataSet';</li> <li>pagination: Boolean value that enables or disables the pagination.<br>The default is enabled;</li> <li>serverPagination: Boolean value that enables or disables the server-side pagination.<br>The default is the client-side pagination;</li> <li>serverSorting: Boolean value that enables or disables the server-side sorting.<br>The default is the client-side sortng;</li> <li>resultList: String with the name of the itens list in the data source .<br>The default value is 'records';</li> <li>totalRecordsField: String with the name of the total number of itens in the data source.<br>The default value is 'totalRecords';</li> <li>pageLinks: Number of pagination links. The default value is 5;</li> <li>rowsPerPage: Number of itens per page. The default value is 30;</li> <li>defaultSorting: The name of the default field paginator.<br>The default is the first column;</li> <li>rowsPerPageOptions: Lua table with the rows per page options.<br>The default values are {15,30,60};<br> <li>paginatorTemplate: String with the paginator template. The default paginator format is:<br><font size=1>&lt;b&gt;{CurrentPageReport}&lt;/b&gt; {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown};</font><br> <li>pageReportTemplate: Changes the paginator report. The default value is '{currentPage} of {totalPages}';</li> <li>firstPageLinkLabel: Changes the first page link. The default value is '<< first';</li> <li>lastPageLinkLabel: Changes the last page link. The default value is 'last >>';</li> <li>previousPageLinkLabel: Changes the previous page link. The default value is '< prev';</li> <li>nextPageLinkLabel: Changes the next page link. The default value is 'next >';</li> <li>rowSelection: Boolean value that enables or disables the row selection.<br>The default value is disabled;</li> <li>scrollable: Accepts a lua table in this format "{width='500px',height='300px'}" that <br> sets the width and height with scrolling;</li> <li>defaultDir: String with the default sorting direction ('asc' or 'desc').<br>The default direction is ascendant;</li> <li>mainClassNameCSS: String with the main CSS class name</li> <ul></pre>
+	</li>
+	
+	<li>
+	  columns: Lua table with each column and its settings. Accepts a table like this:<br> <pre class='example'>{{key="id", label= "id", sortable=true},<br>{key="name", label="Full Name", sortable=true, minWidth=100, maxAutoWidth=150},<br>{key="age", label="Age", width=40}}</pre>
+	</li>
+	
+	<li>
+	  dataSource: String with the name, path or URL for the data source;<br><br>
+	</li>
+	
+	<li>
+	  dataSourceType: Accepts a string with the type of data source (JSARRAY, JSON, HTMLTABLE, XML and TEXT).The default value is JSON;<br><br>
+	</li>
+	
+	<li>
+	  insertBefore: Accepts a string with javascript code that is inserted in the begining of the dataTable script;<br><br>
+	</li>
+	
+	<li>
+	  insertAfter: Accepts a string with javascript code that is inserted in the ending of the dataTable script;<br><br>
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> local dt = require("datatable.show")<br> local columns = {{key="name", label= "name",sortable=true},{key="age", label="age"}}<br> local configs = {rowsPerPage = 15, defaultSorting = "name", serverPagination = true}<br> local datasource = "datasource.lua"<br> dt.showDataTable(configs,columns,datasource) </pre> * For more parameters and details please visit <a href='http://developer.yahoo.com/yui/datatable/' target='_blank'>http://developer.yahoo.com/yui/datatable/</a><br><br> <H2>Extra properties</h2> If you are using a remote data source (JSON, XML or TEXT), sometimes it is necessary to reload or filter rows from the repository and you can do it using the datatable JS method 'reload'. Just pass a string with arguments that are concatenates with the request of data source.<br> See the example of the lua page below:<br> <pre class='example' style='padding:5px 5px 5px 5px'> &lt;HTML&gt;&lt;BODY&gt;<BR><BR> Filter:<br> &lt;a href="javascript:ref_DTsetEx.myDataTable.reload('name=A&age=30');"&gt;Names with A and Age=30&lt;/a&gt;<BR><BR> <% local dt = require("datatable.show")<br> local columns = {{key="name", label= "name",sortable=true},{key="age", label="age"}}<br> local configs = {serverPagination = true, dataSetID = "DTsetEx",}<br> local datasource = "jsonRepository.lua"<br> dt.showDataTable(configs,columns,datasource) %><br><br> &lt;/BODY&gt;&lt;/HTML&gt; </pre>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

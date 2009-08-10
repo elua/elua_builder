@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>LuaDoc</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li><strong>sool</strong></li>
+	
+</ul>
+
+
+
+<!-- File list -->
+
+
+
+
+
+
+</div><!-- id="navigation" -->
+
+<div id="content">
+
+<h1>Module <code>sool</code></h1>
+
+<p>SOOL - Simple Object Oriented lib for Lua. Based on several OO implementations for Lua available on the web, SOOL implements instantiation, static classes, multiple inheritance and object type verification. SOOL does not intend to be a complete implementation of OO for Lua, instead it intends to be simple and short.</p>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name" nowrap><a href="#[class]:create">[class]:create</a>&nbsp;()</td>
+	<td class="summary">Creates a new instance of the class.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#[object]:class">[object]:class</a>&nbsp;()</td>
+	<td class="summary">Returns the class of the instance.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#[object]:superclasses">[object]:superclasses</a>&nbsp;()</td>
+	<td class="summary">Returns the superclasses of the instance in a table.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#[staticClass]:class">[staticClass]:class</a>&nbsp;()</td>
+	<td class="summary">Returns the static class itself.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#[staticClass]:superclasses">[staticClass]:superclasses</a>&nbsp;()</td>
+	<td class="summary">Returns the superclasses of the static class in a table.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#sool.class">sool.class</a>&nbsp;(superclasses)</td>
+	<td class="summary">Creates a new ordinary class.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#sool.isA">sool.isA</a>&nbsp;(objectOrClass, superclass)</td>
+	<td class="summary">Verifies if the object is an instance of the base class or if the class inherits from the base class.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#sool.package">sool.package</a>&nbsp;()</td>
+	<td class="summary">Creates a new package.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#sool.staticClass">sool.staticClass</a>&nbsp;(superclasses)</td>
+	<td class="summary">Creates a new static class (a class only with class methods, and cannot be instatiated).</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="[class]:create"></a><strong>[class]:create</strong>&nbsp;()</dt>
+<dd>
+Creates a new instance of the class.
+
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> --Class constructor<br> function new(attribute1) <dir> local object = _M:create()<br> object.attribute1 = attribute1 --Attribute defined on constructor<br> object.attribute2 = "SOME_VALUE" --Default value for attribute<br> return object </dir> end </pre>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="[object]:class"></a><strong>[object]:class</strong>&nbsp;()</dt>
+<dd>
+Returns the class of the instance.
+
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> print (sool.isA(object1:class(), Class1) </pre>
+
+
+
+<h3>Return value:</h3>
+the class of the instance.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="[object]:superclasses"></a><strong>[object]:superclasses</strong>&nbsp;()</dt>
+<dd>
+Returns the superclasses of the instance in a table.
+
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> local superclasses = object1:superclasses()<br> for i, v in ipairs(superclasses) do <dir> -- do something with each class v </dir> end </pre>
+
+
+
+<h3>Return value:</h3>
+the superclasses of the instance in a table.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="[staticClass]:class"></a><strong>[staticClass]:class</strong>&nbsp;()</dt>
+<dd>
+Returns the static class itself.
+
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> print (sool.isA(staticClass1:class(), SomeOtherClass) </pre>
+
+
+
+<h3>Return value:</h3>
+the static class itself.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="[staticClass]:superclasses"></a><strong>[staticClass]:superclasses</strong>&nbsp;()</dt>
+<dd>
+Returns the superclasses of the static class in a table.
+
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> local superclasses = object1:superclasses()<br> for i, v in ipairs(superclasses) do <dir> -- do something with each class v </dir> end </pre>
+
+
+
+<h3>Return value:</h3>
+the superclasses of the static class in a table.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="sool.class"></a><strong>sool.class</strong>&nbsp;(superclasses)</dt>
+<dd>
+Creates a new ordinary class. Should be applied to a module on its creation.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  superclasses: optional: single superclass or table containing superclasses for the new class
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> --package: transportation<br> --superclass: Vehicle<br> --new class: Automobile<br> module ("transportation.Automobile", sool.class(transportation.Vehicle))<br> <br> function new()<br> ... </pre>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="sool.isA"></a><strong>sool.isA</strong>&nbsp;(objectOrClass, superclass)</dt>
+<dd>
+Verifies if the object is an instance of the base class or if the class inherits from the base class.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  objectOrClass: object or class being verified
+	</li>
+	
+	<li>
+	  superclass: supposed parent class
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> print(sool.isA(object1, Class1))<br> print(sool.isA(Class1, Class2)) </pre>
+
+
+
+<h3>Return value:</h3>
+true if object is an instance of the base class or if the class inherits from the base class. Otherwise, returns false.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="sool.package"></a><strong>sool.package</strong>&nbsp;()</dt>
+<dd>
+Creates a new package. Should be applied to a module on its creation. Usually, a package is used to group classes.
+
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> module ("display", sool.package())<br> <br> Menu = require "display.Menu"<br> Text = require "display.Text"<br> Button = require "display.Button" </pre>
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="sool.staticClass"></a><strong>sool.staticClass</strong>&nbsp;(superclasses)</dt>
+<dd>
+Creates a new static class (a class only with class methods, and cannot be instatiated). Should be applied to a module on its creation.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  superclasses: optional: single superclass or table containing superclasses for the new class
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+<pre class='example'> module ("config.colors", sool.staticClass())<br> <br> function new()<br> ... </pre>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>

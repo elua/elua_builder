@@ -1,0 +1,24 @@
+<% f = require "luawebforms" %>
+<% render("header.lp","_shared") %>
+
+<h2><%= locale_create.form_title %> </h2>
+<%= flash.get("validationMessages")%>
+<div class="form">
+<%= f.form({action=makeURL({control='user',act='register'})}) %>
+		<div class="form_label"><%= locale_create.labels.name %>:</div> <%= f.text_field({name='name', class="field login", value = user.name, maxlength = 80 }) %> <br><br>
+		<div class="form_label"><%= locale_create.labels.email %>:</div> <%= f.text_field({name='email',class="field login", value = user.email, maxlength = 80}) %> <br><br>
+		<div class="form_label"><%= locale_create.labels.co_email %>:</div> <%= f.text_field({name='co_email',class="field login", value = user.co_email, maxlength = 80}) %> <br><br>
+		<div class="form_label"><%= locale_create.labels.login %>:</div> <%= f.text_field({name='login', class="field", value = user.login, maxlength = 10}) %> <br><br>
+		<div class="form_label"><%= locale_create.labels.passwd %>:</div> <%= f.password_field({name='passwd', class="field", value = user.password, maxlength = 8}) %> <br><br>
+		<div class="form_label"><%= locale_create.labels.co_passwd %>:</div> <%= f.password_field({name='co_passwd', class="field", value = "", maxlength = 8}) %> <br><br>
+		<div class="form_label"><%= locale_create.labels.country %>:</div><%=f.select({name='country',prompt = locale_create.country_prompt},User.COUNTRY)%> <br><br>
+		<div class="form_label"><%= locale_create.labels.organization%>:</div> <%=f.select({name='organization', prompt = locale_create.organization_prompt},User.ORGANIZATION)%> <br><br>
+		<div class="form_label"><%= locale_create.labels.remarks %>:</div><br> <%= f.text_area({name="remarks", class="text_area", value = user.remarks}) %> <br><br>
+		<div class="form_label"><%= locale_create.labels.resume %>:</div><br> <%= f.text_area({name="resume", class="text_area", value = user.resume}) %> <br><br>
+		<%= f.check_box({name='elua_list'},User.CHECK_DEFAULT_VALUE) %> <%= locale_create.labels.eLualist %>
+</div> <br>
+		<%= f.submit({value=locale_create.label_submit})%>
+<%= f.form_close() %>
+
+
+<% render("footer.lp","_shared") %>
