@@ -1,6 +1,6 @@
 -- Files application Model
 
-module("files.model", package.seeall)
+module("file.model", package.seeall)
 sqlI = require "sqlInjection"
 File = mapper:new("files")
 lfs = require("lfs")
@@ -10,6 +10,26 @@ function getFiles()
 	local user = UserModel.getCurrentUser()
 	local files = db:selectall("*","files","user_id = "..user.id)
 	return files
+end
+
+function getFilesByBuild(build_id)
+	local UserModel = require "user.model"
+	local user = UserModel.getCurrentUser()
+	local files = db:selectall("f.*,bf.build_id",
+								"files f inner join builds_files bf on bf.file_id = f.id",
+								"f.user_id = "..user.id.." and bf.build_id = "..sqlI.sqlInjection(build_id,"number"))
+	return files
+end
+
+function getFilesByBuildIndex(build_id)
+	if tonumber(build_id) then
+		local files = getFilesByBuild(build_id)
+		local files_tb = {}
+		for _,v in pairs(files)do
+			files_tb[v.id] = true
+		end
+		return files_tb
+	end
 end
 
 function getFileByName(filename)

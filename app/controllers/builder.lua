@@ -13,9 +13,10 @@ function index()
 end
 
 function files()
+	
 	build =  {}
 	id = cgilua.QUERY.id
-	UserModel = require "user.model"
+	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
 	BuildModel = require "builder.model"
 	

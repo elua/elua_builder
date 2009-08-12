@@ -31,7 +31,7 @@
                                 
                                 //--- COLUMN FORMATTERS
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<input type='checkbox' name='file_id' value="+oData+" border='0' style='margin-bottom:5px;'/> "
+                                    elLiner.innerHTML = "<input type='checkbox' name='file_id' value='"+oData['id']+"' "+ (oData['checked'] == true?'checked':'') +" border='0' style='margin-bottom:5px;'/> ";
                                 };
                                 YAHOO.widget.DataTable.Formatter.myActions = this.actions;                                                        
                 ]]
@@ -44,7 +44,7 @@
 										rowsPerPageOptions = {15,20,40,60},
 
 				}
-				local datasource_files = makeURL({control='files',act='repository'})
+				local datasource_files = makeURL({control='files',act='repository',build_id = id })
 				dt.showDataTable(configs_files, columns_files, datasource_files, nil, extraFormatters)	
 			%>
 		</div><br>

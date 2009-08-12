@@ -10,10 +10,19 @@ function repository()
 	local sort = cgilua.QUERY.sort
 	local dir  = cgilua.QUERY.dir
 	local query = cgilua.QUERY
-	 	
-	local FilesModel = require("files.model")
-	local items = FilesModel.getFiles()
-	 
+	local build_id = cgilua.QUERY.build_id
+	local FileModel = require("file.model")
+	
+	local items = FileModel.getFiles()
+	local build_files_index = FileModel.getFilesByBuildIndex(build_id)
+	for _,v in pairs(items)do
+		if type(build_files_index) == "table" then
+			v.id = {id = v.id, checked = build_files_index[v.id]}
+		else
+			v.id = {id = v.id, checked = false}
+		end
+	end
+		 
 	local DT = require("dataTable")
 	local rep = DT.repository:new(items,{startIndex=startIndex,results=results,sort=sort,dir=dir})
 	 
@@ -21,7 +30,7 @@ function repository()
 end
 
 function upload()
-	local FileModel = require("files.model") 
+	local FileModel = require("file.model") 
 	local file_upload = cgilua.POST.file
     if file_upload and next(file_upload) then
 		local _, name = cgilua.splitonlast(file_upload.filename)
