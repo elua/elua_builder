@@ -29,7 +29,7 @@ function selectBuild(id)
 }
 </script>
 
-<h4><%=locale_index.labels.greeting%>, <%= current_user.name %> </h4>
+<h4><%=locale_index.labels.greeting%>, <%= current_user.name %> <div class="link"><a href="<%= makeURL({control="user", act="logout"})%>"><%=locale_index.labels.logout%></a></div></h4>
 
 <h2><%=locale_index.builds_title%> </h2>
 

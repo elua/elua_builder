@@ -17,6 +17,7 @@ locale_index = {
 				title_build = "Build Name",
 				confirmDeleteFile= "You confirmed the exclusion of this file?",
 				confirmDeleteBuild= "You confirmed the exclusion of this build?",
+				logout = "Logout",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",

@@ -11,6 +11,7 @@
 <br>
 	<%= flash.get("validationMessagesBuild")%>
 <% end %>
+<div class="link"><a href="<%= makeURL({control= "builder", act="index"})%>"> <big><%=locale_index.label_back%></big> </a></div>
 <div>
 	<%= f.form({action = makeURL({control='builder',act='files'})}) %>
 		<%= f.hidden_field({name='id', value=id}) %>
@@ -123,5 +124,5 @@
 		<%= f.submit({value = locale_components.label_submit}) %>
 	<%= f.form_close() %>
 </div>
-<div class="link"> <h2></h2><a href="<%= makeURL({control= "builder", act="index"})%>"> <big><%=locale_index.label_back%></big> </a> </h2></div>
+<div class="link"><a href="<%= makeURL({control= "builder", act="index"})%>"> <big><%=locale_index.label_back%></big> </a></div>
 <% render("footer.lp","_shared") %>

@@ -33,6 +33,11 @@ function authenticate()
 	end
 end
 
+function logout()
+	cgilua.cookies.delete ('system_cookie')
+	redirect({control="user", act="index"})
+end
+
 function create()
 	User = require "user.model"
 	user = user_obj or {}
