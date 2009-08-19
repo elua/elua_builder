@@ -42,6 +42,13 @@ function getFileByName(filename)
 	end
 end
 
+function getFileSize(file)
+ 	local current = file:seek()
+ 	local size = file:seek("end")
+ 	file:seek("set", current)
+ 	return tonumber(size)
+end
+
 function save(filename)
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()

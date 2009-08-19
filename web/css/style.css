@@ -60,7 +60,7 @@ table.index ul { padding-top: 0em; margin-top: 0em; }
     margin-right: auto;
 }
 
-/* Início da Tabela */
+/* Inï¿½cio da Tabela */
 
 table {border: 1px solid black;border-collapse:collapse;}
 th {
@@ -318,3 +318,6 @@ width:430px;
 .link {
 text-align: right;
 }
+
+.yui-skin-sam .columnCenter{text-align:center;}
+.yui-skin-sam .columnCenter div{text-align:center;}

@@ -1,10 +1,12 @@
 locale_index = {
+	label_error_open_file = "The selected file does not exist.",
 	upload_title = "Upload",
 	builds_title = "Builds",
 	files_title = "Files",
 	label_progress = "Progress",
 	label_back = "Back",
 	label_remove = "Remove",
+	label_download = "Download",
 	label_select = "Select",
 	labels = {
 				greeting = "Hello",
@@ -18,6 +20,7 @@ locale_index = {
 				confirmDeleteFile= "You confirmed the exclusion of this file?",
 				confirmDeleteBuild= "You confirmed the exclusion of this build?",
 				logout = "Logout",
+				confirmDownloadFile = "Confirms download file?",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",

@@ -23,10 +23,6 @@ function confirmDeleteBuild(id)
 	}
 }
 
-function selectBuild(id)
-{	
-	window.location.href="<%=makeURL({control="builder", act="files"})%>&id="+id;
-}
 </script>
 
 <h4><%=locale_index.labels.greeting%>, <%= current_user.name %> <div class="link"><a href="<%= makeURL({control="user", act="logout"})%>"><%=locale_index.labels.logout%></a></div></h4>
@@ -38,7 +34,7 @@ function selectBuild(id)
 <div>
 	<%
 		local columns_builds = {
-							{key="id", label = locale_index.label_remove, width=40, formatter="myActionsRemove"},
+							{key="id", label = locale_index.label_remove, width=40, formatter="myActionsRemove", className="columnCenter"},
 							{key="title", label= locale_index.labels.title ,  sortable=true,minWidth=1024, maxAutoWidth=80, formatter="myActionsSelect"},
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=80},
 							{key="configs", label=locale_index.labels.configs, sortable=true, minWidth=1024, maxAutoWidth=650},
@@ -47,12 +43,12 @@ function selectBuild(id)
                                 
                                 //--- COLUMN FORMATTERS
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'>]]..locale_index.label_remove..[[</a> "
+                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'><img src=images/buttons/edittrash.png title=]]..locale_index.label_remove..[[></a> "
                                 };
                                 YAHOO.widget.DataTable.Formatter.myActionsRemove = this.actions;    
 		
 								this.view = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='selectBuild("+oRecord.getData("id")+")'>"+oData+"</a>";
+                                    elLiner.innerHTML = "<a href=']]..makeURL({control="builder", act="files"})..[[&id="+oRecord.getData("id")+"' >"+oData+"</a>";
                                 };
                                 YAHOO.widget.DataTable.Formatter.myActionsSelect = this.view;                   
         ]]
@@ -81,7 +77,7 @@ function selectBuild(id)
 <div>
 	<%
 		local columns_files = { 
-							{key="id", label = locale_index.label_remove, width=40, formatter="myActions"},
+							{key="id", label = locale_index.label_remove, width=35, formatter="action"},
 							{key="filename", label= locale_index.labels.filename,  sortable=true,minWidth=1024, maxAutoWidth=150},
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},
 		}
@@ -89,10 +85,12 @@ function selectBuild(id)
 		extraFormatters = [[
                                 
                                 //--- COLUMN FORMATTERS
-                                this.actions = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oData+")'>]]..locale_index.label_remove..[[</a> "
+                                this.action = function(elLiner, oRecord, oColumn, oData) {
+                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oData['id']+")'><img src=images/buttons/edittrash.png title=]]..locale_index.label_remove..[[></a>";
+									elLiner.innerHTML += " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oData['id']+"'><img src=images/buttons/agt_add-to-desktop.png title=]]..locale_index.label_download..[[></a>";
                                 };
-                                YAHOO.widget.DataTable.Formatter.myActions = this.actions                              
+                                YAHOO.widget.DataTable.Formatter.action = this.action
+								
         ]]
 		local configs_files = {
 						dataSetID = "dataSetFiles",
