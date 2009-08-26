@@ -20,7 +20,12 @@ end
 local function checkDir()
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
-	local path = CONFIG.MVC_USERS..user.login.."/builds"
+	local path = CONFIG.MVC_USERS..user.login
+	dir = lfs.attributes(path)
+	if dir == nil then
+		lfs.mkdir(path)
+	end
+	local path = path.."/builds"
 	dir = lfs.attributes(path)
 	if dir == nil then
 		lfs.mkdir(path)
@@ -84,7 +89,8 @@ function generate(id)
     		destination:write(sconstructStr)
     		destination:close()
     	end
-
+    	
+		os.execute("echo Demasaiiiiii >"..dir.."/"..name..".bin")
 end
 
 

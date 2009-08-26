@@ -10,6 +10,7 @@ function index()
 	local BuildModel = require "builder.model"
 	current_user = UserModel.getCurrentUser()
 	render("index.lp")
+	
 end
 
 function files()
@@ -24,8 +25,7 @@ function files()
 	for _,v in pairs(BuildModel.TARGETS) do 
 		v.option = v.value
 	end
-	local val = require "validation"
-	local validator = val.implement.new(build)
+	
 	
 	if tonumber(id) then
 		build = BuildModel.getBuild(id)
@@ -38,6 +38,8 @@ function files()
 		build.configs = {}
 		if isPOST() then
 			build = cgilua.POST
+			local val = require "validation"
+			local validator = val.implement.new(build)
 			build = BuildModel.setDefaultValues(build)
 			build.file_id = (build.file_id == nil) and "" or build.file_id 
 			--cgilua.put(tableToString(cgilua.POST))
@@ -92,31 +94,37 @@ function delete()
 	local id = cgilua.QUERY.id
 	local user = UserModel.getCurrentUser()
 	local build = db:selectall("*","builds","id = "..id)
+	local build_name = build[1].title
+	local path_build = CONFIG.MVC_USERS..user.login.."/builds/"..build_name..".bin"
+	local path_scontruct = CONFIG.MVC_USERS..user.login.."/builds/".."SConstruct_"..id
+	os.remove(path_build)
+	os.remove(path_scontruct)
 	local builds = db:delete ("builds","id = "..id)
+	local files_build = db:delete ("builds_files", "build_id="..id)
 	redirect({control="builder", act="index"})
 end
 
 function download()
 	local UserModel = require "user.model"
-	local FileModel = require("file.model") 
+	local FileModel = require"file.model" 
 	local id = cgilua.QUERY.id
 	local user = UserModel.getCurrentUser()
 	local build = db:selectall("*","builds","id = "..id)
 	local build_name = build[1].title
 	
 	io:tmpfile(CONFIG.MVC_TMP)
-	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/"..filename, "rb")
+	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/builds/"..build_name..".bin", "rb")
 
    if (open==nil) then --ops, something went wrong, file does not exists!
-    cgilua.put("<h2>"..locale_index.label_error_open_file.."</h2>")
+    cgilua.put("<h2>".."The selected file does not exist".."</h2>")
    else
    fileSize = FileModel.getFileSize(open)
    -- cgilua.header("Pragma", "public")
    -- cgilua.header("Cache-Control", "must-revalidate, post-check=0, pre-check=0")
     cgilua.header("Content-Type", "application/force-download")
-    cgilua.header("Content-Disposition",[[attachment; filename="]]..filename)
-    cgilua.header("Content-Type", "application/octet-stream; name="..filename)
-    cgilua.header("Content-Type", "application/octetstream; name="..filename)
+    cgilua.header("Content-Disposition",[[attachment; filename="]]..build_name)
+    cgilua.header("Content-Type", "application/octet-stream; name="..build_name)
+    cgilua.header("Content-Type", "application/octetstream; name="..build_name)
     cgilua.header("Content-Transfer-Encoding", "binary")
     cgilua.header("Content-Length ", fileSize)
     while true do

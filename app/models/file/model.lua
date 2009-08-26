@@ -65,7 +65,12 @@ end
 function checkDir()
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
-	local path = CONFIG.MVC_USERS..user.login.."/rom_fs"
+	local path = CONFIG.MVC_USERS..user.login
+	dir = lfs.attributes(path)
+	if dir == nil then
+		lfs.mkdir(path)
+	end
+	local path = path.."/rom_fs"
 	dir = lfs.attributes(path)
 	if dir == nil then
 		lfs.mkdir(path)

@@ -53,7 +53,7 @@ function delete()
 	local user = UserModel.getCurrentUser()
 	local file = db:selectall("*","files","id = "..id)
 	local filename = file[1].filename
-	local path = CONFIG.MVC_UPLOAD..user.login.."/"..filename
+	local path = CONFIG.MVC_USERS..user.login.."/rom_fs/"..filename
 	os.remove(path)
 	local files = db:delete ("files","id = "..id)
 	local files_build = db:delete ("builds_files", "file_id="..id)
@@ -62,17 +62,17 @@ end
 
 function download()
 	local UserModel = require "user.model"
-	local FileModel = require("file.model") 
+	local FileModel = require "file.model" 
 	local id = cgilua.QUERY.id
 	local user = UserModel.getCurrentUser()
 	local file = db:selectall("*","files","id = "..id)
 	local filename = file[1].filename
 	
 	io:tmpfile(CONFIG.MVC_TMP)
-	open, errorMsg =io.open(CONFIG.MVC_UPLOAD..user.login.."/"..filename, "rb")
+	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/rom_fs/"..filename, "rb")
 
    if (open==nil) then --ops, something went wrong, file does not exists!
-    cgilua.put("<h2>"..locale_index.label_error_open_file.."</h2>")
+    	cgilua.put("<h2>".."The selected file does not exist".."</h2>")
    else
    fileSize = FileModel.getFileSize(open)
    -- cgilua.header("Pragma", "public")
