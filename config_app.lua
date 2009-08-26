@@ -25,10 +25,10 @@ CONFIG.MVC_VIEW    = CONFIG.PATH.."/app/views/"
 CONFIG.MVC_MODEL = CONFIG.PATH.."/app/models/"
 CONFIG.MVC_LOCALE = CONFIG.PATH.."/app/locale/"
 CONFIG.MVC_WEB = CONFIG.PATH.."/app/web/"
-CONFIG.MVC_MESSAGES = CONFIG.PATH.."/app/messages/"
+CONFIG.MVC_TEMPLATES = CONFIG.PATH.."/app/templates/"
 CONFIG.MVC_TMP = CONFIG.PATH.."/tmp/"
 CONFIG.MVC_REPORTS = CONFIG.PATH.."/app/reports/"
-CONFIG.MVC_UPLOAD = CONFIG.PATH.."/app/upload/"
+CONFIG.MVC_USERS = CONFIG.PATH.."/app/users/"
 
 
 --MAIL Server Variables
