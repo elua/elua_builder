@@ -43,7 +43,8 @@ function confirmDeleteBuild(id)
                                 
                                 //--- COLUMN FORMATTERS
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'><img src=images/buttons/edittrash.png title=]]..locale_index.label_remove..[[></a> "
+                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'><img src=images/buttons/edittrash.png title=]]..locale_index.label_remove..[[></a> ";
+									elLiner.innerHTML += " <a href=']]..makeURL({control= "builder", act="download"})..[[&id="+oData['id']+"'><img src=images/buttons/agt_add-to-desktop.png title=]]..locale_index.label_download..[[></a>";
                                 };
                                 YAHOO.widget.DataTable.Formatter.myActionsRemove = this.actions;    
 		

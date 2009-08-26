@@ -17,6 +17,17 @@ function getBuild(id)
 	return build[1]
 end
 
+local function checkDir()
+	local UserModel = require "user.model"
+	local user = UserModel.getCurrentUser()
+	local path = CONFIG.MVC_USERS..user.login.."/builds"
+	dir = lfs.attributes(path)
+	if dir == nil then
+		lfs.mkdir(path)
+	end
+	return path
+end
+
 function save(values)
 	local UserModel = require"user.model"
 	local user = UserModel.getCurrentUser()
@@ -58,6 +69,24 @@ function setDefaultValues(build)
 	end
 	return build
 end
+
+
+function generate(id)
+		local build = getBuild(tonumber(id))
+		local name = build.title
+		local dir = checkDir()
+		local luaReports  = require "luaReports"
+		local values = {}
+		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", values,"string")
+
+		local destination = io.open(dir.."/SConstruct_"..build.id, "w")
+		if destination then
+    		destination:write(sconstructStr)
+    		destination:close()
+    	end
+
+end
+
 
 TARGETS = {
 			{value ="EK-LM3S8962", disabled = false},

@@ -1,0 +1,1 @@
+return { ["__views"] = 1, ["validationMessages"] = "<div id='errorExplanation'><ul><li>O login é obrigatório</li><li>A senha é obrigatória</li></ul></div>", }

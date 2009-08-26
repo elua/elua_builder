@@ -17,6 +17,7 @@ function files()
 	build =  {}
 	id = cgilua.QUERY.id
 	local UserModel = require "user.model"
+	local FileModel = require "file.model" 
 	local user = UserModel.getCurrentUser()
 	BuildModel = require "builder.model"
 	
@@ -47,7 +48,6 @@ function files()
 			validator:validate('file_id', locale_index.validator.file_id, val.checks.isNotEmpty)
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
 			if(validator:isValid())then
-				
 				local build_obj = BuildModel.save(build)
 				if (type(build.file_id) == "table") then
 					for _,file_id in pairs(build.file_id)do
@@ -56,7 +56,11 @@ function files()
 				else
 					BuildModel.saveBuildFile(build.file_id,build_obj.id)
 				end
-				redirect({control='builder',act='index'})
+				-- Generates a build				
+				BuildModel.generate(build.id)
+				
+				
+            	redirect({control="builder",act="index"})
 			else
 				flash.set('validationMessagesBuild',validator:htmlMessages())
 				render("files.lp")
@@ -90,4 +94,39 @@ function delete()
 	local build = db:selectall("*","builds","id = "..id)
 	local builds = db:delete ("builds","id = "..id)
 	redirect({control="builder", act="index"})
+end
+
+function download()
+	local UserModel = require "user.model"
+	local FileModel = require("file.model") 
+	local id = cgilua.QUERY.id
+	local user = UserModel.getCurrentUser()
+	local build = db:selectall("*","builds","id = "..id)
+	local build_name = build[1].title
+	
+	io:tmpfile(CONFIG.MVC_TMP)
+	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/"..filename, "rb")
+
+   if (open==nil) then --ops, something went wrong, file does not exists!
+    cgilua.put("<h2>"..locale_index.label_error_open_file.."</h2>")
+   else
+   fileSize = FileModel.getFileSize(open)
+   -- cgilua.header("Pragma", "public")
+   -- cgilua.header("Cache-Control", "must-revalidate, post-check=0, pre-check=0")
+    cgilua.header("Content-Type", "application/force-download")
+    cgilua.header("Content-Disposition",[[attachment; filename="]]..filename)
+    cgilua.header("Content-Type", "application/octet-stream; name="..filename)
+    cgilua.header("Content-Type", "application/octetstream; name="..filename)
+    cgilua.header("Content-Transfer-Encoding", "binary")
+    cgilua.header("Content-Length ", fileSize)
+    while true do
+    	local bytes = open:read(1024)
+       	if not bytes then 
+        	break
+        else
+            cgilua.put(bytes)
+        end
+    end
+    open:close()
+   end
 end
