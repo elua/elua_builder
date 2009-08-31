@@ -90,17 +90,9 @@ function repository()
 end
 
 function delete()
-	local UserModel = require "user.model"
+	local BuilderModel = require "builder.model"
 	local id = cgilua.QUERY.id
-	local user = UserModel.getCurrentUser()
-	local build = db:selectall("*","builds","id = "..id)
-	local build_name = build[1].title
-	local path_build = CONFIG.MVC_USERS..user.login.."/builds/"..build_name..".bin"
-	local path_scontruct = CONFIG.MVC_USERS..user.login.."/builds/".."SConstruct_"..id
-	os.remove(path_build)
-	os.remove(path_scontruct)
-	local builds = db:delete ("builds","id = "..id)
-	local files_build = db:delete ("builds_files", "build_id="..id)
+	BuilderModel.delete(id)
 	redirect({control="builder", act="index"})
 end
 
@@ -113,7 +105,7 @@ function download()
 	local build_name = build[1].title
 	
 	io:tmpfile(CONFIG.MVC_TMP)
-	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/builds/"..build_name..".bin", "rb")
+	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/builds/"..id..build_name..".bin", "rb")
 
    if (open==nil) then --ops, something went wrong, file does not exists!
     cgilua.put("<h2>".."The selected file does not exist".."</h2>")

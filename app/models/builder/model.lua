@@ -4,6 +4,7 @@ module("builder.model", package.seeall)
 sqlI = require "sqlInjection"
 Build = mapper:new("builds")
 BuildFile = mapper:new("builds_files")
+lfs = require("lfs")
 
 function getBuilds()
 	local UserModel = require "user.model"
@@ -30,6 +31,11 @@ local function checkDir()
 	if dir == nil then
 		lfs.mkdir(path)
 	end
+	local path = path.."/"..build.id
+	dir = lfs.attributes(path)
+	if dir == nil then
+		lfs.mkdir(path)
+	end	
 	return path
 end
 
@@ -75,6 +81,30 @@ function setDefaultValues(build)
 	return build
 end
 
+function delete(id)
+	local UserModel = require "user.model"
+	local user = UserModel.getCurrentUser()
+	local build = db:selectall("*","builds","id = "..id)
+	local build_name = build[1].title
+	local path = CONFIG.MVC_USERS..user.login.."/builds/"..id
+	--local path_build = CONFIG.MVC_USERS..user.login.."/builds/"..id.."/"..build_name..".bin"
+	--local path_scontruct = CONFIG.MVC_USERS..user.login.."/builds/"..id.."/".."SConstruct"
+	--os.remove(path_build)
+	--os.remove(path_scontruct)
+	
+	local files = lfs.dir(path)
+	local file = files()
+	while file do
+		os.remove(path.."/"..file)
+		file = files()
+	end
+	
+	if lfs.rmdir(path)then
+		local builds = db:delete ("builds","id = "..id)
+		local files_build = db:delete ("builds_files", "build_id="..id)
+	end
+	
+end
 
 function generate(id)
 		local build = getBuild(tonumber(id))
@@ -84,7 +114,7 @@ function generate(id)
 		local values = {}
 		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", values,"string")
 
-		local destination = io.open(dir.."/SConstruct_"..build.id, "w")
+		local destination = io.open(dir.."/SConstruct", "w")
 		if destination then
     		destination:write(sconstructStr)
     		destination:close()
