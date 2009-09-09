@@ -112,6 +112,9 @@ function generate(id)
 		local dir = checkDir()
 		local luaReports  = require "luaReports"
 		local values = {}
+		-- copy de source files
+		os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
+		
 		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", values,"string")
 
 		local destination = io.open(dir.."/SConstruct", "w")
@@ -119,8 +122,9 @@ function generate(id)
     		destination:write(sconstructStr)
     		destination:close()
     	end
-    	
-		os.execute("echo Demasaiiiiii >"..dir.."/"..name..".bin")
+    	-- Run scons
+    	os.execute([[cd ]]..dir..[[;scons board=EK-LM3S8962 -c > log_c.txt;scons  board=EK-LM3S8962 prog > log_b.txt]])
+		
 end
 
 
