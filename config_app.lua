@@ -1,7 +1,7 @@
 -- #### Application variables ###
 CONFIG = {}
-CONFIG.PATH = [[C:/aptana/elua_builder]]
-CONFIG.APP_NAME = "elua"
+CONFIG.PATH = [[/var/www/eluabuilder/eluabuilder]]
+CONFIG.APP_NAME = "elua_builder"
 CONFIG.ENABLE_SESSIONS = true
 CONFIG.MAX_FILE_SIZE = 60000 * 1024    -- in bytes
 CONFIG.LANGUAGE     = "en-us"
@@ -48,9 +48,9 @@ CONFIG.MAIL_SERVER = {
 
 CONFIG.DB = {
     server = "localhost",
-    dbname = "elua",
-    username = "root",
-    password = "",
+    dbname = "eluabuilder",
+    username = "eluabuilder",
+    password = "eluabuilder",
     driver = "mysql"
 }
 

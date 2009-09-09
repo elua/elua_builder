@@ -222,7 +222,7 @@ function tableToString(tb)
 			if (type(v) == "table") then
 				str = str.. i.."="..tableToString(v)..","
 			else
-				local value = tonumber(v) ~= nil and tonumber(v) or "'"..tostring(v).."'"
+				local value = tonumber(v) ~= nil and tonumber(v) or [["]]..tostring(v)..[["]]
 				if(tonumber(i))then
 					str = str..value..","
 				else
