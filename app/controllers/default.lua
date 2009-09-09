@@ -6,14 +6,6 @@
 
 
 function index()
-  render("index.lp")
-  
+	redirect({control="user",act="index"})
 end
 
-function redir()
-redirect({control="default",act="teste",id=333,t=555})
-end
-
-function teste()
-	cgilua.put("teste")
-end
