@@ -87,13 +87,9 @@ function delete(id)
 	local build = db:selectall("*","builds","id = "..id)
 	local build_name = build[1].title
 	local path = CONFIG.MVC_USERS..user.login.."/builds/"..id
-	--local path_build = CONFIG.MVC_USERS..user.login.."/builds/"..id.."/"..build_name..".bin"
-	--local path_scontruct = CONFIG.MVC_USERS..user.login.."/builds/"..id.."/".."SConstruct"
-	--os.remove(path_build)
-	--os.remove(path_scontruct)
-	
 	local files = lfs.dir(path)
 	local file = files()
+	
 	while file do
 		os.remove(path.."/"..file)
 		file = files()
@@ -112,8 +108,21 @@ function generate(id)
 		local dir = checkDir()
 		local luaReports  = require "luaReports"
 		local values = {}
-		-- copy de source files
+		if (build.configs ~= nil and type(build.configs) == "string") then
+			build.configs = assert(loadstring("return "..build.configs)())
+		end
+		-- copy source files
+		local UserModel = require "user.model"
+		local user = UserModel.getCurrentUser()
 		os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
+		
+		-- copy romfs files
+		local FileModel = require "file.model"
+		local files = FileModel.getFilesByBuild(build.id)
+		local path = CONFIG.MVC_USERS..user.login
+		for i,v in pairs(files) do
+			os.execute("cp -r -u "..path.."/rom_fs/"..v.filename.." "..dir.."/romfs")
+		end
 		
 		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", values,"string")
 
@@ -123,8 +132,9 @@ function generate(id)
     		destination:close()
     	end
     	-- Run scons
-    	os.execute([[cd ]]..dir..[[;scons board=EK-LM3S8962 -c > log_c.txt;scons  board=EK-LM3S8962 prog > log_b.txt]])
-		
+    	os.execute([[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c > log_c.txt;scons  board=]]..build.configs.target..[[ prog > log_b.txt]])
+		local path_build = path.."/builds/"
+		os.execute("zip "..path_build.."arquivos.zip "..dir.."/*.bin *.elf")  
 end
 
 
