@@ -38,17 +38,17 @@ function files()
 		build.configs = {}
 		if isPOST() then
 			build = cgilua.POST
-			local val = require "validation"
-			local validator = val.implement.new(build)
+			val = require "validation"
+			validator = val.implement.new(build)
 			build = BuildModel.setDefaultValues(build)
 			build.file_id = (build.file_id == nil) and "" or build.file_id 
-			--cgilua.put(tableToString(cgilua.POST))
-			
 			build.configs = tableToString(build)
 			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
-			validator:validate('title',locale_index.validator.checkNotExistBuild, BuildModel.checkNotExistBuild)
-			validator:validate('file_id', locale_index.validator.file_id, val.checks.isNotEmpty)
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
+			--validator:validate('file_id', locale_index.validator.file_id, val.checks.isNotEmpty)
+			if build.id == nil then
+				validator:validate('title',locale_index.validator.checkNotExistBuild, BuildModel.checkNotExistBuild)
+			end
 			if(validator:isValid())then
 				local build_obj = BuildModel.save(build)
 				if (type(build.file_id) == "table") then
@@ -60,9 +60,7 @@ function files()
 				end
 				-- Generates a build				
 				BuildModel.generate(build.id)
-				
-				
-            	redirect({control="builder",act="index"})
+				redirect({control="builder",act="index"})
 			else
 				flash.set('validationMessagesBuild',validator:htmlMessages())
 				render("files.lp")
@@ -72,6 +70,7 @@ function files()
 		end
 	end
 end
+
 
 function repository()
 	local startIndex = cgilua.QUERY.startIndex
@@ -97,36 +96,7 @@ function delete()
 end
 
 function download()
-	local UserModel = require "user.model"
-	local FileModel = require"file.model" 
+	local BuilderModel = require "builder.model"
 	local id = cgilua.QUERY.id
-	local user = UserModel.getCurrentUser()
-	local build = db:selectall("*","builds","id = "..id)
-	local build_name = build[1].title
-	
-	io:tmpfile(CONFIG.MVC_TMP)
-	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/builds/"..id..build_name..".bin", "rb")
-
-   if (open==nil) then --ops, something went wrong, file does not exists!
-    cgilua.put("<h2>".."The selected file does not exist".."</h2>")
-   else
-   fileSize = FileModel.getFileSize(open)
-   -- cgilua.header("Pragma", "public")
-   -- cgilua.header("Cache-Control", "must-revalidate, post-check=0, pre-check=0")
-    cgilua.header("Content-Type", "application/force-download")
-    cgilua.header("Content-Disposition",[[attachment; filename="]]..build_name)
-    cgilua.header("Content-Type", "application/octet-stream; name="..build_name)
-    cgilua.header("Content-Type", "application/octetstream; name="..build_name)
-    cgilua.header("Content-Transfer-Encoding", "binary")
-    cgilua.header("Content-Length ", fileSize)
-    while true do
-    	local bytes = open:read(1024)
-       	if not bytes then 
-        	break
-        else
-            cgilua.put(bytes)
-        end
-    end
-    open:close()
-   end
+	BuilderModel.download(id)
 end

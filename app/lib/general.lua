@@ -104,6 +104,17 @@ function trim(strIn)
    local _, _, strOut = string.find(strIn, "^%s*(.-)%s*$")
    return strOut
 end
+function change_true_false(values)
+	
+	for i,v in pairs(values)do
+		if (v == 'true') then
+			values[i] = ""
+		elseif(v == 'false')then
+			values[i] = "//"
+		end
+	end
+	return values
+end
 
 function round(num, idp)
 	local mult = 10^(idp or 0)

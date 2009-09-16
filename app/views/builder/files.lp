@@ -13,7 +13,7 @@
 <% end %>
 <div class="link"><a href="<%= makeURL({control= "builder", act="index"})%>"> <big><%=locale_index.label_back%></big> </a></div>
 <div>
-	<%= f.form({action = makeURL({control='builder',act='files'})}) %>
+	<%= f.form({action = makeURL({control='builder',act='files'}), onsubmit="$('send').disabled=true;Element.show('generating')"}) %>
 		<%= f.hidden_field({name='id', value=id}) %>
 		<%= f.hidden_field({name='created_at', value=build.created_at}) %>
 		<h2> <%= locale_index.labels.title_build %></h2>
@@ -121,8 +121,14 @@
 				</tr>
 			</tbody>
 		</table><br>
-		<%= f.submit({value = locale_components.label_submit}) %>
+		<%= f.submit({id='send',value = locale_components.label_submit}) %>
 	<%= f.form_close() %>
 </div>
 <div class="link"><a href="<%= makeURL({control= "builder", act="index"})%>"> <big><%=locale_index.label_back%></big> </a></div>
+
+<div class="generate" style="display:none;" id='generating' >
+	<h2>Please wait.</h2><br/> 
+	<img src="images/ajax-loader.gif"><br/><br/>
+	<h2>Build is been generated.</h2>
+</div>
 <% render("footer.lp","_shared") %>
