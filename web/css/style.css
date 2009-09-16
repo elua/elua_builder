@@ -321,3 +321,15 @@ text-align: right;
 
 .yui-skin-sam .columnCenter{text-align:center;}
 .yui-skin-sam .columnCenter div{text-align:center;}
+
+.generate {
+	position:absolute;
+	text-align: center;
+	width:300px; 
+	height:100px;
+	top:200px;
+	left:50%;
+	margin-left:-150px;
+	background-color:#ffffff;
+	border: 1px solid #c0c0c0;
+}
