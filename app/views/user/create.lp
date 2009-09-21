@@ -2,7 +2,10 @@
 <% render("header.lp","_shared") %>
 
 <h2><%= locale_create.form_title %> </h2>
+
 <%= flash.get("validationMessages")%>
+
+<div class="link"><a href="<%= makeURL({control= "user", act="index"})%>"> <big><%=locale_index.label_back%></big> </a></div>
 <div class="form">
 <%= f.form({action=makeURL({control='user',act='register'})}) %>
 		<div class="form_label"><%= locale_create.labels.name %>:</div> <%= f.text_field({name='name', class="field login", value = user.name, maxlength = 80 }) %> <br><br>
@@ -18,7 +21,8 @@
 		<%= f.check_box({name='elua_list'},User.CHECK_DEFAULT_VALUE) %> <%= locale_create.labels.eLualist %>
 </div> <br>
 		<%= f.submit({value=locale_create.label_submit})%>
+		<input type=reset value="<%=locale_create.label_clear%>"/>
 <%= f.form_close() %>
-
+<div class="link"><a href="<%= makeURL({control= "user", act="index"})%>"> <big><%=locale_index.label_back%></big> </a></div>
 
 <% render("footer.lp","_shared") %>

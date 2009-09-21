@@ -51,7 +51,9 @@ function files()
 			end
 			if(validator:isValid())then
 				local build_obj = BuildModel.save(build)
+				BuildModel.deleteFilesFromBuild(build.id)
 				if (type(build.file_id) == "table") then
+					
 					for _,file_id in pairs(build.file_id)do
 						BuildModel.saveBuildFile(file_id,build_obj.id)
 					end

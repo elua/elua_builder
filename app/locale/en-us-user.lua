@@ -1,11 +1,13 @@
 locale_index = { 
 	login_title = "Authentication",	
+	label_back = "Back",
 	labels = {
 				login = "Login",
 				passwd = "Password",
 				newuser = "Create Account",
 			},
 	label_submit = "Submit",
+	
 }
 
 locale_create = {
@@ -26,6 +28,7 @@ locale_create = {
 	country_prompt = "Select your country",
 	organization_prompt = "Select your organization",
 	label_submit = "Submit",
+	label_clear = "Clear",
 }
 
 locale_register = {

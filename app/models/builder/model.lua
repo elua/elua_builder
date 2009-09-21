@@ -94,6 +94,10 @@ function delete(id)
 	end
 end
 
+function deleteFilesFromBuild(build_id)
+	return db:delete("builds_files", "build_id="..sqlI.sqlInjection(build_id,"number"))
+end
+
 function download(id)
 	local UserModel = require "user.model"
 	local FileModel = require"file.model" 
@@ -150,13 +154,20 @@ function generate(id)
 		-- copy romfs files
 		local FileModel = require "file.model"
 		local files = FileModel.getFilesByBuild(build.id)
+		
 		local path = CONFIG.MVC_USERS..user.login
 		for i,v in pairs(files) do
-			os.execute("cp -r -u "..path.."/rom_fs/"..v.filename.." "..dir.."/romfs")
+			if(tonumber(v.id) == tonumber(build.configs.autorun_file_id))then
+				os.execute("cp -u "..path.."/rom_fs/"..v.filename.." "..dir.."/romfs/autorun.lua")
+				files[i].filename = "autorun.lua"
+			else
+				os.execute("cp -r -u "..path.."/rom_fs/"..v.filename.." "..dir.."/romfs")
+			end	
 		end
 		local platform = platforms_by_targets()[build.configs.target]
 		
-		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", values,"string")
+		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", {files = files},"string")
+		--error(sconstructStr)
 		local platform_confStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build.configs,"string")
 		
 		local destination = io.open(dir.."/SConstruct", "w")

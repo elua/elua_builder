@@ -34,7 +34,7 @@ function confirmDeleteBuild(id)
 <div>
 	<%
 		local columns_builds = {
-							{key="id", label = locale_index.label_remove, width=40, formatter="actions", className="columnCenter"},
+							{key="id", label = locale_index.label_remove_edit, width=60, formatter="actions", className="columnCenter"},
 							{key="title", label= locale_index.labels.title ,  sortable=true,minWidth=1024, maxAutoWidth=80, formatter="myActionsSelect"},
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=80},
 							{key="configs", label=locale_index.labels.configs, sortable=true, minWidth=1024, maxAutoWidth=650},
@@ -44,12 +44,12 @@ function confirmDeleteBuild(id)
                                 //--- COLUMN FORMATTERS
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
                                     elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'><img src=images/buttons/edittrash.png title=]]..locale_index.label_remove..[[></a> ";
-									elLiner.innerHTML += " <a href=']]..makeURL({control= "builder", act="download"})..[[&id="+oData+"'><img src=images/buttons/agt_add-to-desktop.png title=]]..locale_index.label_download..[[></a>";
+									elLiner.innerHTML += " <a href=']]..makeURL({control= "builder", act="files"})..[[&id="+oData+"'><img src=images/buttons/kedit.png title=]]..locale_index.label_edit..[[></a>";
                                 };
                                 YAHOO.widget.DataTable.Formatter.actions = this.actions;    
 		
 								this.view = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<a href=']]..makeURL({control="builder", act="files"})..[[&id="+oRecord.getData("id")+"' >"+oData+"</a>";
+                                    elLiner.innerHTML = "<a href=']]..makeURL({control="builder", act="download"})..[[&id="+oRecord.getData("id")+"' >"+oData+"</a>";
                                 };
                                 YAHOO.widget.DataTable.Formatter.myActionsSelect = this.view;                   
         ]]
@@ -78,7 +78,7 @@ function confirmDeleteBuild(id)
 <div>
 	<%
 		local columns_files = { 
-							{key="id", label = locale_index.label_remove, width=35, formatter="action"},
+							{key="id", label = locale_index.label_remove_download, width=90, formatter="action", className="columnCenter"},
 							{key="filename", label= locale_index.labels.filename,  sortable=true,minWidth=1024, maxAutoWidth=150},
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},
 		}

@@ -24,6 +24,7 @@
 			<%
 				local columns_files = { 
 										{key="id", label = locale_index.label_select, width=40, formatter="myActions"},
+										{key="id", label = locale_index.label_autorun, width=100, formatter="autorun", className="columnCenter"},
 										{key="filename", label= locale_index.labels.filename,  sortable=true,minWidth=1024, maxAutoWidth=150},
 										{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},
 				}
@@ -34,7 +35,12 @@
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
                                     elLiner.innerHTML = "<input type='checkbox' name='file_id' value='"+oData['id']+"' "+ (oData['checked'] == true?'checked':'') +" border='0' style='margin-bottom:5px;'/> ";
                                 };
-                                YAHOO.widget.DataTable.Formatter.myActions = this.actions;                                                        
+                                YAHOO.widget.DataTable.Formatter.myActions = this.actions;  
+								
+								this.autorun = function(elLiner, oRecord, oColumn, oData) {
+                                    elLiner.innerHTML = "<input type='radio' name='autorun_file_id' value='"+oData['id']+" /> ";
+                                };
+                                YAHOO.widget.DataTable.Formatter.autorun = this.autorun;                                                         
                 ]]
 				
 				local configs_files = {
