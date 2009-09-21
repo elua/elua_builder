@@ -83,37 +83,22 @@ board_list = { 'SAM7-EX256' : [ 'AT91SAM7X256', 'AT91SAM7X512' ],
 # To include a file in a ROMFS build, include it in a group here (or create one
 # if you need) and make sure the group is included on your platform's file_list
 # definition (right after this).
-romfs = { 'bisect' : [ 'bisect.lua' ],
-          'hangman' : [ 'hangman.lua' ],
-          'lhttpd' : [ 'index.pht', 'lhttpd.lua', 'test.lua' ],
-          'pong' : [ 'pong.lua', 'LM3S.lua' ],
-          'led' : [ 'led.lua' ],
-          'piano' : [ 'piano.lua' ],
-          'pwmled' : [ 'pwmled.lua' ],
-          'tvbgone' : [ 'tvbgone.lua', 'codes.bin' ],
-          'hello' : [ 'hello.lua' ],
-          'info' : [ 'info.lua' ],
-          'morse' : [ 'morse.lua' ],
-          'dualpwm' : [ 'dualpwm.lua' ],
-          'adcscope' : [ 'adcscope.lua' ],
-          'adcpoll' : [ 'adcpoll.lua' ],
-          'life' : [ 'life.lua' ],
-          'logo' : ['logo.lua', 'logo.bin' ]
+romfs = { 'builds_files' : [ $files[=['$filename',]=] ]    
         }
 
 # List of board/romfs data combinations
-file_list = { 'SAM7-EX256' : [ 'bisect', 'hangman' , 'led', 'piano', 'hello', 'info', 'morse' ],
-              'EK-LM3S8962' : [ 'bisect', 'hangman', 'lhttpd', 'pong', 'led', 'piano', 'pwmled', 'tvbgone', 'hello', 'info', 'morse', 'adcscope', 'adcpoll', 'logo' ],
-              'EK-LM3S6965' : [ 'bisect', 'hangman', 'lhttpd', 'pong', 'led', 'piano', 'pwmled', 'tvbgone', 'hello', 'info', 'morse', 'adcscope', 'adcpoll', 'logo' ],
-              'STR9-COMSTICK' : [ 'bisect', 'hangman', 'led', 'hello', 'info' ],
-              'PC' : [ 'bisect', 'hello', 'info', 'life', 'hangman' ],
-              'SIM' : [ 'bisect', 'hello', 'info', 'life', 'hangman' ],
-              'LPC-H2888' : [ 'bisect', 'hangman', 'led', 'hello', 'info' ],
-              'MOD711' : [ 'bisect', 'hangman', 'led', 'hello', 'info', 'dualpwm' ],
-              'STM3210E-EVAL' : [ 'bisect', 'hello', 'info' ],
-              'ATEVK1100' : [ 'bisect', 'hangman', 'led', 'hello', 'info' ],
-              'ET-STM32' : [ 'hello', 'hangman', 'info', 'bisect','adcscope','adcpoll' ],
-              'EAGLE-100' : [ 'bisect', 'hangman', 'lhttpd', 'led', 'hello', 'info' ]              
+file_list = { 'SAM7-EX256' : [ 'builds_files' ],
+              'EK-LM3S8962' : [ 'builds_files' ],
+              'EK-LM3S6965' : [ 'builds_files' ],
+              'STR9-COMSTICK' : [ 'builds_files' ],
+              'PC' : [ 'builds_files' ],
+              'SIM' : [ 'builds_files' ],
+              'LPC-H2888' : [ 'builds_files' ],
+              'MOD711' : [ 'builds_files' ],
+              'STM3210E-EVAL' : [ 'builds_files' ],
+              'ATEVK1100' : [ 'builds_files' ],
+              'ET-STM32' : [ 'builds_files' ],
+              'EAGLE-100' : [ 'builds_files' ]              
             }
 
 # Variants: board = <boardname>
