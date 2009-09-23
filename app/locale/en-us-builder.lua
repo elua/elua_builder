@@ -25,6 +25,7 @@ locale_index = {
 				confirmDeleteFile= "You confirmed the exclusion of this file?",
 				confirmDeleteBuild= "You confirmed the exclusion of this build?",
 				logout = "Logout",
+				edit_account = "Edit Account",
 				confirmDownloadFile = "Confirms download file?",
 				open_file = "The selected file does not exist.",
 	},

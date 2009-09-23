@@ -24,10 +24,16 @@ function confirmDeleteBuild(id)
 }
 
 </script>
-
-<h4><%=locale_index.labels.greeting%>, <%= current_user.name %> <div class="link"><a href="<%= makeURL({control="user", act="logout"})%>"><%=locale_index.labels.logout%></a></div></h4>
-
+<div class="link">
+	<a href="<%= makeURL({control="user", act="edit"})%>"><img src="images/buttons/edit_user.gif" title="<%=locale_index.labels.edit_account%>"></a>
+	<a href="<%= makeURL({control="user", act="logout"})%>"><img src="images/buttons/exit.png" title="<%=locale_index.labels.logout%>"></a>
+</div>
 <h2><%=locale_index.builds_title%> </h2>
+
+
+<h4>
+	<%=locale_index.labels.greeting%>, <%= current_user.name %> 
+</h4>
 
 <div class="link" <a href="<%= makeURL({control= "builder", act="files"})%>"> <%=locale_index.labels.newbuild%> </a> </div>
 
@@ -43,7 +49,7 @@ function confirmDeleteBuild(id)
                                 
                                 //--- COLUMN FORMATTERS
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'><img src=images/buttons/edittrash.png title=]]..locale_index.label_remove..[[></a> ";
+                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteBuild("+oData+")'><img src=images/buttons/cancel.png title=]]..locale_index.label_remove..[[></a> ";
 									elLiner.innerHTML += " <a href=']]..makeURL({control= "builder", act="files"})..[[&id="+oData+"'><img src=images/buttons/kedit.png title=]]..locale_index.label_edit..[[></a>";
                                 };
                                 YAHOO.widget.DataTable.Formatter.actions = this.actions;    
@@ -68,8 +74,8 @@ function confirmDeleteBuild(id)
 
 <h2><%= locale_index.upload_title %> </h2><br>
 <div>
-	<form method="POST" enctype="multipart/form-data" action="start.lua?control=files&act=upload"> 
-		<input type="file" name="file"> 
+	<form method="POST" enctype="multipart/form-data" action="start.lua?control=files&act=upload" onsubmit="return( $('filename').value != '');"> 
+		<input type="file" name="file" id="filename"> 
 		<input type="submit" value="Upload"> 
 	</form> 
 </div><br>
@@ -87,7 +93,7 @@ function confirmDeleteBuild(id)
                                 
                                 //--- COLUMN FORMATTERS
                                 this.action = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oData['id']+")'><img src=images/buttons/edittrash.png title=]]..locale_index.label_remove..[[></a>";
+                                    elLiner.innerHTML = "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oData['id']+")'><img src=images/buttons/cancel.png title=]]..locale_index.label_remove..[[></a>";
 									elLiner.innerHTML += " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oData['id']+"'><img src=images/buttons/agt_add-to-desktop.png title=]]..locale_index.label_download..[[></a>";
                                 };
                                 YAHOO.widget.DataTable.Formatter.action = this.action

@@ -135,6 +135,6 @@
 <div class="generate" style="display:none;" id='generating' >
 	<h2>Please wait.</h2><br/> 
 	<img src="images/ajax-loader.gif"><br/><br/>
-	<h2>Build is been generated.</h2>
+	<h2>Build is being generated.</h2>
 </div>
 <% render("footer.lp","_shared") %>
