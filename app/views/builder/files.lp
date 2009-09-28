@@ -20,7 +20,7 @@
 		<%= f.text_field({class="field2", name='title',size=10, value=build.title}) %> <br><br>
 		
 		<h2><%= locale_components.target_title %> </h2>
-		<!--<label for="target"> <%= locale_components.labels.target %>:</label> -->
+		<label for="target"></label>
 		<div> <%= f.select({name='target',prompt = locale_components.target_prompt},BuildModel.TARGETS, build.configs.target) %></div><br>
 		
 		<h2><%= locale_components.component_title %> </h2>	
@@ -97,7 +97,7 @@
 		<div>
 			<%
 				local columns_files = { 
-										{key="id", label = locale_index.label_select, width=40, formatter="myActions"},
+										{key="id", label = locale_index.label_select, width=40, formatter="myActions", className="columnCenter"},
 										{key="id", label = locale_index.label_autorun, width=100, formatter="autorun", className="columnCenter"},
 										{key="filename", label= locale_index.labels.filename,  sortable=true,minWidth=1024, maxAutoWidth=150},
 										{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},

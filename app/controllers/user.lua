@@ -26,6 +26,7 @@ function authenticate()
 	
 	if(validator:isValid())then
 		User.authenticate(user_aut)
+		flash.set('validationMessages',"")
 		redirect({control="builder", act="index"})
 	else
 		flash.set('validationMessages',validator:htmlMessages())
@@ -82,7 +83,7 @@ function update()
 	validator:validate('login',locale_register.validator.login_min, val.checks.minLength,5)
 	if (user_obj.change_passwd == "true")then
 		validator:validate('passwd',locale_register.validator.passwd, val.checks.isNotEmpty)
-		validator:validate('passwd',locale_register.validator.passwd_min, val.checks.sizeString,8)
+		validator:validate('passwd',locale_register.validator.passwd_min, val.checks.sizeString,5)
 		validator:validate('passwd',locale_register.validator.confirm_passwd, val.checks.isEqual,user_obj.co_passwd)
 	end	
 	if user_obj.id == nil then
@@ -91,6 +92,7 @@ function update()
 	
 	if(validator:isValid())then
 		UserModel.save(user_obj)
+		flash.set('validationMessages',"")
 		flash.set('notice',locale_register.validator.notice)
 		redirect({control="builder", act="index"})
 	else
@@ -116,7 +118,7 @@ function register()
 	validator:validate('login',locale_register.validator.login_min, val.checks.minLength,5)
 		
 	validator:validate('passwd',locale_register.validator.passwd, val.checks.isNotEmpty)
-	validator:validate('passwd',locale_register.validator.passwd_min, val.checks.sizeString,8)
+	validator:validate('passwd',locale_register.validator.passwd_min, val.checks.sizeString,5)
 	validator:validate('passwd',locale_register.validator.confirm_passwd, val.checks.isEqual,user_obj.co_passwd)
 	if user.id == nil then
 		validator:validate('login',locale_register.validator.checkNotExistLogin, UserModel.checkNotExistLogin)
@@ -124,6 +126,7 @@ function register()
 
 	if(validator:isValid())then
 		UserModel.save(user_obj)
+		flash.set('validationMessages',"")
 		flash.set('notice',locale_register.validator.notice)
 		redirect({control="user", act="index"})
 	else

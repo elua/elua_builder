@@ -292,10 +292,15 @@ COUNTRY = {
 		}
 		
 ORGANIZATION = {
-			{value="Commercial use", option ="Commercial use"},
-			{value="Government use", option="Government use"},
-			{value="Academic use", option="Academic use"},
-			{value="Student use", option="Student use"},
+				{value="Academic", option ="Academic"},
+				{value="Automotive", option ="Automotive"},
+				{value="Inteligent Sensors", option ="Inteligent Sensors"},
+				{value="Military", option ="Military"},
+				{value="RAD e Prototyping", option ="RAD e Prototyping"},
+				{value="Robotics", option ="Robotics"},
+				{value="Signal Processing", option ="Signal Processing"},
+				{value="Space Exploration", option ="Space Exploration"},
+				{value="Other", option ="Other"},
 		}
 		
 CHECK_DEFAULT_VALUE = {{label = "", value = "true"}}
