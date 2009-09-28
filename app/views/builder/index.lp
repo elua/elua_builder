@@ -1,10 +1,13 @@
 <% f = require "luawebforms" %>
 <% dt = require("dataTable.show")%>
+
 <% render("header.lp","_shared") %>
 
 <% dt.printJSheaders("lib/yui/js/") %>
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
+
+<h4 class="link"><%=locale_index.labels.greeting%>, <%= current_user.name %></h4>
 
 <script>
 function confirmDeleteFile(id)
@@ -22,21 +25,14 @@ function confirmDeleteBuild(id)
 		window.location.href="<%=makeURL({control= "builder", act="delete"})%>&id="+id;
 	}
 }
-
 </script>
+
 <div class="link">
-	<a href="<%= makeURL({control="user", act="edit"})%>"><img src="images/buttons/edit_user.gif" title="<%=locale_index.labels.edit_account%>"></a>
-	<a href="<%= makeURL({control="user", act="logout"})%>"><img src="images/buttons/exit.png" title="<%=locale_index.labels.logout%>"></a>
+	<a href="<%= makeURL({control="user", act="edit"})%>"><!--<img src="images/buttons/edit_user.gif" title="--><%=locale_index.labels.edit_account%><!-->--></a>&nbsp;&nbsp; 
+	<a href="<%= makeURL({control="user", act="logout"})%>"><!--<img src="images/buttons/exit.png" title="--><%=locale_index.labels.logout%><!--">--></a>
 </div>
+
 <h2><%=locale_index.builds_title%> </h2>
-
-
-<h4>
-	<%=locale_index.labels.greeting%>, <%= current_user.name %> 
-</h4>
-
-<div class="link" <a href="<%= makeURL({control= "builder", act="files"})%>"> <%=locale_index.labels.newbuild%> </a> </div>
-
 <div>
 	<%
 		local columns_builds = {
@@ -45,7 +41,7 @@ function confirmDeleteBuild(id)
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=80},
 							{key="configs", label=locale_index.labels.configs, sortable=true, minWidth=1024, maxAutoWidth=650},
 		}
-		extraFormatters = [[
+		local extraFormatters = [[
                                 
                                 //--- COLUMN FORMATTERS
                                 this.actions = function(elLiner, oRecord, oColumn, oData) {
@@ -60,25 +56,19 @@ function confirmDeleteBuild(id)
                                 YAHOO.widget.DataTable.Formatter.myActionsSelect = this.view;                   
         ]]
 		local configs_builds = {
-						dataSetID = "dataSet",
+						dataSetID = "dataSetBuilds",
 						serverPagination = false,
 						defaultSorting = 'title',
-						rowsPerPage = 15,
-						rowsPerPageOptions = {15,20,40,60},
+						paginatorID = "paginatorBuilds",
+						rowsPerPage = 10,
+						rowsPerPageOptions = {5,10,15,20},
 
 		}
 		local datasource_builds = makeURL({control='builder',act='repository'})
 		dt.showDataTable(configs_builds, columns_builds, datasource_builds,nil,extraFormatters)
 	%>
 </div><br>
-
-<h2><%= locale_index.upload_title %> </h2><br>
-<div>
-	<form method="POST" enctype="multipart/form-data" action="start.lua?control=files&act=upload" onsubmit="return( $('filename').value != '');"> 
-		<input type="file" name="file" id="filename"> 
-		<input type="submit" value="Upload"> 
-	</form> 
-</div><br>
+<div class="link" <a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>"> </a> </div>
 
 <h2><%=locale_index.files_title%></h2><br>
 <div>
@@ -89,7 +79,7 @@ function confirmDeleteBuild(id)
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},
 		}
   
-		extraFormatters = [[
+		local extraFormatters = [[
                                 
                                 //--- COLUMN FORMATTERS
                                 this.action = function(elLiner, oRecord, oColumn, oData) {
@@ -103,13 +93,22 @@ function confirmDeleteBuild(id)
 						dataSetID = "dataSetFiles",
 						serverPagination = false,
 						defaultSorting = 'filename',
+						paginatorID = "paginatorFiles",
 						rowsPerPage = 15,
-						rowsPerPageOptions = {15,20,40,60},
+						rowsPerPageOptions = {10,15,20,40},
 
 		}
 		local datasource_files = makeURL({control='files',act='repository'})
 		dt.showDataTable(configs_files, columns_files, datasource_files,nil,extraFormatters)
 	%>
+	<br>
+	<!--<h2><%= locale_index.upload_title %> </h2><br>-->
+	<div>
+	<form method="POST" enctype="multipart/form-data" action="start.lua?control=files&act=upload" onsubmit="return( $('filename').value != '');"> 
+		<input type="file" name="file" id="filename"> 
+		<input type="submit" value="Upload"> 
+	</form> 
+	</div><br>
 </div><br>
 
 <% render("footer.lp","_shared") %>

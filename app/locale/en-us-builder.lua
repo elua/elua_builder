@@ -1,8 +1,8 @@
 locale_index = {
 	
 	upload_title = "Upload",
-	builds_title = "Builds",
-	files_title = "Files",
+	builds_title = "Configured Builds",
+	files_title = "Stored Files",
 	label_progress = "Progress",
 	label_back = "Back",
 	label_remove = "Remove",
@@ -21,11 +21,11 @@ locale_index = {
 				id = "Id",
 				configs = "Configs",
 				newbuild = "New Build",
-				title_build = "Build Name",
+				title_build = "Build Configuration Name",
 				confirmDeleteFile= "You confirmed the exclusion of this file?",
 				confirmDeleteBuild= "You confirmed the exclusion of this build?",
 				logout = "Logout",
-				edit_account = "Edit Account",
+				edit_account = "Account",
 				confirmDownloadFile = "Confirms download file?",
 				open_file = "The selected file does not exist.",
 	},
@@ -38,8 +38,9 @@ locale_index = {
 }
 	
 locale_components = {
-	target_title = "Targets available",
-	component_title = "Components",
+	target_title = "Target Platform",
+	component_title = "Included Components",
+	files_romfs_title = "ROM File System",
 	labels = {
 				target = "Target",
 				build_xmodem = "BUILD_XMODEM",
@@ -55,5 +56,5 @@ locale_components = {
 				
 			},
 	target_prompt = "Select your target",
-	label_submit = "Generate",
+	label_build = "Build",	
 }

@@ -76,7 +76,7 @@ function update()
 	
 	validator:validate('email',locale_register.validator.email_none, val.checks.isNotEmpty)
 	validator:validate('email',locale_register.validator.valid_email, val.checks.isEmail)
-	validator:validate('email',locale_register.validator.confirm_email, val.checks.isEqual,user_obj.co_email)
+	--validator:validate('email',locale_register.validator.confirm_email, val.checks.isEqual,user_obj.co_email)
 	
 	validator:validate('login',locale_register.validator.login, val.checks.isNotEmpty)
 	validator:validate('login',locale_register.validator.login_min, val.checks.minLength,5)
@@ -110,7 +110,7 @@ function register()
 	
 	validator:validate('email',locale_register.validator.email_none, val.checks.isNotEmpty)
 	validator:validate('email',locale_register.validator.valid_email, val.checks.isEmail)
-	validator:validate('email',locale_register.validator.confirm_email, val.checks.isEqual,user_obj.co_email)
+	--validator:validate('email',locale_register.validator.confirm_email, val.checks.isEqual,user_obj.co_email)
 	
 	validator:validate('login',locale_register.validator.login, val.checks.isNotEmpty)
 	validator:validate('login',locale_register.validator.login_min, val.checks.minLength,5)
