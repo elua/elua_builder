@@ -26,7 +26,7 @@ locale_create = {
 				other="Other use",
 			},
 	country_prompt = "Select your country",
-	organization_prompt = "Select their main uses",
+	organization_prompt = "Please select...",
 	label_submit = "Submit",
 	label_clear = "Clear",
 }
