@@ -44,7 +44,7 @@
 			<br><br>
 		</div>
 		<div class="form_label"><%= locale_create.labels.country %>:</div><%=f.select({name='country',prompt = locale_create.country_prompt}, User_Model.COUNTRY, user.country)%> <br><br>
-		<div class="form_label"><%= locale_create.labels.organization%>:</div> <%=f.select({name='organization', prompt = locale_create.organization_prompt, onchange="mainUses(this.value)"},User.ORGANIZATION, user.organization)%> <br><br>
+		<div class="form_label"><%= locale_create.labels.organization%>:</div> <%=f.select({name='organization', prompt = locale_create.organization_prompt, onchange="mainUses(this.value)"},User_Model.ORGANIZATION, user.organization)%> <br><br>
 		<span id="span_other" style="display:none"><div class="form_label"><%= locale_create.labels.other%>:</div> <%=f.text_area({name='other_use', prompt = locale_create.organization_prompt},user.other)%> <br><br></span>
 		<div class="form_label"><%= locale_create.labels.remarks %>:</div><br> <%= f.text_area({name="remarks", class="text_area", value = user.remarks},user.remarks) %> <br><br>
 </div> <br>

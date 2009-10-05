@@ -13,6 +13,7 @@ locale_index = {
 	label_autorun = "Select Autorun File",
 	label_remove_edit = "Remove/Edit",
 	label_remove_download = "Remove/Download",
+	files_romfs_title = "ROM File System",
 	labels = {
 				greeting = "Hello",
 				filename = "File Name",
@@ -40,7 +41,6 @@ locale_index = {
 locale_components = {
 	target_title = "Target Platform",
 	component_title = "Included Components",
-	files_romfs_title = "ROM File System",
 	labels = {
 				target = "Target",
 				build_xmodem = "BUILD_XMODEM",
@@ -52,8 +52,7 @@ locale_components = {
 				build_dns = "BUILD_DNS",
 				build_con_generic = "BUILD_CON_GENERIC",
 				build_con_tcp = "BUILD_CON_TCP",
-				build_adc = "BUILD_ADC",
-				
+				build_adc = "BUILD_ADC",			
 			},
 	target_prompt = "Select your target",
 	label_build = "Build",	

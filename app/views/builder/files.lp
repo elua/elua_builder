@@ -6,7 +6,18 @@
 <% dt.printJSheaders("lib/yui/js/") %>
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
-
+<!--<script>
+function limpaBuild(element)
+{
+	radios = document.getElementsByName(element);
+	for(i=0; i< radios.length; i++)
+	{
+		if (radios[i].checked ==true)
+			radios[i].checked = false;
+		
+	}
+}
+</script>-->
 <% if flash.get("validationMessagesBuild") ~= nil then %>
 <br>
 	<%= flash.get("validationMessagesBuild")%>
@@ -129,7 +140,7 @@
 				dt.showDataTable(configs_files, columns_files, datasource_files, nil, extraFormatters)	
 			%>
 		</div><br>
-		
+		<!--<input type="button" name="bt1" value="Limpar builds" onclick="limpaBuild('autorun_file_id')">-->
 		
 		<%= f.submit({id='send',value = locale_components.label_build}) %>
 	<%= f.form_close() %>

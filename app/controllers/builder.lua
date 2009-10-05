@@ -8,6 +8,7 @@
 function index()
 	local UserModel = require "user.model"
 	local BuildModel = require "builder.model"
+	
 	current_user = UserModel.getCurrentUser()
 	render("index.lp")
 	

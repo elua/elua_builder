@@ -103,7 +103,7 @@ end
 
 function register()
 	user_obj = cgilua.POST
-	
+	local passwd = user_obj.passwd
 	local val = require "validation"
 	local UserModel = require "user.model"
    	local validator = val.implement.new(user_obj)
@@ -125,17 +125,19 @@ function register()
 	end
 
 	if(validator:isValid())then
-		UserModel.save(user_obj)
+		new_user, saved, err = UserModel.save(user_obj)
+		--error(new_user)
 		flash.set('validationMessages',"")
 		flash.set('notice',locale_register.validator.notice)
-		User.authenticate(user_obj)
-		redirect({control="builder", act="index"})
+		if (tonumber(new_user.id))then
+			--error(user_obj.login.." "..user_obj.passwd)
+			UserModel.authenticate({login = user_obj.login, passwd=passwd})
+			redirect({control="builder", act="index"})
+		end
 	else
 		flash.set('validationMessages',validator:htmlMessages())
 		create()
 	end
 end
 
-function forgotPassword() 
 
-end

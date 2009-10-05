@@ -68,7 +68,7 @@ function confirmDeleteBuild(id)
 		dt.showDataTable(configs_builds, columns_builds, datasource_builds,nil,extraFormatters)
 	%>
 </div><br>
-<div class="link" <a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>"> </a> </div>
+<div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>"> </a> </div><br>
 
 <h2><%=locale_index.files_title%></h2><br>
 <div>

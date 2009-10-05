@@ -10,7 +10,8 @@ function save(values)
 	values.passwd = md5.sumhexa(values.passwd)
 	values.actived = true
 	local user = User:new(values)
-	return user:save()
+	user:save()
+	return user
 end
 
 function getUser(id)
