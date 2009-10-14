@@ -14,6 +14,7 @@
 		<%= f.submit({value=locale_index.label_submit})%>
 	<%= f.form_close() %>
 <br><br>
-<a href="<%= makeURL({control= "user", act="create"})%>"> <%=locale_index.labels.newuser%> </a> 
+<button onclick="window.location.href='<%= makeURL({control= "user", act="create"})%>'"><%=locale_index.labels.newuser%></button>
+<button onclick="window.location.href='<%= makeURL({control= "user", act="forgot_password"})%>'"><%=locale_index.labels.forgot_password%></button>
 
 <% render("footer.lp","_shared") %>

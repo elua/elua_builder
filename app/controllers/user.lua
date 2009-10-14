@@ -8,6 +8,50 @@ function index()
 	render("index.lp")
 end
 
+function forgot_password()
+	local UserModel = require "user.model"
+	local luaReports  = require "luaReports"
+	if isPOST() then
+		local email = cgilua.POST.email
+		local val = require "validation"
+		local validator = val.implement.new(cgilua.POST)
+		validator:validate('email',locale_register.validator.email_none, val.checks.isNotEmpty)
+		validator:validate('email',locale_register.validator.valid_email, UserModel.checkEmail)
+		if(validator:isValid())then
+			user = UserModel.userHash(email)
+			local reset_password_message = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."reset_password_message.lp", user,"string")
+			sendmail(CONFIG.MAIL_SERVER.systemMailFrom, 'carlos.deodoro@gmail.com', '', locale_index.labels.change_passwd, reset_password_message)
+			--flash.set('validationMessages',locale_register.validator.change_passwd)
+		else
+			flash.set('validationMessages',validator:htmlMessages())
+			render("confirm_email.lp")
+		end
+	else
+		render("confirm_email.lp")
+	end
+end
+
+function forgot()
+	local UserModel = require "user.model"
+	if isPOST() then
+		local change_passwd = cgilua.POST
+		local val = require "validation"
+		local validator = val.implement.new(change_passwd)
+		validator:validate('passwd',locale_register.validator.passwd, val.checks.isNotEmpty)
+		validator:validate('passwd',locale_register.validator.confirm_passwd, val.checks.isEqual,change_passwd.co_passwd)
+		if (validator:isValid()) then
+			user = UserModel.getUserHash(change_passwd.user_hash)
+			user.passwd = change_passwd.passwd
+			user.user_hash = ""
+			UserModel.save(user)
+			redirect({control="user", act="index"})	
+		end
+	else
+		user_hash = cgilua.QUERY.h
+		render("change_password.lp")
+	end
+end
+
 function authenticate()
 	user_aut = cgilua.POST
 	local User = require "user.model"

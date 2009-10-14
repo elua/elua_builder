@@ -5,6 +5,8 @@ locale_index = {
 				login = "Login",
 				passwd = "Password",
 				newuser = "Create Account",
+				forgot_password = "Forgot Password",
+				change_passwd = "Elua Builder Password Reset Confirmation",
 			},
 	label_submit = "Submit",
 	
@@ -46,5 +48,6 @@ locale_register = {
 					checkNotExistLogin = "This Login has already been used.",
 					notice = "You were successfuly registered",
 					authenticate = "User and/or password not valid.",
+					change_passwd = "Confirm the change password in the email informed.",
 				},
 }

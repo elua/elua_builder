@@ -14,6 +14,13 @@ function save(values)
 	return user
 end
 
+function getUserHash(user_hash)
+	local user = db:selectall("*","users","user_hash = '"..user_hash.."'")
+	if (type(user[1]) == "table")then 
+		return user[1]
+	end
+end
+
 function getUser(id)
 	if tonumber(id) then
 		local users = db:selectall("*","users","id = '"..tonumber(id).."'")
@@ -29,6 +36,29 @@ function checkUser(login, passwd)
 	local users = db:selectall("*","users","login = '"..login.."' and passwd = '"..passwd.."'")
 	if (type(users[1]) == "table")then 
 		return true, users[1]
+	end
+end
+
+function userHash(email)
+	local user = db:selectall("*","users","email = '"..email.."'")
+	local user = user[1]
+	local date = os.date()
+	local user_hash = md5.sumhexa(user.login..date)
+	db:update("users",{user_hash=user_hash},"id="..user.id)
+	user.user_hash = user_hash
+	--local user = db:selectall("*","users","email = '"..email.."'")
+	return user
+end
+
+function checkEmail(email)
+	email = sqlI.sqlInjection(email,"string")
+	local users = db:selectall("*","users","email = '"..email.."'")
+	if users == nil then
+		return false
+	else
+		if (type(users[1]) == "table")then 
+			return true, users[1]
+		end
 	end
 end
 
