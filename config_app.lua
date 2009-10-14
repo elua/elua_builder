@@ -34,14 +34,14 @@ CONFIG.ELUA_BASE = CONFIG.PATH.."/elua_src_base/"
 
 --MAIL Server Variables
 CONFIG.MAIL_SERVER = {
-    server = "localhost",
-    user = "default@localhost",
-    password = "",
-    systemMailFrom = "admin@localhost",
-    adminMailFrom = "admin@localhost",
+    server = "192.168.100.105",
+    user = "gsanchez@192.168.100.105",
+    password = "Nosso lab",
+    systemMailFrom = "carlos.deodoro@gmail.com",
+    adminMailFrom = "carlos.deodoro@gmail.com",
     
-    devMailFrom = "dev@localhost",
-    devMailTo = "dev@localhost",
+    devMailFrom = "carlos.deodoro@gmail.com",
+    devMailTo = "carlos.deodoro@gmail.com",
     environment = "DEVELOPMENT" -- Accepts "DEVELOPMENT" or "PRODUCTION"
 }
 
