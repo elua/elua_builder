@@ -182,8 +182,10 @@ function generate(id)
     		platform_save:close()
     	end
     	
+    	local toolchain_str = build.configs.toolchain == "default" and "" or " toolchain="..build.configs.toolchain
+    	
     	-- Run scons
-    	os.execute([[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons  board=]]..build.configs.target..[[ prog > log_b.txt]])
+    	os.execute([[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons ]]..toolchain_str..[[  board=]]..build.configs.target..[[ prog > log_b.txt]])
 		os.execute("cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log_b.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip .")  
 end
 
@@ -202,6 +204,12 @@ TARGETS = {
 			{value ="ET-STM32", platform = 'stm32', disabled = true},
 			{value ="EAGLE-100", platform = 'lm3s', disabled = true},
 		}
+		
+TOOLCHAINS = {
+				{value="default",label=locale_components.labels.toolchain_default},
+				{value="codesourcery", label=locale_components.labels.toolchain_codesourcery}
+			}
+			
 function platforms_by_targets()
 	local platforms = {}
 	for i,v in pairs(TARGETS)do

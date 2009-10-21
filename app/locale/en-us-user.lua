@@ -49,6 +49,6 @@ locale_register = {
 					notice = "You were successfuly registered",
 					authenticate = "User and/or password not valid.",
 					change_passwd = "Confirm the change password in the email informed.",
-					email_reset = "Please check your email for new instructions.",
+					email_reset = "Please check your email and see the instructions.",
 				},
 }

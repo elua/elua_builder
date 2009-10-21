@@ -34,6 +34,10 @@ function limpaBuild(element)
 		<label for="target"></label>
 		<div> <%= f.select({name='target',prompt = locale_components.target_prompt},BuildModel.TARGETS, build.configs.target) %></div><br>
 		
+		<h2><%= locale_components.toolchain_title %> </h2>
+		<%=f.radio_button({name="toolchain"},BuildModel.TOOLCHAINS, "default")%>
+		<br><br>
+		
 		<h2><%= locale_components.component_title %> </h2>	
 		<table class="table_center"> 
 			<tbody> 

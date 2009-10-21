@@ -35,13 +35,16 @@ function forgot()
 	local UserModel = require "user.model"
 	if isPOST() then
 		local change_passwd = cgilua.POST
+		
 		local val = require "validation"
 		local validator = val.implement.new(change_passwd)
 		validator:validate('passwd',locale_register.validator.passwd, val.checks.isNotEmpty)
 		validator:validate('passwd',locale_register.validator.confirm_passwd, val.checks.isEqual,change_passwd.co_passwd)
 		if (validator:isValid()) then
 			user = UserModel.getUserHash(change_passwd.user_hash)
+			cgilua.put(user.id)
 			user.passwd = change_passwd.passwd
+			
 			user.user_hash = ""
 			UserModel.save(user)
 			redirect({control="user", act="index"})	
