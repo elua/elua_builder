@@ -21,14 +21,14 @@ function forgot_password()
 			user = UserModel.userHash(email)
 			local reset_password_message = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."reset_password_message.lp", user,"string")
 			sendmail(CONFIG.MAIL_SERVER.systemMailFrom, email, '', locale_index.labels.change_passwd, reset_password_message)
-			--flash.set('validationMessages',locale_register.validator.change_passwd)
+			flash.set('email_reset',locale_register.validator.email_reset)
 		else
 			flash.set('validationMessages',validator:htmlMessages())
-			render("confirm_email.lp")
 		end
 	else
-		render("confirm_email.lp")
+		
 	end
+	render("confirm_email.lp")
 end
 
 function forgot()
