@@ -29,6 +29,7 @@ local function checkDir()
 	local path = path.."/builds"
 	dir = lfs.attributes(path)
 	if dir == nil then
+	0
 		lfs.mkdir(path)
 	end
 	local path = path.."/"..build.id
