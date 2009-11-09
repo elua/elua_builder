@@ -11,17 +11,10 @@
 	
 </head>
 <body>
-<div id="wrapper">
-	<div id="top-menu">
-		<div id="top-left"><%= locale_general.app_title %></div>
-	</div>
-	<div id="header">
-	    <h1><%= locale_general.app_title or "" %></h1>
-		<div id="main-menu">
-		
-		</div>
-	
-	</div>
 
-	<div class="nosidebar" id="main">
-	<div id="content">
+<div id="block">
+	<!-- Logo -->
+	<div class="logo"><img src="images/logo.png"></div>
+	<!-- Central Box -->
+	<div id="top_block"></div>
+	<div id="bg_block">

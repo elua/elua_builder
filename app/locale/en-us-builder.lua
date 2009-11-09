@@ -2,7 +2,7 @@ locale_index = {
 	
 	upload_title = "Upload",
 	builds_title = "Configured Builds",
-	files_title = "Stored Files",
+	files_title = "Stored Files for the ROM File System",
 	label_progress = "Progress",
 	label_back = "Back",
 	label_remove = "Remove",

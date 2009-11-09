@@ -5,15 +5,16 @@ locale_index = {
 				login = "Login",
 				passwd = "Password",
 				newuser = "Create Account",
-				forgot_password = "Forgot Password",
+				forgot_password = "Forgot your password?",
 				change_passwd = "Elua Builder Password Reset Confirmation",
 			},
 	label_submit = "Submit",
+	copyright = "Copyright 2009 eLua Builder. All rights reserved.",
 	
 }
 
 locale_create = {
-	form_title = "Registration",
+	form_title = "Account Information",
 	labels = {
 				name = "Name",
 				email = "E-mail",
