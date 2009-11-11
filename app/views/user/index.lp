@@ -5,10 +5,6 @@
 		<div id="box_title">
 			<div id="title"><%= locale_index.login_title %></div>
 			<div id="login_combo" class="<%= flash.get("validationMessages") == nil and "ok" or "fail" %>">
-				<%= flash.get("validationMessages")%>
-				<% if flash.get("notice") ~= nil then %>
-					<div class="notice"> <%= flash.get("notice")%> </div>
-				<% end %>
 				<div id="bottom_text">
 					<div id="login_box">
 						<%= f.form({action=makeURL({control='user',act='authenticate'})}) %>
@@ -22,6 +18,10 @@
 						<a href="<%= makeURL({control= "user", act="forgot_password"})%>">&raquo;&nbsp;<%=locale_index.labels.forgot_password%></a>
 					</div>
 					
+					<%= flash.get("validationMessages")%>
+					<% if flash.get("notice") ~= nil then %>
+						<div class="notice"> <%= flash.get("notice")%> </div>
+					<% end %>
 				</div>
 				
 			</div>

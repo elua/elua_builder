@@ -3,6 +3,9 @@
 <head>
 	<title><%= locale_general.page_title %></title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<%
+	-- loadCSS("lib/yui/css/reset.css")
+	%>
 	<% loadCSS("css/style.css")%>
 	<% loadJS('js/common.js') %>
 	<% loadJS('lib/prototype-1.6.0.2.js') %>
