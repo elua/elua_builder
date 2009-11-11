@@ -1,12 +1,20 @@
 <% f = require "luawebforms" %>
 <% render("header.lp","_shared") %>
 
-<%= flash.get("validationMessages")%>
-<p><b><%= flash.get("email_reset")%></b></p>
+<div id="box_title"><%= locale_index.labels.forgot_password %> </div>
+<%= flash.get("validationMessagesForgot")%>
+<%= flash.get("email_reset")%>
 
-<%= f.form({action=makeURL({control='user',act='forgot_password'})}) %>
-	<div class="form_label"><%= locale_create.labels.email %>:</div> <%= f.text_field({name='email',class="field login", value ='', maxlength = 80}) %> <br><br>
-	<%= f.submit({value=locale_create.label_submit})%>
-<%= f.form_close() %>
-<div class="link"><a href="<%= makeURL({control= "user", act="index"})%>"> <big><%=locale_index.label_back%></big> </a></div>
+<div id="create_page">
+	<%= f.form({action=makeURL({control='user',act='forgot_password'})}) %>
+		<div class="form_label"><%= locale_create.labels.email %>:</div><%= f.text_field({name='email',class="field name_field", value ='', maxlength = 80}) %> <br><br>
+		<div class="forgot_button">
+			<%= f.submit({value=locale_create.label_submit, class="button_submit"})%>
+		</div>
+	<%= f.form_close() %>
+	<div id="bottom_text" class="links">
+		<a href="<%= makeURL({control= "user", act="index"})%>">&raquo;&nbsp;<%=locale_index.label_back%></a>
+	</div>
+</div>
+
 <% render("footer.lp","_shared") %>

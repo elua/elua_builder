@@ -23,7 +23,7 @@ function forgot_password()
 			sendmail(CONFIG.MAIL_SERVER.systemMailFrom, email, '', locale_index.labels.change_passwd, reset_password_message)
 			flash.set('email_reset',locale_register.validator.email_reset)
 		else
-			flash.set('validationMessages',validator:htmlMessages())
+			flash.set('validationMessagesForgot',validator:htmlMessages())
 		end
 	else
 		
@@ -57,27 +57,31 @@ end
 
 function authenticate()
 	user_aut = cgilua.POST
-	local User = require "user.model"
-	local val = require "validation"
-	local validator = val.implement.new(user_aut)
-	
-	validator:validate('login',locale_register.validator.login, val.checks.isNotEmpty)
-	validator:validate('passwd', locale_register.validator.passwd, val.checks.isNotEmpty)
-	validator:validate('login',locale_register.validator.authenticate, function()
-																	if val.checks.isNotEmpty(user_aut.login) and val.checks.isNotEmpty(user_aut.passwd)  then 
-																		return User.checkUser(user_aut.login,user_aut.passwd)
-																	else
-																		return true
-																	end
-																end)
-	
-	if(validator:isValid())then
-		User.authenticate(user_aut)
-		flash.set('validationMessages',"")
-		redirect({control="builder", act="index"})
+	if isPOST() then
+		local User = require "user.model"
+		local val = require "validation"
+		local validator = val.implement.new(user_aut)
+		
+		validator:validate('login',locale_register.validator.login, val.checks.isNotEmpty)
+		validator:validate('passwd', locale_register.validator.passwd, val.checks.isNotEmpty)
+		validator:validate('login',locale_register.validator.authenticate, function()
+																		if val.checks.isNotEmpty(user_aut.login) and val.checks.isNotEmpty(user_aut.passwd)  then 
+																			return User.checkUser(user_aut.login,user_aut.passwd)
+																		else
+																			return true
+																		end
+																	end)
+		
+		if(validator:isValid())then
+			User.authenticate(user_aut)
+			flash.set('validationMessages',"")
+			redirect({control="builder", act="index"})
+		else
+			flash.set('validationMessages',validator:htmlMessages())
+			index()
+		end
 	else
-		flash.set('validationMessages',validator:htmlMessages())
-		index()
+		redirect{control='user',act='index'}
 	end
 end
 
@@ -174,7 +178,7 @@ function register()
 	if(validator:isValid())then
 		new_user, saved, err = UserModel.save(user_obj)
 		--error(new_user)
-		flash.set('validationMessages',"")
+		flash.set('validationMessagesRegister',"")
 		flash.set('notice',locale_register.validator.notice)
 		if (tonumber(new_user.id))then
 			--error(user_obj.login.." "..user_obj.passwd)
