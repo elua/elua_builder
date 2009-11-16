@@ -46,10 +46,12 @@ locale_register = {
 					passwd = "The field 'Password' must be filled in.",
 					passwd_min = "The filed 'Password' must have 5 characters.",
 					confirm_passwd = "Password confirmation not valid.",
+					other_use = "The field 'Other use' must be filled in.",
 					checkNotExistLogin = "This Login has already been used.",
 					notice = "You were successfuly registered",
 					authenticate = "User and/or password not valid.",
 					change_passwd = "Confirm the change password in the email informed.",
 					email_reset = "Please check your email and see the instructions.",
+					hash="Invalid link.",
 				},
 }

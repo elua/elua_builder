@@ -15,7 +15,7 @@
 </script>
 
 <div id="box_title"><%= locale_create.form_title %> </div>
-<%= flash.get("validationMessagesRegister")%>
+<%= flash.get("validationMessages")%> 
 
 <div id="create_page">
 	<%= f.form({action=makeURL({control='user',act='register'})}) %>

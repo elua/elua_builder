@@ -2,8 +2,12 @@
 <% render("header.lp","_shared") %>
 
 <div id="box_title"><%= locale_index.labels.forgot_password %> </div>
-<%= flash.get("validationMessagesForgot")%>
-<%= flash.get("email_reset")%>
+<div id="notice"> 
+	<%= flash.get("validationMessagesForgot")%>
+	<%= flash.get("validationMessagesHash")%>
+	<%= flash.get("email_reset")%>
+</div>
+
 
 <div id="create_page">
 	<%= f.form({action=makeURL({control='user',act='forgot_password'})}) %>

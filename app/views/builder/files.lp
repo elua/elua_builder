@@ -35,7 +35,7 @@ function limpaBuild(element)
 		<div> <%= f.select({name='target',prompt = locale_components.target_prompt},BuildModel.TARGETS, build.configs.target) %></div><br>
 		
 		<h2><%= locale_components.toolchain_title %> </h2>
-		<%=f.radio_button({name="toolchain"},BuildModel.TOOLCHAINS, "default")%>
+		<%=f.select({name="toolchain"},BuildModel.TOOLCHAINS, build.configs.toolchain)%>
 		<br><br>
 		
 		<h2><%= locale_components.component_title %> </h2>	
@@ -113,10 +113,12 @@ function limpaBuild(element)
 			<%
 				local columns_files = { 
 										{key="id", label = locale_index.label_select, width=40, formatter="myActions", className="columnCenter"},
-										{key="id", label = locale_index.label_autorun, width=100, formatter="autorun", className="columnCenter"},
+										
 										{key="filename", label= locale_index.labels.filename,  sortable=true,minWidth=1024, maxAutoWidth=150},
 										{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},
 				}
+				
+				--{key="id", label = locale_index.label_autorun, width=100, formatter="autorun", className="columnCenter"},
 				
 				extraFormatters = [[
                                 
@@ -126,10 +128,11 @@ function limpaBuild(element)
                                 };
                                 YAHOO.widget.DataTable.Formatter.myActions = this.actions;  
 								
+								/*
 								this.autorun = function(elLiner, oRecord, oColumn, oData) {
                                     elLiner.innerHTML = "<input type='radio' name='autorun_file_id' value='"+oData['id']+" /> ";
                                 };
-                                YAHOO.widget.DataTable.Formatter.autorun = this.autorun;                                                         
+                                YAHOO.widget.DataTable.Formatter.autorun = this.autorun;    */                                                     
                 ]]
 				
 				local configs_files = {

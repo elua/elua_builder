@@ -42,16 +42,21 @@ function forgot()
 		validator:validate('passwd',locale_register.validator.confirm_passwd, val.checks.isEqual,change_passwd.co_passwd)
 		if (validator:isValid()) then
 			user = UserModel.getUserHash(change_passwd.user_hash)
-			cgilua.put(user.id)
-			user.passwd = change_passwd.passwd
-			
+			user.passwd = change_passwd.passwd		
 			user.user_hash = ""
 			UserModel.save(user)
 			redirect({control="user", act="index"})	
 		end
 	else
-		user_hash = cgilua.QUERY.h
-		render("change_password.lp")
+		user = {}
+		user.user_hash = cgilua.QUERY.h
+		hashValid = UserModel.getUserHash(user.user_hash)		
+		if (type(hashValid) == "table") then
+			render("change_password.lp")
+		else
+			flash.set('validationMessagesHash',locale_register.validator.hash)
+			render("confirm_email.lp")
+		end
 	end
 end
 
@@ -174,7 +179,13 @@ function register()
 	if user.id == nil then
 		validator:validate('login',locale_register.validator.checkNotExistLogin, UserModel.checkNotExistLogin)
 	end
-
+	validator:validate('other_use',locale_register.validator.other_use, 
+						function() 
+							if user_obj.organization == 'Other' then
+								return user_obj.other_use ~= nil and user_obj.other_use ~= ''
+							end
+							return true
+						end)
 	if(validator:isValid())then
 		new_user, saved, err = UserModel.save(user_obj)
 		--error(new_user)
