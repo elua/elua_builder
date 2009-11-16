@@ -88,8 +88,8 @@ body{
 #login_combo.fail {background-image:url("../images/login_combo_fail.png");}
 
 #errorExplanation{
-					margin: 0px 10px 0px 155px;
 					color:#ee1226;
+					margin: 0px 10px 0px 155px;
 }
 
 #errorExplanation li {
@@ -213,4 +213,9 @@ hr {
 	 border-top: 1px dashed #bfbfbf;
 	 background-color: #bfbfbf;
      height: 1px;				
-{
+}
+
+#fieldset {
+			height:180px;
+			width:373px;
+}
