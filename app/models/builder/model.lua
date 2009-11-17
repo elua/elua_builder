@@ -209,8 +209,8 @@ TARGETS = {
 		}
 		
 TOOLCHAINS = {
-				{value="default",label=locale_components.labels.toolchain_default},
-				{value="codesourcery", label=locale_components.labels.toolchain_codesourcery}
+				{value="default",option=locale_components.labels.toolchain_default},
+				{value="codesourcery", option=locale_components.labels.toolchain_codesourcery}
 			}
 			
 function platforms_by_targets()
