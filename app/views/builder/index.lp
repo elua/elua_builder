@@ -7,8 +7,8 @@
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
 
-<h4 class="link"><%=locale_index.labels.greeting%>, <%= current_user.name %></h4>
-
+<div class="hello"><%=locale_index.labels.greeting%>, <%= current_user.name %></div>
+<br /><br />
 <script>
 function confirmDeleteFile(id)
 {
@@ -27,19 +27,24 @@ function confirmDeleteBuild(id)
 }
 </script>
 
-<div class="link">
-	<a href="<%= makeURL({control="user", act="edit"})%>"><!--<img src="images/buttons/edit_user.gif" title="--><%=locale_index.labels.edit_account%><!-->--></a>&nbsp;&nbsp; 
-	<a href="<%= makeURL({control="user", act="logout"})%>"><!--<img src="images/buttons/exit.png" title="--><%=locale_index.labels.logout%><!--">--></a>
-</div>
 
-<h2><%=locale_index.builds_title%> </h2>
-<div>
+
+<div id="box_title">
+	<%=locale_index.builds_title%> 
+	<div class="links_right">
+		<a href="<%= makeURL({control="user", act="edit"})%>"><!--<img src="images/buttons/edit_user.gif" title="--><%=locale_index.labels.edit_account%><!-->--></a>&nbsp;&nbsp; 
+		<a href="<%= makeURL({control="user", act="logout"})%>"><!--<img src="images/buttons/exit.png" title="--><%=locale_index.labels.logout%><!--">--></a>
+	</div>
+</div>
+<br />
+<div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>" class="button_submit"> </a> </div><br>
+<div >
 	<%
 		local columns_builds = {
 							{key="id", label = locale_index.label_remove_edit, width=60, formatter="actions", className="columnCenter"},
-							{key="title", label= locale_index.labels.title ,  sortable=true,minWidth=1024, maxAutoWidth=80, formatter="myActionsSelect"},
-							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=80},
-							{key="configs", label=locale_index.labels.configs, sortable=true, minWidth=1024, maxAutoWidth=650},
+							{key="title", label= locale_index.labels.title ,  sortable=true,width=110, formatter="myActionsSelect"},
+							{key="created_at", label=locale_index.labels.created_at, sortable=true, Width=60},
+							{key="configs", label=locale_index.labels.configs, sortable=true, width=463},
 		}
 		local extraFormatters = [[
                                 
@@ -60,6 +65,7 @@ function confirmDeleteBuild(id)
 						serverPagination = false,
 						defaultSorting = 'title',
 						paginatorID = "paginatorBuilds",
+						paginatorPosition = "bottom",
 						rowsPerPage = 10,
 						rowsPerPageOptions = {5,10,15,20},
 
@@ -68,15 +74,14 @@ function confirmDeleteBuild(id)
 		dt.showDataTable(configs_builds, columns_builds, datasource_builds,nil,extraFormatters)
 	%>
 </div><br>
-<div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>"> </a> </div><br>
 
-<h2><%=locale_index.files_title%></h2><br>
+<h2><%=locale_index.files_title%></h2>
 <div>
 	<%
 		local columns_files = { 
-							{key="id", label = locale_index.label_remove_download, width=90, formatter="action", className="columnCenter"},
-							{key="filename", label= locale_index.labels.filename,  sortable=true,minWidth=1024, maxAutoWidth=150},
-							{key="created_at", label=locale_index.labels.created_at, sortable=true, minWidth=1024, maxAutoWidth=150},
+							{key="id", label = locale_index.label_remove_download, width=110, formatter="action", className="columnCenter"},
+							{key="filename", label= locale_index.labels.filename,  sortable=true,width=495},
+							{key="created_at", label=locale_index.labels.created_at, sortable=true, width=150},
 		}
   
 		local extraFormatters = [[
@@ -94,6 +99,7 @@ function confirmDeleteBuild(id)
 						serverPagination = false,
 						defaultSorting = 'filename',
 						paginatorID = "paginatorFiles",
+						paginatorPosition = "bottom",
 						rowsPerPage = 15,
 						rowsPerPageOptions = {10,15,20,40},
 
