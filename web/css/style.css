@@ -219,3 +219,6 @@ hr {
 			height:180px;
 			width:373px;
 }
+
+.links_right{float:right;font-size:12px;margin:5px 15px 10px 0px;}
+.hello{float:right;font-size:14px;font-weight:bold;padding-right:65px;}
