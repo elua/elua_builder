@@ -30,6 +30,30 @@ body{
 			font-weight: bold;
 }
 
+#box_title_build {
+					background-color: #f2f2f2;
+					height:26px;
+					width:780px;
+					
+					padding:6px 0px 0px -20px;	
+					z-index:1000;	
+					text-align:left;
+					word-spacing: normal;
+					color:#000000;
+					font-family:"Arial";
+					font-size: 16px;
+					font-weight: bold;
+}
+
+.box_text_build {
+						margin: 0px 0px 10px 20px;												
+}
+
+.build_components {
+					margin: 0px 0px 10px 20px;
+					padding:10px 0px 20px 0px
+}
+
 #top_block {
 		background-image:url("../images/top_block.png");
 		float:left;
@@ -68,6 +92,7 @@ body{
 		width:870px;
 		
 		}
+		
 #footer .hr1{
 		background-color:#c0c0c0;
 		color:#FF0000;
@@ -76,6 +101,7 @@ body{
 		width:840px;
 		margin-bottom:5px;
 	}
+	
 #login_combo {
 				position:relative;
 				background-repeat: no-repeat;
@@ -84,8 +110,27 @@ body{
 				margin-top: 20px;
 				height:310px;
 }
+
 #login_combo.ok {background-image:url("../images/login_combo.png");}
 #login_combo.fail {background-image:url("../images/login_combo_fail.png");}
+
+#forgot_password_combo{
+						background-image:url("../images/forget.png");
+						position:relative;
+						background-repeat: no-repeat;
+						background-position: 30px 30px; 
+						padding: 40px 0px 0px 25px;
+						margin-top: 20px;
+						height:150px;
+}
+
+#forgot_box{
+			margin: 30px 10px 0px 190px;
+			color:#000000;
+			font-family:"arial";
+			font-size: medium;
+			font-weight: bold;	
+}
 
 #errorExplanation{
 					color:#ee1226;
@@ -125,12 +170,16 @@ body{
 			margin: 5px 10px 20px 85px;
 }
 
+.build_button{
+				margin: 5px 10px 20px 20px;
+}
+
 .create_button	{
 					margin: 5px 10px 20px 198px;
 }
 
 .forgot_button {
-					margin: 5px 10px 20px 302px;
+					margin: 5px 10px 20px 356px;
 }
 
 .button_submit {
@@ -177,6 +226,10 @@ body{
 				font-weight: bold;	
 }
 
+#create_page_build {
+						padding:10px 0px 0px 20px;													
+}
+
 a{
 		color:#3f7c8e;
 		text-decoration: none;
@@ -215,10 +268,47 @@ hr {
      height: 1px;				
 }
 
+thead {
+		text-align:center;
+		word-spacing: normal;
+		color:#000000;
+		font-family:"Arial";
+		font-size: 12px;
+		font-weight: bold;
+		background-color: #f2f2f2;	
+}
+
+tbody {
+		word-spacing: normal;
+		color:#000000;
+		font-family:"Arial";
+		font-size: 12px;
+		background-color: #f2f2f2;	
+}
+
+.td_check_box{
+				text-align:center;
+}
+
 #fieldset {
 			height:180px;
 			width:373px;
 }
 
+.yui-skin-sam .columnCenter{text-align:center;}
+.yui-skin-sam .columnCenter div{text-align:center;}
 .links_right{float:right;font-size:12px;margin:5px 15px 10px 0px;}
-.hello{float:right;font-size:14px;font-weight:bold;padding-right:65px;}
+.hello{float:right;font-size:14px;font-weight:bold;padding-right:50px;}
+.upload{float:left;font-size:14px;font-weight:bold;}
+
+.generate {
+	position:absolute;
+	text-align: center;
+	width:300px; 
+	height:100px;
+	top:300px;
+	left:50%;
+	margin-left:-150px;
+	background-color:#ffffff;
+	border: 1px solid #c0c0c0;
+}
