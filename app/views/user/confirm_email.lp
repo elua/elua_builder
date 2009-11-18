@@ -8,16 +8,20 @@
 	<%= flash.get("email_reset")%>
 </div>
 
-
-<div id="create_page">
-	<%= f.form({action=makeURL({control='user',act='forgot_password'})}) %>
-		<div class="form_label"><%= locale_create.labels.email %>:</div><%= f.text_field({name='email',class="field name_field", value ='', maxlength = 80}) %> <br><br>
-		<div class="forgot_button">
-			<%= f.submit({value=locale_create.label_submit, class="button_submit"})%>
-		</div>
-	<%= f.form_close() %>
+<div id="forgot_password_combo">
+	<div id="forgot_box">
+		<!--[if IE]>  
+    		<div style="height:10px"></div>
+		<![endif]--> 
+		<%= f.form({action=makeURL({control='user',act='forgot_password'})}) %>
+			<%= locale_create.labels.email %>: <%= f.text_field({name='email',class="field name_field", value ='', maxlength = 80}) %> 
+			<div class="forgot_button">
+				<%= f.submit({value=locale_create.label_submit, class="button_submit"})%>
+			</div>
+		<%= f.form_close() %>
+	</div><br><br>
 	<div id="bottom_text" class="links">
-		<a href="<%= makeURL({control= "user", act="index"})%>">&raquo;&nbsp;<%=locale_index.label_back%></a>
+			<a href="<%= makeURL({control= "user", act="index"})%>">&raquo;&nbsp;<%=locale_index.label_back%></a>
 	</div>
 </div>
 

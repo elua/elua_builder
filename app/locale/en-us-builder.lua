@@ -1,5 +1,5 @@
 locale_index = {
-	
+	copyright = "Copyright 2009 eLua Builder. All rights reserved.",
 	upload_title = "Upload",
 	builds_title = "Configured Builds",
 	files_title = "Stored Files for the ROM File System",
@@ -7,8 +7,9 @@ locale_index = {
 	label_back = "Back",
 	label_remove = "Remove",
 	label_edit = "Edit",
+	label_actions = "Actions",
 	label_download = "Download",
-	label_select = "Select",
+	label_select = "Included",
 	open_file = "The selected file does not exist.",
 	label_autorun = "Select Autorun File",
 	label_remove_edit = "Remove/Edit",
@@ -29,6 +30,7 @@ locale_index = {
 				edit_account = "Account",
 				confirmDownloadFile = "Confirms download file?",
 				open_file = "The selected file does not exist.",
+				file_type = "File File",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",
@@ -40,7 +42,7 @@ locale_index = {
 	
 locale_components = {
 	target_title = "Target Platform",
-	component_title = "Included Components",
+	component_title = "eLua Components",
 	toolchain_title = "Toolchain",
 	labels = {
 				target = "Target",

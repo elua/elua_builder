@@ -52,6 +52,7 @@ function forgot()
 		user.user_hash = cgilua.QUERY.h
 		hashValid = UserModel.getUserHash(user.user_hash)		
 		if (type(hashValid) == "table") then
+			user = hashValid
 			render("change_password.lp")
 		else
 			flash.set('validationMessagesHash',locale_register.validator.hash)
