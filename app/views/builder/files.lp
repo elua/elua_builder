@@ -6,8 +6,9 @@
 <% dt.printJSheaders("lib/yui/js/") %>
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
-<!--<script>
-function limpaBuild(element)
+<script>
+
+/*function limpaBuild(element)
 {
 	radios = document.getElementsByName(element);
 	for(i=0; i< radios.length; i++)
@@ -17,7 +18,9 @@ function limpaBuild(element)
 		
 	}
 }
-</script>-->
+*/
+
+</script>
 <% if flash.get("validationMessagesBuild") ~= nil then %>
 <br>
 	<%= flash.get("validationMessagesBuild")%>
@@ -41,7 +44,7 @@ function limpaBuild(element)
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.target_title %></div>
 				</div>
-				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt},BuildModel.TARGETS, build.configs.target) %></div>
+				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange="window.location.href='"..makeURL().."&target='+this.value"},BuildModel.TARGETS, build.configs.target) %></div>
 			</div>
 			
 			<div>
@@ -140,7 +143,7 @@ function limpaBuild(element)
 													{key="id", label = locale_index.label_select, width=40, formatter="myActions", className="columnCenter"},
 													
 													{key="filename", label= locale_index.labels.filename,  sortable=true,width=360},
-													{key="file_type", label= locale_index.labels.file_type, sortable=true, width=123},
+													{key="category", label= locale_index.labels.file_type, sortable=true, width=123},
 													{key="created_at", label=locale_index.labels.created_at, sortable=true, width=150},
 							}
 							

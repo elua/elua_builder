@@ -30,7 +30,7 @@ locale_index = {
 				edit_account = "Account",
 				confirmDownloadFile = "Confirms download file?",
 				open_file = "The selected file does not exist.",
-				file_type = "File File",
+				file_type = "File Type",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",

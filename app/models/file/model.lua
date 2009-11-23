@@ -53,10 +53,11 @@ function save(filename)
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
 	local file = getFileByName(filename)
+	category = "User File"
 	if type(file) == "table" then
 		file.created_at = os.date("%Y-%m-%d %H:%M:%S")
 	else
-		file = {filename=filename, user_id = user.id}
+		file = {filename=filename, user_id = user.id, category=category}
 	end
 	local file = File:new(file)
 	return file:save()
@@ -78,3 +79,28 @@ function checkDir()
 	return path
 end
 
+ROMFS_V06 = {
+				{id="0.1",filename = 'bisect.lua', category= 'V0.6 File',created_at=""},
+				{id="0.2",filename = 'hangman.lua', category= 'V0.6 File',created_at=""},
+				{id="0.3",filename = 'index.pht', category= 'V0.6 File',created_at=""}, 
+			}
+			x = {
+				lhttpd = {filename = 'lhttpd.lua', category= 'V0.6 File'}, 
+				test = {filename = 'test.lua', category= 'V0.6 File'},
+				pong = {filename = 'pong.lua', category= 'V0.6 File'},
+				LM3S = {filename = 'LM3S.lua', category= 'V0.6 File'},
+				led = {filename = 'led.lua', category= 'V0.6 File'},
+				piano = {filename = 'piano.lua', category= 'V0.6 File'},
+				pwmled = {filename = 'pwmled.lua', category= 'V0.6 File'},
+				tvbgone = {filename = 'tvbgone.lua', category= 'V0.6 File'},
+				codes = {filename = 'codes.bin', category= 'V0.6 File'},
+				hello = {filename = 'hello.lua', category= 'V0.6 File'},
+				info =  {filename = 'info.lua', category= 'V0.6 File'},
+				morse = {filename = 'morse.lua', category= 'V0.6 File'},
+				dualpwm = {filename = 'dualpwm.lua', category= 'V0.6 File'},
+				adcscope = {filename = 'adcscope.lua', category= 'V0.6 File'},
+				adcpoll= {filename = 'adcpoll.lua', category= 'V0.6 File'},
+				life = {filename = 'life.lua', category= 'V0.6 File'},
+				logo_lua = {filename = 'logo.lua', category= 'V0.6 File'}, 
+				logo_bin = {filename = 'logo.bin', category= 'V0.6 File'},
+}

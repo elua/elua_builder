@@ -22,10 +22,10 @@ function makeURL(arg)
 		arg = {}
 	end
 	if(arg.control == nil or arg.control == "")then
-		arg.control = controller
+		arg.control = APP.controller
 	end
 	if(arg.act == nil or arg.act == "")then
-		arg.act = action
+		arg.act = APP.action
 	end
   local url = "start.lua?control="..arg.control.."&act="..arg.act
   if (CONFIG.ENABLE_MAPPED_URL == true) then 	

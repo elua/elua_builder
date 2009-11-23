@@ -192,6 +192,10 @@ function generate(id)
 		os.execute(move_clear_str)  
 end
 
+PLATFORM = {}
+PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
+PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
+
 
 TARGETS = {
 			{value ="EK-LM3S8962", platform = 'lm3s', disabled = false},
@@ -212,7 +216,7 @@ TOOLCHAINS = {
 				{value="default",option=locale_components.labels.toolchain_default},
 				{value="codesourcery", option=locale_components.labels.toolchain_codesourcery}
 			}
-			
+
 function platforms_by_targets()
 	local platforms = {}
 	for i,v in pairs(TARGETS)do

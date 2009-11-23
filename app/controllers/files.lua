@@ -22,7 +22,12 @@ function repository()
 			v.id = {id = v.id, checked = false}
 		end
 	end
-		 
+	local romfs_v06 = FileModel.ROMFS_V06
+	
+	--[[for _,v in pairs(romfs_v06) do
+		table.insert(items,{filename = v.filename, category = v.category})
+	end]]--
+	
 	local DT = require("dataTable")
 	local rep = DT.repository:new(items,{startIndex=startIndex,results=results,sort=sort,dir=dir})
 	 
@@ -37,7 +42,7 @@ function upload()
 		local _, name = cgilua.splitonlast(file_upload.filename)
 		local file = file_upload.file
         local dir = FileModel.checkDir()
-		destination = io.open(dir.."/"..name, "wb")
+		destination = io.open(dir.."/"..name, "wb")	
 		FileModel.save(name)
         if destination then
             local bytes = file:read("*a")

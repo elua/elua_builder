@@ -69,6 +69,10 @@ function files()
 				render("files.lp")
 			end
 		else
+			local target = cgilua.QUERY.target
+			if (target ~= nil and target ~= '')then
+				build.configs = BuildModel.PLATFORM[target]
+			end
 			render("files.lp")
 		end
 	end

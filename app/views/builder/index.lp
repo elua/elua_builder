@@ -88,7 +88,7 @@ function confirmDeleteBuild(id)
 		local columns_files = { 
 							{key="id", label = locale_index.label_actions, width=80, formatter="action", className="columnCenter"},
 							{key="filename", label= locale_index.labels.filename,  sortable=true,width=400},
-							{key="file_type", label= locale_index.labels.file_type, sortable=true, width=123},
+							{key="category", label= locale_index.labels.file_type, sortable=true, width=123},
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, width=130},
 		}
   
