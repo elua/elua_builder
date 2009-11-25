@@ -24,9 +24,9 @@ function repository()
 	end
 	local romfs_v06 = FileModel.ROMFS_V06
 	
-	--[[for _,v in pairs(romfs_v06) do
-		table.insert(items,{filename = v.filename, category = v.category})
-	end]]--
+	for _,v in pairs(romfs_v06) do
+		table.insert(items,{id = {id = v.id, category = v.category}, filename = v.filename, category = v.category, created_at = v.created_at})
+	end
 	
 	local DT = require("dataTable")
 	local rep = DT.repository:new(items,{startIndex=startIndex,results=results,sort=sort,dir=dir})
@@ -72,31 +72,67 @@ function download()
 	local id = cgilua.QUERY.id
 	local user = UserModel.getCurrentUser()
 	local file = db:selectall("*","files","id = "..id)
-	local filename = file[1].filename
-	
-	io:tmpfile(CONFIG.MVC_TMP)
-	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/rom_fs/"..filename, "rb")
+	if type(file[1])=='table' then
+		local filename = file[1].filename
+		io:tmpfile(CONFIG.MVC_TMP)
+		open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/rom_fs/"..filename, "rb")
 
-   if (open==nil) then --ops, something went wrong, file does not exists!
-    	cgilua.put("<h2>".."The selected file does not exist".."</h2>")
-   else
-   fileSize = FileModel.getFileSize(open)
-   -- cgilua.header("Pragma", "public")
-   -- cgilua.header("Cache-Control", "must-revalidate, post-check=0, pre-check=0")
-    cgilua.header("Content-Type", "application/force-download")
-    cgilua.header("Content-Disposition",[[attachment; filename="]]..filename)
-    cgilua.header("Content-Type", "application/octet-stream; name="..filename)
-    cgilua.header("Content-Type", "application/octetstream; name="..filename)
-    cgilua.header("Content-Transfer-Encoding", "binary")
-    cgilua.header("Content-Length ", fileSize)
-    while true do
-    	local bytes = open:read(1024)
-       	if not bytes then 
-        	break
-        else
-            cgilua.put(bytes)
-        end
-    end
-    open:close()
-   end
+   		if (open==nil) then --ops, something went wrong, file does not exists!
+    		cgilua.put("<h2>".."The selected file does not exist".."</h2>")
+   		else
+   			fileSize = FileModel.getFileSize(open)
+		   	-- cgilua.header("Pragma", "public")
+		   	-- cgilua.header("Cache-Control", "must-revalidate, post-check=0, pre-check=0")
+    		cgilua.header("Content-Type", "application/force-download")
+    		cgilua.header("Content-Disposition",[[attachment; filename="]]..filename)
+			cgilua.header("Content-Type", "application/octet-stream; name="..filename)
+			cgilua.header("Content-Type", "application/octetstream; name="..filename)
+			cgilua.header("Content-Transfer-Encoding", "binary")
+			cgilua.header("Content-Length ", fileSize)
+			while true do
+				local bytes = open:read(1024)
+   				if not bytes then 
+    				break
+    			else
+        			cgilua.put(bytes)
+    			end
+			end
+    		open:close()
+   		end
+	else
+		local romfs = FileModel.ROMFS_V06
+		local length_romfs = #romfs
+		
+		for i=1,length_romfs do
+			file_romfs = romfs[i]
+			if file_romfs.id == id then
+				filename = file_romfs.filename
+				
+			end
+		end
+		io:tmpfile(CONFIG.MVC_TMP)
+		open, errorMsg =io.open(CONFIG.ELUA_BASE..'romfs/'..filename, "rb")
+		if (open==nil) then --ops, something went wrong, file does not exists!
+	    	cgilua.put("<h2>".."The selected file does not exist".."</h2>")
+	   	else
+		   	fileSize = FileModel.getFileSize(open)
+		   	-- cgilua.header("Pragma", "public")
+		   	-- cgilua.header("Cache-Control", "must-revalidate, post-check=0, pre-check=0")
+		    cgilua.header("Content-Type", "application/force-download")
+		    cgilua.header("Content-Disposition",[[attachment; filename="]]..filename)
+		    cgilua.header("Content-Type", "application/octet-stream; name="..filename)
+		    cgilua.header("Content-Type", "application/octetstream; name="..filename)
+		    cgilua.header("Content-Transfer-Encoding", "binary")
+		    cgilua.header("Content-Length ", fileSize)
+		    while true do
+		    	local bytes = open:read(1024)
+		       	if not bytes then 
+		        	break
+		        else
+		            cgilua.put(bytes)
+		        end
+		    end
+	    	open:close()
+	    end
+	end
 end

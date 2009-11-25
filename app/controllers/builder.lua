@@ -42,7 +42,7 @@ function files()
 			val = require "validation"
 			validator = val.implement.new(build)
 			build = BuildModel.setDefaultValues(build)
-			build.file_id = (build.file_id == nil) and "" or build.file_id 
+			build.file_id = (build.file_id == nil) and "" or build.file_id	
 			build.configs = tableToString(build)
 			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
@@ -51,16 +51,70 @@ function files()
 				validator:validate('title',locale_index.validator.checkNotExistBuild, BuildModel.checkNotExistBuild)
 			end
 			if(validator:isValid())then
-				local build_obj = BuildModel.save(build)
+				if (type(build.file_id) == "table") then
+					local length_build_file_id = #build.file_id
+					for i=1,length_build_file_id do
+						local file_id = build.file_id[i]
+						if string.sub(file_id,0,1)== '0' then
+							local romfs = FileModel.ROMFS_V06
+							local length_romfs = #romfs
+							for i=1,length_romfs do
+								local file_romfs = romfs[i]
+								if file_romfs.id == file_id then
+									filename = file_romfs.filename
+									local dir = FileModel.checkDir()
+									local path = CONFIG.MVC_USERS..user.login
+									os.execute("cp -u "..CONFIG.ELUA_BASE..'romfs/'..filename.." "..path.."/rom_fs/"..filename.."")
+									FileModel.save(filename)
+									file = FileModel.getFileByName(filename)
+									build.file_id[i]= file.id	
+								end
+							end	
+						end
+					end	
+					local build_obj = BuildModel.save(build)
+					BuildModel.deleteFilesFromBuild(build.id)
+					for _,file_id in pairs(build.file_id)do	
+						BuildModel.saveBuildFile(file_id,build_obj.id)
+					end
+				else
+					if string.sub(build.file_id,0,1)== '0' then
+						local romfs = FileModel.ROMFS_V06
+						local length_romfs = #romfs
+						for i=1,length_romfs do
+							local file_romfs = romfs[i]
+							if file_romfs.id == build.file_id then
+								filename = file_romfs.filename
+								local dir = FileModel.checkDir()
+								local path = CONFIG.MVC_USERS..user.login
+								os.execute("cp -u "..CONFIG.ELUA_BASE..'romfs/'..filename.." "..path.."/rom_fs/"..filename.."")
+								FileModel.save(filename)
+								file = FileModel.getFileByName(filename)
+								build.file_id = file.id	
+							end
+						end	
+						local build_obj = BuildModel.save(build)
+						BuildModel.deleteFilesFromBuild(build.id)
+						BuildModel.saveBuildFile(build.file_id,build_obj.id)
+					else
+						BuildModel.saveBuildFile(build.file_id,build_obj.id)		
+					end
+				end
+							
+				--[[local build_obj = BuildModel.save(build)
 				BuildModel.deleteFilesFromBuild(build.id)
 				if (type(build.file_id) == "table") then
 					
 					for _,file_id in pairs(build.file_id)do
-						BuildModel.saveBuildFile(file_id,build_obj.id)
+						
+						
+							BuildModel.saveBuildFile(file_id,build_obj.id)
+						
 					end
 				else
 					BuildModel.saveBuildFile(build.file_id,build_obj.id)
-				end
+				end]]--
+				
 				-- Generates a build				
 				BuildModel.generate(build.id)
 				redirect({control="builder",act="index"})

@@ -96,8 +96,13 @@ function confirmDeleteBuild(id)
                                 
                                 //--- COLUMN FORMATTERS
                                 this.action = function(elLiner, oRecord, oColumn, oData) {
-                                    elLiner.innerHTML = " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oData['id']+"'><img src=images/buttons/download.png border=0 title=]]..locale_index.label_download..[[></a>";
-									elLiner.innerHTML += "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oData['id']+")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
+									elLiner.innerHTML += " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oRecord.getData('id')['id']+"'><img src=images/buttons/download.png border=0 title=]]..locale_index.label_download..[[></a>";
+									if (oRecord.getData('category') != 'V0.6 File')
+									{
+                                    	elLiner.innerHTML += "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oRecord.getData('id')['id']+")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
+									}
+									
+									
                                 };
                                 YAHOO.widget.DataTable.Formatter.action = this.action
 								
@@ -109,7 +114,7 @@ function confirmDeleteBuild(id)
 						paginatorID = "paginatorFiles",
 						paginatorPosition = "bottom",
 						rowsPerPage = 15,
-						rowsPerPageOptions = {10,15,20,40},
+						rowsPerPageOptions = {10,15,20,30,40},
 
 		}
 		local datasource_files = makeURL({control='files',act='repository'})

@@ -21,6 +21,7 @@
 */
 
 </script>
+
 <% if flash.get("validationMessagesBuild") ~= nil then %>
 <br>
 	<%= flash.get("validationMessagesBuild")%>
@@ -36,15 +37,15 @@
 		<div>
 			<div>
 				<div id="box_title_build">
-					<div class="box_text_build"><%= locale_index.labels.title_build %></div>
-				</div>
-				<div class="build_components"><%= f.text_field({class="field name_field", name='title', value=build.title})%></div>
-			</div>
-			<div>
-				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.target_title %></div>
 				</div>
 				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange="window.location.href='"..makeURL().."&target='+this.value"},BuildModel.TARGETS, build.configs.target) %></div>
+			</div>
+			<div>
+				<div id="box_title_build">
+					<div class="box_text_build"><%= locale_index.labels.title_build %></div>
+				</div>
+				<div class="build_components"><%= f.text_field({class="field name_field", name='title', value=build.title})%></div>
 			</div>
 			
 			<div>
@@ -153,6 +154,7 @@
 			                                
 			                                //--- COLUMN FORMATTERS
 			                                this.actions = function(elLiner, oRecord, oColumn, oData) {
+												
 			                                    elLiner.innerHTML = "<input type='checkbox' name='file_id' value='"+oData['id']+"' "+ (oData['checked'] == true?'checked':'') +" border='0' style='margin-bottom:5px;'/> ";
 			                                };
 			                                YAHOO.widget.DataTable.Formatter.myActions = this.actions;  
@@ -170,7 +172,7 @@
 													defaultSorting = 'filename',
 													paginatorPosition = "bottom",
 													rowsPerPage = 15,
-													rowsPerPageOptions = {15,20,40,60},
+													rowsPerPageOptions = {15,20,30,40,60},
 			
 							}
 							local datasource_files = makeURL({control='files',act='repository',build_id = id })
