@@ -210,6 +210,8 @@ TARGETS = {
 			{value ="ATEVK1100", platform = 'avr32', disabled = true},
 			{value ="ET-STM32", platform = 'stm32', disabled = true},
 			{value ="EAGLE-100", platform = 'lm3s', disabled = true},
+			{value="STR-E912", platform = 'STR-E912', disabled = true},
+			{value="ELUA-PUC", platform = 'ELUA-PUC', disabled = true},
 		}
 		
 TOOLCHAINS = {

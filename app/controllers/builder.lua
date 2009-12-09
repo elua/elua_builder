@@ -97,6 +97,7 @@ function files()
 						BuildModel.deleteFilesFromBuild(build.id)
 						BuildModel.saveBuildFile(build.file_id,build_obj.id)
 					else
+						local build_obj = BuildModel.save(build)
 						BuildModel.saveBuildFile(build.file_id,build_obj.id)		
 					end
 				end

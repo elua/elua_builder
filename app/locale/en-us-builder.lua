@@ -24,6 +24,7 @@ locale_index = {
 				configs = "Configs",
 				newbuild = "New Build",
 				title_build = "Build Configuration Name",
+				title_MCU = "MCU",
 				confirmDeleteFile= "You confirmed the exclusion of this file?",
 				confirmDeleteBuild= "You confirmed the exclusion of this build?",
 				logout = "Logout",

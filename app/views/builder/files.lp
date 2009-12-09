@@ -41,11 +41,12 @@
 				</div>
 				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange="window.location.href='"..makeURL().."&target='+this.value"},BuildModel.TARGETS, build.configs.target) %></div>
 			</div>
+			
 			<div>
 				<div id="box_title_build">
-					<div class="box_text_build"><%= locale_index.labels.title_build %></div>
+					<div class="box_text_build"><%= locale_index.labels.title_MCU %></div>
 				</div>
-				<div class="build_components"><%= f.text_field({class="field name_field", name='title', value=build.title})%></div>
+				<div class="build_components"><%= f.text_field({class="field name_field", name='mcu', value=build.mcu})%></div>
 			</div>
 			
 			<div>
@@ -54,7 +55,14 @@
 				</div>
 				<div class="build_components"><%=f.select({name="toolchain", class="select_field"},BuildModel.TOOLCHAINS, build.configs.toolchain)%></div>
 			</div>
-						
+			
+			<div>
+				<div id="box_title_build">
+					<div class="box_text_build"><%= locale_index.labels.title_build %></div>
+				</div>
+				<div class="build_components"><%= f.text_field({class="field name_field", name='title', value=build.title})%></div>
+			</div>
+								
 			<div>
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.component_title %></div>

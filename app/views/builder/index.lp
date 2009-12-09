@@ -32,11 +32,9 @@ function confirmDeleteBuild(id)
 <div id="box_title">
 	<%=locale_index.builds_title%> 
 	<div class="links_right">
-		<!--[if IE]>  
-    		<div style="z-index:3; margin:-20px 15px 10px 0px"></div>
-		<![endif]--> 
-		<img src="images/buttons/account.png">&nbsp; <a href="<%= makeURL({control="user", act="edit"})%>"><%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-		<img src="images/buttons/logout.png">&nbsp; <a href="<%= makeURL({control="user", act="logout"})%>"><%=locale_index.labels.logout%></a>
+		<!--<div style="float:right; font-size:12px; margin:-20px 15px 10px 0px;"></div>-->
+			<img src="images/buttons/account.png">&nbsp; <a href="<%= makeURL({control="user", act="edit"})%>"><%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+			<img src="images/buttons/logout.png">&nbsp; <a href="<%= makeURL({control="user", act="logout"})%>"><%=locale_index.labels.logout%></a>				
 	</div>
 </div>
 <br />
