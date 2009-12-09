@@ -6,6 +6,7 @@ require("md5")
 sqlI = require "sqlInjection"
 User = mapper:new("users")
 
+
 function save(values)
 	values.passwd = md5.sumhexa(values.passwd)
 	values.actived = true

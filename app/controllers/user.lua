@@ -63,11 +63,13 @@ end
 
 function authenticate()
 	user_aut = cgilua.POST
+
 	if isPOST() then
 		local User = require "user.model"
+		--error("depois do modelo de usuário")
 		local val = require "validation"
 		local validator = val.implement.new(user_aut)
-		
+
 		validator:validate('login',locale_register.validator.login, val.checks.isNotEmpty)
 		validator:validate('passwd', locale_register.validator.passwd, val.checks.isNotEmpty)
 		validator:validate('login',locale_register.validator.authenticate, function()
@@ -77,7 +79,7 @@ function authenticate()
 																			return true
 																		end
 																	end)
-		
+
 		if(validator:isValid())then
 			User.authenticate(user_aut)
 			flash.set('validationMessages',"")
