@@ -73,6 +73,15 @@ function checkNotExistBuild(title)
 	return true
 end
 
+function copyPathFile(filename)
+	local UserModel = require "user.model"
+	local FileModel = require "file.model" 
+	local user = UserModel.getCurrentUser()
+	local dir = FileModel.checkDir()
+	local path = CONFIG.MVC_USERS..user.login
+	os.execute("cp -u "..CONFIG.ELUA_BASE..'romfs/'..filename.." "..path.."/rom_fs/"..filename.."")
+end
+
 function setDefaultValues(build)
 	local COMPONENT_DEFAULT_VALUE = {build_xmodem = 'false', build_shell = 'false', build_romfs = 'false', build_term = 'false', build_uip = 'false', build_dhcpc = 'false', build_dns = 'false', build_con_generic = 'false', build_con_tcp = 'false', build_adc = 'false'}
 	for i,v in pairs(COMPONENT_DEFAULT_VALUE) do
@@ -193,8 +202,8 @@ function generate(id)
 end
 
 PLATFORM = {}
-PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
-PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
+PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='true',build_dns='false',build_con_generic='false',build_con_tcp='true',build_adc='true'}
+PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='true',build_dns='false',build_con_generic='false',build_con_tcp='true',build_adc='true'}
 
 
 TARGETS = {

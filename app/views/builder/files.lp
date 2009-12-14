@@ -8,17 +8,16 @@
 <% dt.printYuiCSS("lib/yui/css/") %>
 <script>
 
-/*function limpaBuild(element)
+function checked_ip()
 {
-	radios = document.getElementsByName(element);
-	for(i=0; i< radios.length; i++)
-	{
-		if (radios[i].checked ==true)
-			radios[i].checked = false;
-		
-	}
+	if($('build_uip').checked){Element.show('ip_box'); $('build_dhcp').checked=false;} else{Element.hide('ip_box');}
 }
-*/
+
+function checked_dns()
+{
+	if($('build_dns').checked){Element.show('dns_block');}else{Element.hide('dns_block');}
+}
+
 
 </script>
 
@@ -31,7 +30,7 @@
 
 <div id="create_page_build">
 	<%= f.form({action = makeURL({control='builder',act='files'}), onsubmit="$('send').disabled=true;Element.show('generating')"}) %>
-		<%= f.hidden_field({name='id', value=id}) %>
+		<%= f.hidden_field({name='id', value=build.id}) %>
 		<%= f.hidden_field({name='created_at', value=build.created_at}) %>
 		<br>
 		<div>
@@ -39,7 +38,7 @@
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.target_title %></div>
 				</div>
-				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange="window.location.href='"..makeURL().."&target='+this.value"},BuildModel.TARGETS, build.configs.target) %></div>
+				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("window.location.href='"..makeURL().."&target='+this.value") or nil},BuildModel.TARGETS, build.configs.target) %></div>
 			</div>
 			
 			<div>
@@ -80,7 +79,8 @@
 								<td class="td_check_box">
 									<%= f.check_box({name='build_xmodem'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
 								</td> 
-								<td><%= locale_components.labels.build_xmodem %>	</td> 
+								<td><%= locale_components.labels.build_xmodem %></td> 
+								
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
@@ -99,24 +99,48 @@
 									<%= f.check_box({name='build_term'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
 								</td> 
 								<td><%= locale_components.labels.build_term %>	</td> 
+								
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_uip'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
+									<%= f.check_box({name='build_uip', id='build_uip', onclick='checked_ip();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
 								</td> 
 								<td><%= locale_components.labels.build_uip %>	</td> 
+								<td id="ip_box" style="display:none;">
+									<%= locale_components.labels.ip %>
+									<%=f.text_field({class="field ip_field", name='ip1', value=build.configs.ip1, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='ip2', value=build.configs.ip2, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='ip3', value=build.configs.ip3, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='ip4', value=build.configs.ip4, maxlength = 3})%>
+								
+									<%= locale_components.labels.mask %>
+									<%=f.text_field({class="field ip_field", name='mask1', value=build.configs.mask1, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='mask2', value=build.configs.mask2, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='mask3', value=build.configs.mask3, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='mask4', value=build.configs.mask4, maxlength = 3})%>
+								</td>
+								<script>checked_ip();</script>
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_dhcpc'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
+									<%= f.check_box({name='build_dhcpc', id='build_dhcp'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
 								</td> 
 								<td><%= locale_components.labels.build_dhcpc %>	</td> 
+								
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_dns'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
+									<%= f.check_box({name='build_dns', id='build_dns',onclick='checked_dns();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
 								</td> 
 								<td><%= locale_components.labels.build_dns %>	</td> 
+								<td id="dns_block" style="display:none;">
+									<%= locale_components.labels.dns %>
+									<%=f.text_field({class="field ip_field", name='dns1', value=build.configs.dns1, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='dns2', value=build.configs.dns2, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='dns3', value=build.configs.dns3, maxlength = 3})%>.
+									<%=f.text_field({class="field ip_field", name='dns4', value=build.configs.dns4, maxlength = 3})%>								
+								</td>
+								<script>checked_dns();</script>
 							</tr> 
 							<tr> 
 								<td class="td_check_box">

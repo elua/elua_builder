@@ -14,20 +14,16 @@ function index()
 	
 end
 
-function files()
-	
+function files()	
 	build =  {}
 	id = cgilua.QUERY.id
 	local UserModel = require "user.model"
 	local FileModel = require "file.model" 
 	local user = UserModel.getCurrentUser()
-	BuildModel = require "builder.model"
-	
+	BuildModel = require "builder.model"	
 	for _,v in pairs(BuildModel.TARGETS) do 
 		v.option = v.value
 	end
-	
-	
 	if tonumber(id) then
 		build = BuildModel.getBuild(id)
 		
@@ -36,7 +32,7 @@ function files()
 		end
 		render("files.lp")
 	else
-		build.configs = {}
+			
 		if isPOST() then
 			build = cgilua.POST
 			val = require "validation"
@@ -46,10 +42,6 @@ function files()
 			build.configs = tableToString(build)
 			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
-			--validator:validate('file_id', locale_index.validator.file_id, val.checks.isNotEmpty)
-			if build.id == nil then
-				validator:validate('title',locale_index.validator.checkNotExistBuild, BuildModel.checkNotExistBuild)
-			end
 			if(validator:isValid())then
 				if (type(build.file_id) == "table") then
 					local length_build_file_id = #build.file_id
@@ -62,9 +54,7 @@ function files()
 								local file_romfs = romfs[i]
 								if file_romfs.id == file_id then
 									filename = file_romfs.filename
-									local dir = FileModel.checkDir()
-									local path = CONFIG.MVC_USERS..user.login
-									os.execute("cp -u "..CONFIG.ELUA_BASE..'romfs/'..filename.." "..path.."/rom_fs/"..filename.."")
+									BuildModel.copyPathFile(filename)
 									FileModel.save(filename)
 									file = FileModel.getFileByName(filename)
 									build.file_id[i]= file.id	
@@ -85,9 +75,8 @@ function files()
 							local file_romfs = romfs[i]
 							if file_romfs.id == build.file_id then
 								filename = file_romfs.filename
-								local dir = FileModel.checkDir()
-								local path = CONFIG.MVC_USERS..user.login
-								os.execute("cp -u "..CONFIG.ELUA_BASE..'romfs/'..filename.." "..path.."/rom_fs/"..filename.."")
+								
+								BuildModel.copyPathFile(filename)
 								FileModel.save(filename)
 								file = FileModel.getFileByName(filename)
 								build.file_id = file.id	
@@ -100,31 +89,17 @@ function files()
 						local build_obj = BuildModel.save(build)
 						BuildModel.saveBuildFile(build.file_id,build_obj.id)		
 					end
-				end
-							
-				--[[local build_obj = BuildModel.save(build)
-				BuildModel.deleteFilesFromBuild(build.id)
-				if (type(build.file_id) == "table") then
-					
-					for _,file_id in pairs(build.file_id)do
-						
-						
-							BuildModel.saveBuildFile(file_id,build_obj.id)
-						
-					end
-				else
-					BuildModel.saveBuildFile(build.file_id,build_obj.id)
-				end]]--
-				
+				end			
 				-- Generates a build				
 				BuildModel.generate(build.id)
 				redirect({control="builder",act="index"})
-			else
-				flash.set('validationMessagesBuild',validator:htmlMessages())
+			else				
+				flash.set('validationMessagesBuild',validator:htmlMessages())		
 				render("files.lp")
 			end
 		else
 			local target = cgilua.QUERY.target
+			build.configs = {}
 			if (target ~= nil and target ~= '')then
 				build.configs = BuildModel.PLATFORM[target]
 			end
