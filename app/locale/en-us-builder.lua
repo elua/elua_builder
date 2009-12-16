@@ -38,6 +38,11 @@ locale_index = {
 					file_id = "Select a file",
 					title_target =  "Select a Target",
 					checkNotExistBuild = "This Build name has already been used.",
+					ip_address = "The IP address",
+					mask_address = "The subnet mask",
+					gateway_address = "The gateway IP",
+					dns_address = "The DNS",
+					address_valid = "is not valid.",
 	}
 }
 	
@@ -62,6 +67,7 @@ locale_components = {
 				ip = "IP Adress:",	
 				mask = "Subnet Mask:",	
 				dns = "DNS:",
+				gateway = "Gateway IP:",
 			},
 	target_prompt = "Select your target",
 	label_build = "Build",	

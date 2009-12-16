@@ -18,6 +18,55 @@ function checked_dns()
 	if($('build_dns').checked){Element.show('dns_block');}else{Element.hide('dns_block');}
 }
 
+function verifyIP(ip0, ip1, ip2, ip3, info)
+{
+	var IPvalue = ip0 +'.' + ip1 +'.' + ip2 +'.' + ip3;
+	if (info == 'ip'){
+		message = "<%= locale_index.validator.ip_address%>";
+		valid = "<%=locale_index.validator.address_valid%>";
+		}
+	else if (info == 'gateway'){
+		message = "<%= locale_index.validator.gateway_address%>";
+		valid = "<%=locale_index.validator.address_valid%>";
+	}
+	else if (info == 'dns') {
+		message = "<%= locale_index.validator.dns_address%>";
+		valid = "<%=locale_index.validator.address_valid%>";
+	}
+	
+	else if (info == 'mask') {
+		message = "<%= locale_index.validator.mask_address%>";
+		valid = "<%=locale_index.validator.address_valid%>";
+	}
+	
+	errorString = "";
+	
+	var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+	var ipArray = IPvalue.match(ipPattern);
+	
+	if (IPvalue == "0.0.0.0")
+		errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+	else if (IPvalue == "255.255.255.255")
+		errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+	if (ipArray == null)
+		errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+	else {
+		for (i = 0; i < 4; i++) {
+			thisSegment = ipArray[i];
+			if (thisSegment > 255) {
+				errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+				i = 4;
+			}
+			if ((i == 0) && (thisSegment > 255)) {
+				errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+				i = 4;
+	      	}
+	   	}
+	}
+	extensionLength = 3;
+	if (errorString != "")
+		alert (errorString);
+}
 
 </script>
 
@@ -41,12 +90,12 @@ function checked_dns()
 				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("window.location.href='"..makeURL().."&target='+this.value") or nil},BuildModel.TARGETS, build.configs.target) %></div>
 			</div>
 			
-			<div>
+			<!--<div>
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_index.labels.title_MCU %></div>
 				</div>
 				<div class="build_components"><%= f.text_field({class="field name_field", name='mcu', value=build.mcu})%></div>
-			</div>
+			</div>-->
 			
 			<div>
 				<div id="box_title_build">
@@ -107,17 +156,27 @@ function checked_dns()
 								</td> 
 								<td><%= locale_components.labels.build_uip %>	</td> 
 								<td id="ip_box" style="display:none;">
-									<%= locale_components.labels.ip %>
-									<%=f.text_field({class="field ip_field", name='ip1', value=build.configs.ip1, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='ip2', value=build.configs.ip2, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='ip3', value=build.configs.ip3, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='ip4', value=build.configs.ip4, maxlength = 3})%>
-								
-									<%= locale_components.labels.mask %>
-									<%=f.text_field({class="field ip_field", name='mask1', value=build.configs.mask1, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='mask2', value=build.configs.mask2, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='mask3', value=build.configs.mask3, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='mask4', value=build.configs.mask4, maxlength = 3})%>
+									<div class="box_ip">
+										<%= locale_components.labels.ip %>
+										<%=f.text_field({class="field ip_field", name='ip0', id= "ip0",  value=build.configs.ip0, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='ip1', id= "ip1", value=build.configs.ip1, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='ip2', id= "ip2", value=build.configs.ip2, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='ip3', id= "ip3", value=build.configs.ip3, maxlength = 3, onblur="verifyIP($('ip0').value, $('ip1').value, $('ip2').value, $('ip3').value, 'ip')"})%>
+									</div><br>
+									<div class="box_ip">
+										<%= locale_components.labels.mask %>
+										<%=f.text_field({class="field ip_field", name='mask0', value=build.configs.mask0, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='mask1', value=build.configs.mask1, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='mask2', value=build.configs.mask2, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='mask3', value=build.configs.mask3, maxlength = 3, onblur="verifyIP($('mask0').value, $('mask1').value, $('mask2').value, $('mask3').value, 'mask')"})%>
+									</div><br>
+									<div class="box_ip">
+										<%= locale_components.labels.gateway %>
+										<%=f.text_field({class="field ip_field", name='gateway0', id= "gateway0", value=build.configs.gateway0, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='gateway1', id= "gateway1", value=build.configs.gateway1, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='gateway2', id= "gateway2", value=build.configs.gateway2, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='gateway3', id= "gateway3", value=build.configs.gateway3, maxlength = 3, onblur="verifyIP($('gateway0').value, $('gateway1').value, $('gateway2').value, $('gateway3').value, 'gateway')"})%>
+									</div>
 								</td>
 								<script>checked_ip();</script>
 							</tr> 
@@ -134,11 +193,13 @@ function checked_dns()
 								</td> 
 								<td><%= locale_components.labels.build_dns %>	</td> 
 								<td id="dns_block" style="display:none;">
-									<%= locale_components.labels.dns %>
-									<%=f.text_field({class="field ip_field", name='dns1', value=build.configs.dns1, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='dns2', value=build.configs.dns2, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='dns3', value=build.configs.dns3, maxlength = 3})%>.
-									<%=f.text_field({class="field ip_field", name='dns4', value=build.configs.dns4, maxlength = 3})%>								
+									<div class="box_ip">
+										<%= locale_components.labels.dns %>
+										<%=f.text_field({class="field ip_field", name='dns0', id= "dns0", value=build.configs.dns0, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='dns1', id= "dns1", value=build.configs.dns1, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='dns2', id= "dns2", value=build.configs.dns2, maxlength = 3})%>.
+										<%=f.text_field({class="field ip_field", name='dns3', id= "dns3", value=build.configs.dns3, maxlength = 3, onblur="verifyIP($('dns0').value, $('dns1').value, $('dns2').value, $('dns3').value, 'dns')"})%>	
+									</div>							
 								</td>
 								<script>checked_dns();</script>
 							</tr> 

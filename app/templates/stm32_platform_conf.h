@@ -15,12 +15,12 @@ $build_xmodem #define BUILD_XMODEM
 $build_shell #define BUILD_SHELL
 $build_romfs #define BUILD_ROMFS
 $build_term #define BUILD_TERM
-//#define BUILD_UIP
-//#define BUILD_DHCPC
-//#define BUILD_DNS
+$build_uip #define BUILD_UIP
+$build_dhcpc #define BUILD_DHCPC
+$build_dns #define BUILD_DNS
 $build_con_generic #define BUILD_CON_GENERIC
 $build_adc #define BUILD_ADC
-//#define BUILD_CON_TCP
+$build_con_tcp #define BUILD_CON_TCP
 
 // *****************************************************************************
 // UART/Timer IDs configuration data (used in main.c)
@@ -59,25 +59,25 @@ LUALIB_API int ( luaopen_lcd )( lua_State* L );
 // Configuration data
 
 // Static TCP/IP configuration
-#define ELUA_CONF_IPADDR0     192
-#define ELUA_CONF_IPADDR1     168
-#define ELUA_CONF_IPADDR2     1
-#define ELUA_CONF_IPADDR3     13
+#define ELUA_CONF_IPADDR0     $ip0
+#define ELUA_CONF_IPADDR1     $ip1
+#define ELUA_CONF_IPADDR2     $ip2
+#define ELUA_CONF_IPADDR3     $ip3
 
-#define ELUA_CONF_NETMASK0    255
-#define ELUA_CONF_NETMASK1    255
-#define ELUA_CONF_NETMASK2    255
-#define ELUA_CONF_NETMASK3    0
+#define ELUA_CONF_NETMASK0    $mask0
+#define ELUA_CONF_NETMASK1    $mask1
+#define ELUA_CONF_NETMASK2    $mask2
+#define ELUA_CONF_NETMASK3    $mask3
 
-#define ELUA_CONF_DEFGW0      192
-#define ELUA_CONF_DEFGW1      168
-#define ELUA_CONF_DEFGW2      1
-#define ELUA_CONF_DEFGW3      1
+#define ELUA_CONF_DEFGW0      $gateway0
+#define ELUA_CONF_DEFGW1      $gateway1
+#define ELUA_CONF_DEFGW2      $gateway2
+#define ELUA_CONF_DEFGW3      $gateway3
 
-#define ELUA_CONF_DNS0        192
-#define ELUA_CONF_DNS1        168
-#define ELUA_CONF_DNS2        1
-#define ELUA_CONF_DNS3        1
+#define ELUA_CONF_DNS0        $dns0
+#define ELUA_CONF_DNS1        $dns1
+#define ELUA_CONF_DNS2        $dns2
+#define ELUA_CONF_DNS3        $dns3
 
 // *****************************************************************************
 // Configuration data
