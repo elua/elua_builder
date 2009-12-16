@@ -30,6 +30,10 @@ body{
 			font-weight: bold;
 }
 
+.box_ip {
+			text-align:right;
+}
+
 #box_title_build {
 					background-color: #f2f2f2;
 					height:26px;
@@ -213,6 +217,10 @@ body{
 				width:400px;
 }
 
+.ip_field {
+				width:30px;
+}
+
 .remarks_field {
 				width:400px;
 				height: 100px;
@@ -290,6 +298,16 @@ tbody {
 				text-align:center;
 }
 
+#ip_box {
+			padding-left:20px; 
+			background-color:#ffffff;
+}
+
+#dns_block {
+			padding-left:20px; 
+			background-color:#ffffff;
+}
+
 #fieldset {
 			height:180px;
 			width:373px;
@@ -306,7 +324,7 @@ tbody {
 	text-align: center;
 	width:300px; 
 	height:100px;
-	top:300px;
+	top:500px;
 	left:50%;
 	margin-left:-150px;
 	background-color:#ffffff;
