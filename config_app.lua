@@ -1,7 +1,7 @@
 -- #### Application variables ###
 CONFIG = {}
-CONFIG.PATH = [[/var/www/eluabuilder/eluabuilder]]
-CONFIG.APP_NAME = "elua_builder"
+CONFIG.PATH = [[/var/www/led/carlos/elua_builder]]
+CONFIG.APP_NAME = "carlos-elua_builder"
 CONFIG.ENABLE_SESSIONS = true
 CONFIG.MAX_FILE_SIZE = 60000 * 1024    -- in bytes
 CONFIG.LANGUAGE     = "en-us"
