@@ -30,11 +30,11 @@ function confirmDeleteBuild(id)
 
 
 <div id="box_title">
-	<%=locale_index.builds_title%> 
+	<div style="float:left;"><%=locale_index.builds_title%> </div>
 	<div class="links_right">
 		<!--<div style="float:right; font-size:12px; margin:-20px 15px 10px 0px;"></div>-->
-			<img src="images/buttons/account.png">&nbsp; <a href="<%= makeURL({control="user", act="edit"})%>"><%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-			<img src="images/buttons/logout.png">&nbsp; <a href="<%= makeURL({control="user", act="logout"})%>"><%=locale_index.labels.logout%></a>				
+			<a href="<%= makeURL({control="user", act="edit"})%>"> <img src="images/buttons/account.png" border=0>&nbsp; <%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+			<a href="<%= makeURL({control="user", act="logout"})%>"><img src="images/buttons/logout.png" border=0>&nbsp; <%=locale_index.labels.logout%></a>				
 	</div>
 </div>
 <br />
@@ -66,7 +66,7 @@ function confirmDeleteBuild(id)
 						paginatorID = "paginatorBuilds",
 						paginatorPosition = "bottom",
 						rowsPerPage = 10,
-						rowsPerPageOptions = {5,10,15,20},
+						rowsPerPageOptions = {5,10,15,20,30,40,60},
 
 		}
 		local datasource_builds = makeURL({control='builder',act='repository'})
@@ -82,6 +82,7 @@ function confirmDeleteBuild(id)
 		</form> 
 	</div><br><br>
 <div>
+<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
 	<%
 		local columns_files = { 
 							{key="id", label = locale_index.label_actions, width=80, formatter="action", className="columnCenter"},
@@ -111,8 +112,8 @@ function confirmDeleteBuild(id)
 						defaultSorting = 'filename',
 						paginatorID = "paginatorFiles",
 						paginatorPosition = "bottom",
-						rowsPerPage = 15,
-						rowsPerPageOptions = {10,15,20,30,40},
+						rowsPerPage = 10,
+						rowsPerPageOptions = {5,10,15,20,30,40,60},
 
 		}
 		local datasource_files = makeURL({control='files',act='repository'})

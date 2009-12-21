@@ -192,9 +192,10 @@ function generate(id)
     	end
     	
     	local toolchain_str = build.configs.toolchain == "default" and "" or " toolchain="..build.configs.toolchain
+    	--local lua_optimize_str = build.configs.lua_optimize == true and "optram=1" or ""
     	
     	-- Run scons
-		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ prog > log_b.txt]]
+		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ prog > log_b.txt]]
     	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log_b.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip ."
 
     	os.execute(scons_str)
@@ -202,8 +203,8 @@ function generate(id)
 end
 
 PLATFORM = {}
-PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='true',build_dns='false',build_con_generic='false',build_con_tcp='true',build_adc='true'}
-PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='true',build_dns='false',build_con_generic='false',build_con_tcp='true',build_adc='true'}
+PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
+PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
 PLATFORM["EAGLE-100"] = {target ='EAGLE-100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='true',build_dns='false',build_con_generic='false',build_con_tcp='true',build_adc='true'}
 PLATFORM["SAM7-EX256"] = {target ='SAM7-EX256', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
 PLATFORM["ATEVK1100"] = {target ='ATEVK1100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
@@ -234,8 +235,10 @@ TARGETS = {
 		}
 		
 TOOLCHAINS = {
-				{value="default",option=locale_components.labels.toolchain_default},
-				{value="codesourcery", option=locale_components.labels.toolchain_codesourcery}
+				{value="default",option=locale_components.labels.toolchain_default, disabled = false},
+				{value="codesourcery", option=locale_components.labels.toolchain_codesourcery, disabled = false},
+				{value="EABI", option=locale_components.labels.toolchain_eabi, disabled = true},
+				{value="Yagarto", option=locale_components.labels.toolchain_yagarto, disabled = true},
 			}
 
 function platforms_by_targets()

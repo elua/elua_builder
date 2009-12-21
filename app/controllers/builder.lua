@@ -40,29 +40,10 @@ function files()
 			build = BuildModel.setDefaultValues(build)
 			build.file_id = (build.file_id == nil) and "" or build.file_id	
 			build.configs = tableToString(build)
-			cgilua.put(build.configs)
+			
 			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
-			--[[validator:validate('configs.ip0',locale_index.validator.ip_address, val.checks.isNumber)
-			validator:validate('configs.ip1',locale_index.validator.ip_address, val.checks.isNumber)
-			validator:validate('configs.ip2',locale_index.validator.ip_address, val.checks.isNumber)
-			validator:validate('configs.ip3',locale_index.validator.ip_address, val.checks.isNumber)
-			
-			validator:validate('configs.mask0',locale_index.validator.mask_address, val.checks.isNumber)
-			validator:validate('configs.mask1',locale_index.validator.mask_address, val.checks.isNumber)
-			validator:validate('configs.mask2',locale_index.validator.mask_address, val.checks.isNumber)
-			validator:validate('configs.mask3',locale_index.validator.mask_address, val.checks.isNumber)
-			
-			validator:validate('configs.gateway0',locale_index.validator.gateway_address, val.checks.isNumber)
-			validator:validate('configs.gateway1',locale_index.validator.gateway_address, val.checks.isNumber)
-			validator:validate('configs.gateway2',locale_index.validator.gateway_address, val.checks.isNumber)
-			validator:validate('configs.gateway3',locale_index.validator.gateway_address, val.checks.isNumber)
-			
-			validator:validate('configs.dns0',locale_index.validator.dns_address, val.checks.isNumber)
-			validator:validate('configs.dns1',locale_index.validator.dns_address, val.checks.isNumber)
-			validator:validate('configs.dns2',locale_index.validator.dns_address, val.checks.isNumber)
-			validator:validate('configs.dns3',locale_index.validator.dns_address, val.checks.isNumber)]]--
-			
+		
 			if(validator:isValid())then
 				if (type(build.file_id) == "table") then
 					local length_build_file_id = #build.file_id
@@ -115,6 +96,8 @@ function files()
 				BuildModel.generate(build.id)
 				redirect({control="builder",act="index"})
 			else				
+				build = {}
+				build.configs = cgilua.POST
 				flash.set('validationMessagesBuild',validator:htmlMessages())		
 				render("files.lp")
 			end

@@ -22,12 +22,13 @@ function repository()
 			v.id = {id = v.id, checked = false}
 		end
 	end
-	local romfs_v06 = FileModel.ROMFS_V06
-	
-	for _,v in pairs(romfs_v06) do
-		table.insert(items,{id = {id = v.id, category = v.category}, filename = v.filename, category = v.category, created_at = v.created_at})
-	end
-	
+	if (query.only_user_files ~= "true")then
+		local romfs_v06 = FileModel.ROMFS_V06
+		
+		for _,v in pairs(romfs_v06) do
+			table.insert(items,{id = {id = v.id, category = v.category}, filename = v.filename, category = v.category, created_at = v.created_at})
+		end
+	end	
 	local DT = require("dataTable")
 	local rep = DT.repository:new(items,{startIndex=startIndex,results=results,sort=sort,dir=dir})
 	 

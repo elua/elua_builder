@@ -13,10 +13,11 @@ function checked_ip()
 	if($('build_uip').checked){Element.show('ip_box'); $('build_dhcp').checked=false;} else{Element.hide('ip_box');}
 }
 
-function checked_dns()
-{
-	if($('build_dns').checked){Element.show('dns_block');}else{Element.hide('dns_block');}
+function checked_dhcp()
+{	
+	if($('build_dhcpc').checked){Element.show('ip_box'); Element.hide('ip_box');}
 }
+
 
 function verifyIP(ip0, ip1, ip2, ip3, info)
 {
@@ -75,7 +76,10 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 	<%= flash.get("validationMessagesBuild")%>
 <% end %>
 
-<div id="box_title"><%= locale_index.builds_title%></div>
+
+
+<div id="box_title"><%=  build.id ~= nil and locale_index.builds_title or locale_index.new_builds_title %></div>
+
 
 <div id="create_page_build">
 	<%= f.form({action = makeURL({control='builder',act='files'}), onsubmit="$('send').disabled=true;Element.show('generating')"}) %>
@@ -83,6 +87,13 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 		<%= f.hidden_field({name='created_at', value=build.created_at}) %>
 		<br>
 		<div>
+			<div>
+				<div id="box_title_build">
+					<div class="box_text_build"><%= locale_index.labels.title_build %></div>
+				</div>
+				<div class="build_components"><%= f.text_field({class="field name_field", name='title', value=build.title})%></div>
+			</div>
+			
 			<div>
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.target_title %></div>
@@ -101,14 +112,10 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.toolchain_title %></div>
 				</div>
-				<div class="build_components"><%=f.select({name="toolchain", class="select_field"},BuildModel.TOOLCHAINS, build.configs.toolchain)%></div>
-			</div>
-			
-			<div>
-				<div id="box_title_build">
-					<div class="box_text_build"><%= locale_index.labels.title_build %></div>
+				<div class="build_components">
+					<%=f.select({name="toolchain", class="select_field"},BuildModel.TOOLCHAINS, build.configs.toolchain)%>
+					<!--<br><br><%= f.check_box({name='lua_optimize'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.lua_optimize})%><b><%=locale_components.lua_optimize%></b>-->
 				</div>
-				<div class="build_components"><%= f.text_field({class="field name_field", name='title', value=build.title})%></div>
 			</div>
 								
 			<div>
@@ -128,33 +135,33 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 								<td class="td_check_box">
 									<%= f.check_box({name='build_xmodem'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
 								</td> 
-								<td><%= locale_components.labels.build_xmodem %></td> 
+								<td title= <%=locale_components.build_xmodem%> ><%= locale_components.labels.build_xmodem %></td> 
 								
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_shell'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_shell}) %>
 								</td> 
-								<td><%= locale_components.labels.build_shell %>	</td> 
+								<td title= <%=locale_components.build_shell%> ><%= locale_components.labels.build_shell %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_romfs'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_romfs}) %>
 								</td> 
-								<td><%= locale_components.labels.build_romfs %>	</td> 
+								<td title= <%=locale_components.build_romfs%> ><%= locale_components.labels.build_romfs %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_term'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
 								</td> 
-								<td><%= locale_components.labels.build_term %>	</td> 
+								<td title= <%=locale_components.build_term%> ><%= locale_components.labels.build_term %>	</td> 
 								
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_uip', id='build_uip', onclick='checked_ip();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
 								</td> 
-								<td><%= locale_components.labels.build_uip %>	</td> 
+								<td title= <%=locale_components.build_uip%> ><%= locale_components.labels.build_uip %>	</td> 
 								<td id="ip_box" style="display:none;">
 									<div class="box_ip">
 										<%= locale_components.labels.ip %>
@@ -176,50 +183,47 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 										<%=f.text_field({class="field ip_field", name='gateway1', id= "gateway1", value=build.configs.gateway1, maxlength = 3})%>.
 										<%=f.text_field({class="field ip_field", name='gateway2', id= "gateway2", value=build.configs.gateway2, maxlength = 3})%>.
 										<%=f.text_field({class="field ip_field", name='gateway3', id= "gateway3", value=build.configs.gateway3, maxlength = 3, onblur="verifyIP($('gateway0').value, $('gateway1').value, $('gateway2').value, $('gateway3').value, 'gateway')"})%>
-									</div>
-								</td>
-								<script>checked_ip();</script>
-							</tr> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_dhcpc', id='build_dhcp'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
-								</td> 
-								<td><%= locale_components.labels.build_dhcpc %>	</td> 
-								
-							</tr> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_dns', id='build_dns',onclick='checked_dns();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
-								</td> 
-								<td><%= locale_components.labels.build_dns %>	</td> 
-								<td id="dns_block" style="display:none;">
+									</div><br>
 									<div class="box_ip">
 										<%= locale_components.labels.dns %>
 										<%=f.text_field({class="field ip_field", name='dns0', id= "dns0", value=build.configs.dns0, maxlength = 3})%>.
 										<%=f.text_field({class="field ip_field", name='dns1', id= "dns1", value=build.configs.dns1, maxlength = 3})%>.
 										<%=f.text_field({class="field ip_field", name='dns2', id= "dns2", value=build.configs.dns2, maxlength = 3})%>.
 										<%=f.text_field({class="field ip_field", name='dns3', id= "dns3", value=build.configs.dns3, maxlength = 3, onblur="verifyIP($('dns0').value, $('dns1').value, $('dns2').value, $('dns3').value, 'dns')"})%>	
-									</div>							
+									</div>	
 								</td>
-								<script>checked_dns();</script>
+								<script>checked_ip();</script>
+							</tr> 
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_dhcpc', id='build_dhcpc', onclick='checked_dhcp();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
+								</td> 
+								<td title= <%=locale_components.build_dhcpc%> ><%= locale_components.labels.build_dhcpc %>	</td> 
+								<script>checked_dhcp();</script>
+							</tr> 
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_dns', id='build_dns'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
+								</td> 
+								<td title= <%=locale_components.build_dns%> ><%= locale_components.labels.build_dns %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_con_generic'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_generic}) %>
 								</td> 
-								<td><%= locale_components.labels.build_con_generic %>	</td> 
+								<td title= <%=locale_components.build_con_generic%> ><%= locale_components.labels.build_con_generic %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_con_tcp'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_tcp}) %>
 								</td> 
-								<td><%= locale_components.labels.build_con_tcp %>	</td> 
+								<td title= <%=locale_components.build_con_tcp%> ><%= locale_components.labels.build_con_tcp %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_adc'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_adc}) %>
 								</td> 
-								<td><%= locale_components.labels.build_adc %>	</td> 
+								<td title= <%=locale_components.build_adc%> ><%= locale_components.labels.build_adc %>	</td> 
 							</tr>
 						</tbody>
 					</table>
@@ -231,6 +235,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 					<div class="box_text_build"><%=locale_index.files_romfs_title%></div>
 				</div>
 				<div class="build_components">
+					<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
 					<div>
 						<%
 							local columns_files = { 
@@ -264,8 +269,8 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 													serverPagination = false,
 													defaultSorting = 'filename',
 													paginatorPosition = "bottom",
-													rowsPerPage = 15,
-													rowsPerPageOptions = {15,20,30,40,60},
+													rowsPerPage = 10,
+													rowsPerPageOptions = {5,10,15,20,30,40,60},
 			
 							}
 							local datasource_files = makeURL({control='files',act='repository',build_id = id })
