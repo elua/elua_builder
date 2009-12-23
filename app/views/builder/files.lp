@@ -8,16 +8,77 @@
 <% dt.printYuiCSS("lib/yui/css/") %>
 <script>
 
+function checked_con_generic()
+{
+	if($('build_con_generic').checked)
+		$('build_con_tcp').checked = false;
+		$('build_term').checked = true;
+}
+
+function checked_con_tcp()
+{
+	if($('build_con_tcp').checked){
+		$('build_con_generic').checked = false;
+		$('build_uip').checked = true;
+		$('build_term').checked = true;
+	}		
+}
+
+function checked_dns()
+{
+	if ($('build_dns').checked) {
+		$('build_uip').checked = true;
+		Element.show('ip_box');
+	}
+}
+
+function checked_term()
+{
+	if($('build_term').checked){
+		$('build_con_generic').checked = true;
+	}
+}
+
+function checked_shell()
+{
+	if ($('build_shell').checked) {
+		$('build_term').checked = true;
+	}
+}
+
+function checked_xmodem()
+{
+	if ($('build_xmodem').checked) {
+		$('build_term').checked = true;
+		$('build_shell').checked = true;
+	}
+}
+
 function checked_ip()
 {
-	if($('build_uip').checked){Element.show('ip_box'); $('build_dhcp').checked=false;} else{Element.hide('ip_box');}
+	if($('build_uip').checked ){
+		if ($('build_dhcpc').checked)
+			Element.hide('ip_box');
+		else
+			Element.show('ip_box');
+	} 
+	else
+	{Element.hide('ip_box');}
+	$('build_dhcpc').checked = false;
+	$('build_dns').checked = false;
+	$('build_con_tcp').checked = false;
 }
 
-function checked_dhcp()
-{	
-	if($('build_dhcpc').checked){Element.show('ip_box'); Element.hide('ip_box');}
+function checked_dhcpc()
+{
+	if ($('build_dhcpc').checked){
+		$('build_uip').checked = true;
+		Element.hide('ip_box');
+	}else if($('build_uip').checked)
+	{
+		Element.show('ip_box');
+	}
 }
-
 
 function verifyIP(ip0, ip1, ip2, ip3, info)
 {
@@ -89,7 +150,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 		<div>
 			<div>
 				<div id="box_title_build">
-					<div class="box_text_build"><%= locale_index.labels.title_build %></div>
+					<div class="box_text_build" ><%= locale_index.labels.title_build %></div>
 				</div>
 				<div class="build_components"><%= f.text_field({class="field name_field", name='title', value=build.title})%></div>
 			</div>
@@ -130,38 +191,52 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 								<th>Components</th> 
 							</tr> 
 						</thead>
-						<tbody> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_xmodem'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
-								</td> 
-								<td title= <%=locale_components.build_xmodem%> ><%= locale_components.labels.build_xmodem %></td> 
-								
-							</tr> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_shell'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_shell}) %>
-								</td> 
-								<td title= <%=locale_components.build_shell%> ><%= locale_components.labels.build_shell %>	</td> 
-							</tr> 
+						<tbody>
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_romfs'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_romfs}) %>
 								</td> 
-								<td title= <%=locale_components.build_romfs%> ><%= locale_components.labels.build_romfs %>	</td> 
+								<td title="<%=locale_components.build_romfs%>" ><%= locale_components.labels.build_romfs %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_term'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
+									<%= f.check_box({name='build_con_generic', id='build_con_generic',onclick='checked_con_generic();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_generic}) %>
 								</td> 
-								<td title= <%=locale_components.build_term%> ><%= locale_components.labels.build_term %>	</td> 
+								<td title="<%=locale_components.build_con_generic%>" ><%= locale_components.labels.build_con_generic %>	</td> 
+							</tr> 
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_con_tcp', id='build_con_tcp',onclick='checked_con_tcp();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_tcp}) %>
+								</td> 
+								<td title="<%=locale_components.build_con_tcp%>" ><%= locale_components.labels.build_con_tcp %>	</td> 
+							</tr> 
+							
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_term', id= 'build_term', onclick='checked_term();'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
+								</td> 
+								<td title="<%=locale_components.build_term%>" ><%= locale_components.labels.build_term %>	</td> 
 								
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
+									<%= f.check_box({name='build_shell', id= 'build_shell', onclick='checked_shell();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_shell}) %>
+								</td> 
+								<td title="<%=locale_components.build_shell%>" ><%= locale_components.labels.build_shell %>	</td> 
+							</tr>  
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_xmodem', id= 'build_xmodem', onclick='checked_xmodem();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
+								</td> 
+								<td title="<%=locale_components.build_xmodem%>" ><%= locale_components.labels.build_xmodem %></td> 
+								
+							</tr> 
+														
+							<tr> 
+								<td class="td_check_box">
 									<%= f.check_box({name='build_uip', id='build_uip', onclick='checked_ip();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
 								</td> 
-								<td title= <%=locale_components.build_uip%> ><%= locale_components.labels.build_uip %>	</td> 
+								<td title="<%=locale_components.build_uip%>" ><%= locale_components.labels.build_uip %>	</td> 
 								<td id="ip_box" style="display:none;">
 									<div class="box_ip">
 										<%= locale_components.labels.ip %>
@@ -196,34 +271,23 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_dhcpc', id='build_dhcpc', onclick='checked_dhcp();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
+									<%= f.check_box({name='build_dhcpc', id='build_dhcpc', onclick='checked_dhcpc();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
 								</td> 
-								<td title= <%=locale_components.build_dhcpc%> ><%= locale_components.labels.build_dhcpc %>	</td> 
-								<script>checked_dhcp();</script>
+								<td title="<%=locale_components.build_dhcpc%>" ><%= locale_components.labels.build_dhcpc %>	</td> 
+								<script>checked_dhcpc();</script>
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_dns', id='build_dns'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
+									<%= f.check_box({name='build_dns', id='build_dns', onclick='checked_dns();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
 								</td> 
-								<td title= <%=locale_components.build_dns%> ><%= locale_components.labels.build_dns %>	</td> 
+								<td title="<%=locale_components.build_dns%>" ><%= locale_components.labels.build_dns %>	</td> 
 							</tr> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_con_generic'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_generic}) %>
-								</td> 
-								<td title= <%=locale_components.build_con_generic%> ><%= locale_components.labels.build_con_generic %>	</td> 
-							</tr> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_con_tcp'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_tcp}) %>
-								</td> 
-								<td title= <%=locale_components.build_con_tcp%> ><%= locale_components.labels.build_con_tcp %>	</td> 
-							</tr> 
+							
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_adc'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_adc}) %>
 								</td> 
-								<td title= <%=locale_components.build_adc%> ><%= locale_components.labels.build_adc %>	</td> 
+								<td title="<%=locale_components.build_adc%>" ><%= locale_components.labels.build_adc %>	</td> 
 							</tr>
 						</tbody>
 					</table>
