@@ -10,75 +10,91 @@
 
 function checked_con_generic()
 {
-	if($('build_con_generic').checked)
+	if ($('build_con_generic').checked) {
 		$('build_con_tcp').checked = false;
-		$('build_term').checked = true;
+		$('build_term').disabled = false;
+		if($('build_term').checked){
+			$('build_shell').disabled = false;		
+			if($('build_shell').checked){
+				$('build_xmodem').disabled = false;
+			}
+		}
+	}
+	else if(!$('build_con_tcp').checked){
+		$('build_term').disabled = true;
+		$('build_shell').disabled = true;
+		$('build_xmodem').disabled = true;
+	}
 }
 
 function checked_con_tcp()
 {
-	if($('build_con_tcp').checked){
+	if ($('build_con_tcp').checked) {
 		$('build_con_generic').checked = false;
-		$('build_uip').checked = true;
-		$('build_term').checked = true;
-	}		
-}
-
-function checked_dns()
-{
-	if ($('build_dns').checked) {
-		$('build_uip').checked = true;
-		Element.show('ip_box');
-	}
+		$('build_term').disabled = false;
+		if($('build_term').checked){
+			$('build_shell').disabled = false;		
+			if($('build_shell').checked){
+				$('build_xmodem').disabled = false;
+			}
+		}	
+	}	
+	else if (!$('build_con_generic').checked){
+		$('build_term').disabled = true;
+		$('build_shell').disabled = true;
+		$('build_xmodem').disabled = true;
+	}	
 }
 
 function checked_term()
 {
 	if($('build_term').checked){
-		$('build_con_generic').checked = true;
+		$('build_shell').disabled = false;
+	}
+	else{
+		$('build_shell').disabled = true;
 	}
 }
 
 function checked_shell()
 {
 	if ($('build_shell').checked) {
-		$('build_term').checked = true;
+		$('build_xmodem').disabled = false;
 	}
-}
-
-function checked_xmodem()
-{
-	if ($('build_xmodem').checked) {
-		$('build_term').checked = true;
-		$('build_shell').checked = true;
+	else{
+		$('build_xmodem').disabled = true;
 	}
 }
 
 function checked_ip()
 {
-	if($('build_uip').checked ){
-		if ($('build_dhcpc').checked)
-			Element.hide('ip_box');
-		else
-			Element.show('ip_box');
-	} 
-	else
-	{Element.hide('ip_box');}
-	$('build_dhcpc').checked = false;
-	$('build_dns').checked = false;
-	$('build_con_tcp').checked = false;
-}
-
-function checked_dhcpc()
-{
-	if ($('build_dhcpc').checked){
-		$('build_uip').checked = true;
-		Element.hide('ip_box');
-	}else if($('build_uip').checked)
-	{
+	if ($('build_uip').checked) {
 		Element.show('ip_box');
+		$('build_dhcpc').disabled = false;
+		$('build_dns').disabled = false;
+		if ($('build_dns').checked) 
+			Element.show('dns_box');
+		else 
+			Element.hide('dns_box');
+	}
+	else {
+		Element.hide('ip_box');
+		Element.hide('dns_box');
+		$('build_dhcpc').disabled = true;
+		$('build_dns').disabled = true;
 	}
 }
+
+function checked_dns()
+{
+	if ($('build_dns').checked) {
+		Element.show('dns_box');
+	}
+	else{
+		Element.hide('dns_box');
+	}
+}
+
 
 function verifyIP(ip0, ip1, ip2, ip3, info)
 {
@@ -194,39 +210,39 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 						<tbody>
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_romfs'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_romfs}) %>
+									<%= f.check_box({name='build_romfs', id='build_romfs',disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_romfs}) %>
 								</td> 
 								<td title="<%=locale_components.build_romfs%>" ><%= locale_components.labels.build_romfs %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_con_generic', id='build_con_generic',onclick='checked_con_generic();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_generic}) %>
+									<%= f.check_box({name='build_con_generic', disabled=false, id='build_con_generic',onclick='checked_con_generic();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_generic}) %>
 								</td> 
 								<td title="<%=locale_components.build_con_generic%>" ><%= locale_components.labels.build_con_generic %>	</td> 
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_con_tcp', id='build_con_tcp',onclick='checked_con_tcp();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_tcp}) %>
+									<%= f.check_box({name='build_con_tcp', id='build_con_tcp',disabled=false, onclick='checked_con_tcp();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_tcp}) %>
 								</td> 
 								<td title="<%=locale_components.build_con_tcp%>" ><%= locale_components.labels.build_con_tcp %>	</td> 
 							</tr> 
 							
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_term', id= 'build_term', onclick='checked_term();'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
+									<%= f.check_box({name='build_term', id= 'build_term', disabled=true, onclick='checked_term();'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
 								</td> 
 								<td title="<%=locale_components.build_term%>" ><%= locale_components.labels.build_term %>	</td> 
 								
 							</tr> 
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_shell', id= 'build_shell', onclick='checked_shell();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_shell}) %>
+									<%= f.check_box({name='build_shell', id= 'build_shell',disabled=true, onclick='checked_shell();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_shell}) %>
 								</td> 
 								<td title="<%=locale_components.build_shell%>" ><%= locale_components.labels.build_shell %>	</td> 
 							</tr>  
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_xmodem', id= 'build_xmodem', onclick='checked_xmodem();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
+									<%= f.check_box({name='build_xmodem', id= 'build_xmodem', disabled=true},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
 								</td> 
 								<td title="<%=locale_components.build_xmodem%>" ><%= locale_components.labels.build_xmodem %></td> 
 								
@@ -234,7 +250,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 														
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_uip', id='build_uip', onclick='checked_ip();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
+									<%= f.check_box({name='build_uip', id='build_uip', disabled=false, onclick='checked_ip();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
 								</td> 
 								<td title="<%=locale_components.build_uip%>" ><%= locale_components.labels.build_uip %>	</td> 
 								<td id="ip_box" style="display:none;">
@@ -259,6 +275,22 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 										<%=f.text_field({class="field ip_field", name='gateway2', id= "gateway2", value=build.configs.gateway2, maxlength = 3})%>.
 										<%=f.text_field({class="field ip_field", name='gateway3', id= "gateway3", value=build.configs.gateway3, maxlength = 3, onblur="verifyIP($('gateway0').value, $('gateway1').value, $('gateway2').value, $('gateway3').value, 'gateway')"})%>
 									</div><br>
+								</td>
+								<script>checked_ip();</script>
+							</tr> 
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_dhcpc', id='build_dhcpc',disabled=true},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
+								</td> 
+								<td title="<%=locale_components.build_dhcpc%>" ><%= locale_components.labels.build_dhcpc %>	</td> 
+								<script>checked_dhcpc();</script>
+							</tr> 
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_dns', id='build_dns',disabled=true, onclick='checked_dns();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
+								</td> 
+								<td title="<%=locale_components.build_dns%>" ><%= locale_components.labels.build_dns %>	</td> 
+								<td id="dns_box" style="display:none;">
 									<div class="box_ip">
 										<%= locale_components.labels.dns %>
 										<%=f.text_field({class="field ip_field", name='dns0', id= "dns0", value=build.configs.dns0, maxlength = 3})%>.
@@ -267,25 +299,11 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 										<%=f.text_field({class="field ip_field", name='dns3', id= "dns3", value=build.configs.dns3, maxlength = 3, onblur="verifyIP($('dns0').value, $('dns1').value, $('dns2').value, $('dns3').value, 'dns')"})%>	
 									</div>	
 								</td>
-								<script>checked_ip();</script>
-							</tr> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_dhcpc', id='build_dhcpc', onclick='checked_dhcpc();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
-								</td> 
-								<td title="<%=locale_components.build_dhcpc%>" ><%= locale_components.labels.build_dhcpc %>	</td> 
-								<script>checked_dhcpc();</script>
-							</tr> 
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_dns', id='build_dns', onclick='checked_dns();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
-								</td> 
-								<td title="<%=locale_components.build_dns%>" ><%= locale_components.labels.build_dns %>	</td> 
 							</tr> 
 							
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_adc'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_adc}) %>
+									<%= f.check_box({name='build_adc', id='build_adc', disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_adc}) %>
 								</td> 
 								<td title="<%=locale_components.build_adc%>" ><%= locale_components.labels.build_adc %>	</td> 
 							</tr>
@@ -293,7 +311,12 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 					</table>
 				</div>
 			</div>
-			
+			<script>
+				checked_con_generic();
+				checked_con_tcp();
+				
+				checked_ip();
+			</script>
 			<div>
 				<div id="box_title_build">
 					<div class="box_text_build"><%=locale_index.files_romfs_title%></div>
