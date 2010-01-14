@@ -192,7 +192,7 @@ function generate(id)
     	end
     	
     	local toolchain_str = build.configs.toolchain == "default" and "" or " toolchain="..build.configs.toolchain
-    	--local lua_optimize_str = build.configs.lua_optimize == true and "optram=1" or ""
+    	local lua_optimize_str = build.configs.lua_optimize == true and "optram=1" or ""
     	
     	-- Run scons
 		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ prog > log_b.txt]]
