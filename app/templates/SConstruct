@@ -1,10 +1,18 @@
-import os, sys
+import os, sys, shutil
 target = ARGUMENTS.get( 'target', 'lua' ).lower()
 cputype = ARGUMENTS.get( 'cpu', '' ).upper()
 allocator = ARGUMENTS.get( 'allocator', '' ).lower()
 boardname = ARGUMENTS.get( 'board' , '').upper()
 toolchain = ARGUMENTS.get( 'toolchain', '')
 optram = int( ARGUMENTS.get( 'optram', '1' ) )
+boot = ARGUMENTS.get( 'boot', '').lower()
+romfsmode = ARGUMENTS.get( 'romfs', 'verbatim' ).lower()
+
+# Helper: "normalize" a name to make it a suitable C macro name
+def cnorm( name ):
+  name = name.replace( '-', '' )
+  name = name.replace( ' ', '' )
+  return name.upper()
 
 # List of toolchains
 toolchain_list = {
@@ -13,62 +21,79 @@ toolchain_list = {
     'link' : 'arm-elf-ld', 
     'asm' : 'arm-elf-as', 
     'bin' : 'arm-elf-objcopy', 
-    'size' : 'arm-elf-size' 
+    'size' : 'arm-elf-size',
+    'cross_cpumode' : 'little',
+    'cross_lua' : 'float_arm 64',
+    'cross_lualong' : 'int 32'
   },
   'arm-eabi-gcc' : {
     'compile' : 'arm-eabi-gcc',
     'link' : 'arm-eabi-ld',
     'asm' : 'arm-eabi-as',
     'bin' : 'arm-eabi-objcopy',
-    'size' : 'arm-eabi-size'
+    'size' : 'arm-eabi-size',
+    'cross_cpumode' : 'little',
+    'cross_lua' : 'float 64',
+    'cross_lualong' : 'int 32'
   },
   'codesourcery' : { 
     'compile' : 'arm-none-eabi-gcc', 
     'link' : 'arm-none-eabi-ld', 
     'asm' : 'arm-none-eabi-as', 
     'bin' : 'arm-none-eabi-objcopy', 
-    'size' : 'arm-none-eabi-size' 
+    'size' : 'arm-none-eabi-size',
+    'cross_cpumode' : 'little',
+    'cross_lua' : 'float 64',
+    'cross_lualong' : 'int 32'
   },
   'avr32-gcc' : { 
     'compile' : 'avr32-gcc', 
     'link' : 'avr32-ld', 
     'asm' : 'avr32-as', 
     'bin' : 'avr32-objcopy', 
-    'size' : 'avr32-size' 
+    'size' : 'avr32-size',
+    'cross_cpumode' : 'big',
+    'cross_lua' : 'float 64',
+    'cross_lualong' : 'int 32'
   },
   'i686-gcc' : { 
     'compile' : 'i686-elf-gcc', 
     'link' : 'i686-elf-ld', 
     'asm' : 'nasm', 
     'bin' : 'i686-elf-objcopy', 
-    'size' : 'i686-elf-size' 
+    'size' : 'i686-elf-size',
+    'cross_cpumode' : 'little',
+    'cross_lua' : 'float 64',
+    'cross_lualong' : 'int 32'
   }
 }
 
 # Toolchain Aliases
 toolchain_list['devkitarm'] = toolchain_list['arm-eabi-gcc']
 
-
 # List of platform/CPU/toolchains combinations
 # The first toolchain in the toolchains list is the default one
 # (the one that will be used if none is specified)
 platform_list = {  
   'at91sam7x' : { 'cpus' : [ 'AT91SAM7X256', 'AT91SAM7X512' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
-  'lm3s' : { 'cpus' : [ 'LM3S8962', 'LM3S6965', 'LM3S6918' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'lm3s' : { 'cpus' : [ 'LM3S8962', 'LM3S6965', 'LM3S6918', 'LM3S9B92' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
   'str9' : { 'cpus' : [ 'STR912FAW44' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
   'i386' : { 'cpus' : [ 'I386' ], 'toolchains' : [ 'i686-gcc' ] },
   'sim' : { 'cpus' : [ 'LINUX' ], 'toolchains' : [ 'i686-gcc' ] },
   'lpc288x' : { 'cpus' : [ 'LPC2888' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
   'str7' : { 'cpus' : [ 'STR711FR2' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
   'stm32' : { 'cpus' : [ 'STM32F103ZE', 'STM32F103RE' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
-  'avr32' : { 'cpus' : [ 'AT32UC3A0512' ], 'toolchains' : [ 'avr32-gcc' ] }
+  'avr32' : { 'cpus' : [ 'AT32UC3A0512' ], 'toolchains' : [ 'avr32-gcc' ] },
+  'lpc24xx' : { 'cpus' : [ 'LPC2468' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] }
 }
 
 # List of board/CPU combinations
 board_list = { 'SAM7-EX256' : [ 'AT91SAM7X256', 'AT91SAM7X512' ],
                'EK-LM3S8962' : [ 'LM3S8962' ],
                'EK-LM3S6965' : [ 'LM3S6965' ],
+               'EK-LM3S9B92' : [ 'LM3S9B92' ],
                'STR9-COMSTICK' : [ 'STR912FAW44' ],
+               'STR-E912' : [ 'STR912FAW44' ],
                'PC' : [ 'I386' ],
                'SIM' : [ 'LINUX' ],
                'LPC-H2888' : [ 'LPC2888' ],
@@ -76,7 +101,8 @@ board_list = { 'SAM7-EX256' : [ 'AT91SAM7X256', 'AT91SAM7X512' ],
                'STM3210E-EVAL' : [ 'STM32F103ZE' ],
                'ATEVK1100' : [ 'AT32UC3A0512' ],
                'ET-STM32' : [ 'STM32F103RE' ],
-               'EAGLE-100' : [ 'LM3S6918' ]
+               'EAGLE-100' : [ 'LM3S6918' ],
+               'ELUA-PUC' : ['LPC2468' ]
             }
 
 # ROMFS file list "groups"
@@ -90,7 +116,9 @@ romfs = { 'builds_files' : [ $files[=['$filename',]=] ]
 file_list = { 'SAM7-EX256' : [ 'builds_files' ],
               'EK-LM3S8962' : [ 'builds_files' ],
               'EK-LM3S6965' : [ 'builds_files' ],
+              'EK-LM3S9B92' : [ 'builds_files' ],
               'STR9-COMSTICK' : [ 'builds_files' ],
+              'STR-E912' : [ 'builds_files' ],
               'PC' : [ 'builds_files' ],
               'SIM' : [ 'builds_files' ],
               'LPC-H2888' : [ 'builds_files' ],
@@ -98,8 +126,9 @@ file_list = { 'SAM7-EX256' : [ 'builds_files' ],
               'STM3210E-EVAL' : [ 'builds_files' ],
               'ATEVK1100' : [ 'builds_files' ],
               'ET-STM32' : [ 'builds_files' ],
-              'EAGLE-100' : [ 'builds_files' ]              
-            }
+              'EAGLE-100' : [ 'builds_files' ],
+              'ELUA-PUC' : [ 'builds_files' ],
+}
 
 # Variants: board = <boardname>
 #           cpu = <cpuname>
@@ -170,27 +199,59 @@ elif allocator not in [ 'newlib', 'multiple', 'simple' ]:
   print "Allocator can be either 'newlib', 'multiple' or 'simple'"
   sys.exit( -1 )
 
+# Check boot mode selection
+if boot == '':
+  boot = 'standard'
+elif boot not in ['standard', 'luarpc']:
+  print "Unknown boot mode: ", boot
+  print "Boot mode can be either 'standard' or 'luarpc'"
+  sys.exit( -1 );
+
+# Check romfs mode
+if romfsmode not in ['verbatim', 'compile', 'compress']:
+  print "Unknown romfs mode: ", romfsmode
+  print "romfs mode can be either 'verbatim', 'compile' or 'compress'"
+  sys.exit( -1 )
+
+# Build the compilation command now
+compcmd = ''
+if romfsmode == 'compile':
+  # First check for luac.cross in the current directory
+  if not os.path.isfile( "luac.cross" ):
+    print "The eLua cross compiler was not found."
+    print "Build it by running 'scons -f cross-lua.py'"
+    sys.exit( -1 )
+  compcmd = os.path.join( os.getcwd(), 'luac.cross -ccn %s -cce %s -o %%s -s %%s' % ( toolset[ 'cross_%s' % target ], toolset[ 'cross_cpumode' ] ) )
+elif romfsmode == 'compress':
+  compcmd = 'lua luasrcdiet.lua --quiet --maximum --opt-comments --opt-whitespace --opt-emptylines --opt-eols --opt-strings --opt-numbers --opt-locals -o %s %s'
 
 # User report
 if not GetOption( 'clean' ):
   print
   print "*********************************"
   print "Compiling eLua ..."
-  print "CPU:         ", cputype
-  print "Board:       ", boardname
-  print "Platform:    ", platform
-  print "Allocator:   ", allocator
-  print "Target:      ", target == 'lua' and 'fplua' or 'target'
-  print "Toolchain:   ", toolchain
+  print "CPU:            ", cputype
+  print "Board:          ", boardname
+  print "Platform:       ", platform
+  print "Allocator:      ", allocator
+  print "Boot Mode:      ", boot
+  print "Target:         ", target == 'lua' and 'fplua' or 'target'
+  print "Toolchain:      ", toolchain
+  print "ROMFS mode:     ", romfsmode
   print "*********************************"
   print
 
 output = 'elua_' + target + '_' + cputype.lower()
 cdefs = '-DELUA_CPU=%s -DELUA_BOARD=%s -DELUA_PLATFORM=%s -D__BUFSIZ__=128' % ( cputype, boardname, platform.upper() )
+# Also make the above into direct defines (to use in conditional C code)
+cdefs = cdefs + " -DELUA_CPU_%s -DELUA_BOARD_%s -DELUA_PLATFORM_%s" % ( cnorm( cputype ), cnorm( boardname ), cnorm( platform ) )
 if allocator == 'multiple':
   cdefs = cdefs + " -DUSE_MULTIPLE_ALLOCATOR"
 elif allocator == 'simple':
   cdefs = cdefs + " -DUSE_SIMPLE_ALLOCATOR"
+
+if boot == 'luarpc':
+  cdefs += " -DELUA_BOOT_RPC"
 
 # Special macro definitions for the SYM target
 if platform == 'sim':
@@ -199,7 +260,7 @@ if platform == 'sim':
 # Lua source files and include path
 lua_files = """lapi.c lcode.c ldebug.c ldo.c ldump.c lfunc.c lgc.c llex.c lmem.c lobject.c lopcodes.c
    lparser.c lstate.c lstring.c ltable.c ltm.c lundump.c lvm.c lzio.c lauxlib.c lbaselib.c
-   ldblib.c liolib.c lmathlib.c loslib.c ltablib.c lstrlib.c loadlib.c linit.c lua.c lrotable.c"""
+   ldblib.c liolib.c lmathlib.c loslib.c ltablib.c lstrlib.c loadlib.c linit.c lua.c lrotable.c legc.c"""
 if target == 'lualong' or target == 'lua':
   lua_full_files = " " + " ".join( [ "src/lua/%s" % name for name in lua_files.split() ] )
   local_include = ['inc', 'inc/newlib', 'src/lua']
@@ -216,7 +277,7 @@ cdefs = cdefs + " -DLUA_OPTIMIZE_MEMORY=%d" % ( optram != 0 and 2 or 0 )
 local_libs = ''
 
 # Application files
-app_files = " src/main.c src/romfs.c src/xmodem.c src/shell.c src/term.c src/common.c src/buf.c src/elua_adc.c src/dlmalloc.c src/salloc.c "
+app_files = " src/main.c src/romfs.c src/xmodem.c src/shell.c src/term.c src/common.c src/buf.c src/elua_adc.c src/dlmalloc.c src/salloc.c src/luarpc_elua_uart.c "
 
 # Newlib related files
 newlib_files = " src/newlib/devman.c src/newlib/stubs.c src/newlib/genstd.c src/newlib/stdtcp.c"
@@ -226,13 +287,19 @@ uip_files = "uip_arp.c uip.c uiplib.c dhcpc.c psock.c resolv.c"
 uip_files = " src/elua_uip.c " + " ".join( [ "src/uip/%s" % name for name in uip_files.split() ] )
 local_include += ['src/uip']
 
+# FatFs files
+app_files = app_files + "src/elua_mmc.c src/mmcfs.c src/fatfs/ff.c "
+local_include += ['src/fatfs']
+
 # Lua module files
-module_names = "pio.c spi.c tmr.c pd.c uart.c term.c pwm.c lpack.c bit.c net.c cpu.c adc.c bitarray.c"
+module_names = "pio.c spi.c tmr.c pd.c uart.c term.c pwm.c lpack.c bit.c net.c cpu.c adc.c can.c luarpc.c bitarray.c elua.c"
 module_files = " " + " ".join( [ "src/modules/%s" % name for name in module_names.split() ] )
 
 # Optimizer flags (speed or size)
 #opt = "-O3"
 opt = "-Os -fomit-frame-pointer"
+#opt += " -ffreestanding"
+#opt += " -fconserve-stack" # conserve stack at potential speed cost, >=GCC4.4
 
 # Toolset data (filled by each platform in part)
 tools = {}
@@ -243,17 +310,27 @@ execfile( "src/platform/%s/conf.py" % platform )
 # Complete file list
 source_files = app_files + specific_files + newlib_files + uip_files + lua_full_files + module_files
 
-# Make filesystem first
+# Make ROM File System first
 if not GetOption( 'clean' ):
-  print "Building filesystem..."
+  print "Building ROM File System..."
+  romdir = "romfs"
   flist = []
   for sample in file_list[ boardname ]:
-    flist = flist + romfs[ sample ]
+    flist += romfs[ sample ]
+  # Automatically includes the autorun.lua file in the ROMFS
+  if os.path.isfile( os.path.join( romdir, 'autorun.lua' ) ):
+    flist += [ 'autorun.lua' ]
+  # Automatically includes platform specific Lua module 
+  if os.path.isfile( os.path.join( romdir, boardname + '.lua' ) ):
+    flist += [boardname + '.lua']
   import mkfs
-  mkfs.mkfs( "romfs", "romfiles", flist )
+  mkfs.mkfs( romdir, "romfiles", flist, romfsmode, compcmd )
   print
-  os.system( "mv -f romfiles.h inc/" )
-  os.system( "rm -f src/fs.o" )
+  if os.path.exists( "inc/romfiles.h" ): 
+    os.remove( "inc/romfiles.h" )
+  shutil.move( "romfiles.h", "inc/" )
+  if os.path.exists( "src/fs.o" ): 
+    os.remove( "src/fs.o" )
 
 # Env for building the program
 comp = Environment( CCCOM = tools[ platform ][ 'cccom' ],

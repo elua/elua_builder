@@ -24,7 +24,8 @@ $build_term #define BUILD_TERM
 #define LUA_PLATFORM_LIBS_ROM\
   _ROM( AUXLIB_PD, luaopen_pd, pd_map )\
   _ROM( LUA_MATHLIBNAME, luaopen_math, math_map )\
-  _ROM( AUXLIB_TERM, luaopen_term, term_map )
+  _ROM( AUXLIB_TERM, luaopen_term, term_map )\
+  _ROM( AUXLIB_ELUA, luaopen_elua, elua_map )
 
 // Bogus defines for common.c
 #define CON_UART_ID           0
@@ -43,6 +44,7 @@ $build_term #define BUILD_TERM
 #define NUM_TIMER             0
 #define NUM_PWM               0
 #define NUM_ADC               0
+#define NUM_CAN               0
 
 // CPU frequency (needed by the CPU module, 0 if not used)
 #define CPU_FREQUENCY         0

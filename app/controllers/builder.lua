@@ -107,6 +107,7 @@ function files()
 			if (target ~= nil and target ~= '')then
 				build.configs = BuildModel.PLATFORM[target]
 			end
+			build.title = cgilua.QUERY.title			
 			render("files.lp")
 		end
 	end

@@ -175,7 +175,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.target_title %></div>
 				</div>
-				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("window.location.href='"..makeURL().."&target='+this.value") or nil},BuildModel.TARGETS, build.configs.target) %></div>
+				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("window.location.href='"..makeURL().."&target='+this.value+'&title='+$('title').value") or nil},BuildModel.TARGETS, build.configs.target) %></div>
 			</div>
 			
 			<!--<div>
@@ -307,6 +307,20 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 								</td> 
 								<td title="<%=locale_components.build_adc%>" ><%= locale_components.labels.build_adc %>	</td> 
 							</tr>
+							
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_rpc', id='build_rpc', disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_rpc}) %>
+								</td> 
+								<td title="<%=locale_components.build_rpc%>" ><%= locale_components.labels.build_rpc %>	</td> 
+							</tr>
+							
+							<tr> 
+								<td class="td_check_box">
+									<%= f.check_box({name='build_mmcfs', id='build_mmcfs', disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_mmcfs}) %>
+								</td> 
+								<td title="<%=locale_components.build_mmcfs%>" ><%= locale_components.labels.build_mmcfs %>	</td> 
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -366,6 +380,12 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 					</div>
 				</div>
 			</div>	
+			<div id="box_title_build">
+					<div class="box_text_build"><%=locale_index.files_romfsmode_title%></div>
+			</div>
+			<div class="build_components">
+					<%=f.select({name="romfsmode", class="select_field"},BuildModel.ROMFSMODE, build.configs.romfsmode)%>
+				</div>
 			<!--<input type="button" name="bt1" value="Limpar builds" onclick="limpaBuild('autorun_file_id')">-->
 			<div class="build_button">
 				<%= f.submit({id='send',class="button_submit",value = locale_components.label_build}) %>

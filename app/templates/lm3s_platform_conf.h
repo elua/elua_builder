@@ -15,12 +15,14 @@
 $build_xmodem #define BUILD_XMODEM
 $build_shell #define BUILD_SHELL
 $build_romfs #define BUILD_ROMFS
+$build_mmcfs #define BUILD_MMCFS
 $build_term #define BUILD_TERM
 $build_uip #define BUILD_UIP
 $build_dhcpc #define BUILD_DHCPC
 $build_dns #define BUILD_DNS
 $build_con_generic #define BUILD_CON_GENERIC
 $build_adc #define BUILD_ADC
+$build_rpc #define BUILD_RPC
 $build_con_tcp #define BUILD_CON_TCP
 
 // *****************************************************************************
@@ -36,6 +38,7 @@ $build_con_tcp #define BUILD_CON_TCP
 // Auxiliary libraries that will be compiled for this platform
 
 // The name of the platform specific libs table
+// FIXME: should handle partial or no inclusion of platform specific modules per conf.py
 #ifdef ENABLE_DISP
 #define PS_LIB_TABLE_NAME   "lm3s"
 #endif
@@ -50,6 +53,18 @@ $build_con_tcp #define BUILD_CON_TCP
 #define NETLINE  _ROM( AUXLIB_NET, luaopen_net, net_map )
 #else
 #define NETLINE
+#endif
+
+#ifdef BUILD_ADC
+#define ADCLINE _ROM( AUXLIB_ADC, luaopen_adc, adc_map )
+#else
+#define ADCLINE
+#endif
+
+#ifdef BUILD_RPC
+#define RPCLINE _ROM( AUXLIB_RPC, luaopen_rpc, rpc_map )
+#else
+#define RPCLINE
 #endif
 
 #ifdef PS_LIB_TABLE_NAME
@@ -71,7 +86,8 @@ $build_con_tcp #define BUILD_CON_TCP
   _ROM( AUXLIB_BITARRAY, luaopen_bitarray, bitarray_map )\
   NETLINE\
   _ROM( AUXLIB_CPU, luaopen_cpu, cpu_map )\
-  _ROM( AUXLIB_ADC, luaopen_adc, adc_map )\
+  ADCLINE\
+  RPCLINE\
   _ROM( LUA_MATHLIBNAME, luaopen_math, math_map )\
   PLATLINE
 
@@ -107,9 +123,15 @@ $build_con_tcp #define BUILD_CON_TCP
 #define VTMR_FREQ_HZ          4
 
 // Number of resources (0 if not available/not implemented)
-#define NUM_PIO               7
+#ifdef FORLM3S9B92
+  #define NUM_PIO             7
+#else
+  #define NUM_PIO             7
+#endif
 #define NUM_SPI               1
 #ifdef FORLM3S6965
+  #define NUM_UART            3
+#elif FORLM3S9B92
   #define NUM_UART            3
 #else
   #define NUM_UART            2
@@ -121,6 +143,7 @@ $build_con_tcp #define BUILD_CON_TCP
   #define NUM_PWM             0
 #endif  
 #define NUM_ADC               4
+#define NUM_CAN               0
 
 // Enable RX buffering on UART
 //#define BUF_ENABLE_UART
@@ -135,6 +158,40 @@ $build_con_tcp #define BUILD_CON_TCP
 #define ADC_TIMER_FIRST_ID    0
 #define ADC_NUM_TIMERS        NUM_TIMER  
 
+// RPC boot options
+#define RPC_UART_ID           CON_UART_ID
+#define RPC_TIMER_ID          CON_TIMER_ID
+#define RPC_UART_SPEED        CON_UART_SPEED
+
+// SD/MMC Filesystem Setup
+#define MMCFS_TICK_HZ     4
+#define MMCFS_TICK_MS     ( 1000 / MMCFS_TICK_HZ )
+
+#ifdef ELUA_BOARD_EKLM3S6965
+  // EK-LM3S6965
+  #define MMCFS_CS_PORT                3
+  #define MMCFS_CS_PIN                 0
+  #define MMCFS_SPI_NUM                0
+#endif
+
+#ifdef ELUA_BOARD_EKLM3S8962
+  // EK-LM3S8962
+  #define MMCFS_CS_PORT                6
+  #define MMCFS_CS_PIN                 0
+  #define MMCFS_SPI_NUM                0
+#endif
+
+#ifdef ELUA_BOARD_EAGLE100
+  // Eagle-100
+  #define MMCFS_CS_PORT                6
+  #define MMCFS_CS_PIN                 1
+  #define MMCFS_SPI_NUM                0
+#endif
+
+#ifndef SDC_SPI_NUM
+#undef BUILD_MMCFS
+#endif
+
 
 // CPU frequency (needed by the CPU module, 0 if not used)
 #define CPU_FREQUENCY         SysCtlClockGet()
@@ -143,14 +200,25 @@ $build_con_tcp #define BUILD_CON_TCP
 #define PIO_PREFIX            'A'
 // Pins per port configuration:
 // #define PIO_PINS_PER_PORT (n) if each port has the same number of pins, or
-// #define PIO_PIN_ARRAY { n1, n2, ... } to define pins per port in an array 
+// #define PIO_PIN_ARRAY { n1, n2, ... } to define pins per port in an array
 // Use #define PIO_PINS_PER_PORT 0 if this isn't needed
-#define PIO_PIN_ARRAY         { 8, 8, 8, 8, 4, 4, 2 }
+#ifdef FORLM3S9B92
+  #define PIO_PIN_ARRAY         { 8, 8, 8, 8, 8, 6, 8, 8, 8 }
+#else
+  #define PIO_PIN_ARRAY         { 8, 8, 8, 8, 4, 4, 2 }
+#endif
+//                                A, B, C, D, E, F, G, H, J
+
+#ifdef FORLM3S9B92
+  #define SRAM_SIZE ( 0x18000 )
+#else
+  #define SRAM_SIZE ( 0x10000 )
+#endif
 
 // Allocator data: define your free memory zones here in two arrays
 // (start address and end address)
 #define MEM_START_ADDRESS     { ( void* )end }
-#define MEM_END_ADDRESS       { ( void* )( SRAM_BASE + 0x10000 - STACK_SIZE_TOTAL - 1 ) }
+#define MEM_END_ADDRESS       { ( void* )( SRAM_BASE + SRAM_SIZE - STACK_SIZE_TOTAL - 1 ) }
 
 // *****************************************************************************
 // CPU constants that should be exposed to the eLua "cpu" module
@@ -206,5 +274,5 @@ $build_con_tcp #define BUILD_CON_TCP
   _C( INT_PWM3 ),\
   _C( INT_UDMA ),\
   _C( INT_UDMAERR )
-  
+
 #endif // #ifndef __PLATFORM_CONF_H__

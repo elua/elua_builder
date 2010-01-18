@@ -194,8 +194,10 @@ function generate(id)
     	local toolchain_str = build.configs.toolchain == "default" and "" or " toolchain="..build.configs.toolchain
     	local lua_optimize_str = build.configs.lua_optimize == true and "optram=1" or ""
     	
+    	local romfsmode_str = "romfs="..build.configs.romfsmode
+    	
     	-- Run scons
-		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ prog > log_b.txt]]
+		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log_b.txt]]
     	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log_b.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip ."
 
     	os.execute(scons_str)
@@ -203,35 +205,40 @@ function generate(id)
 end
 
 PLATFORM = {}
-PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
-PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='true',build_con_generic='false',build_con_tcp='true',build_adc='true'}
-PLATFORM["EAGLE-100"] = {target ='EAGLE-100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='false',build_con_generic='false',build_con_tcp='true',build_adc='true'}
-PLATFORM["SAM7-EX256"] = {target ='SAM7-EX256', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
-PLATFORM["ATEVK1100"] = {target ='ATEVK1100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
-PLATFORM["PC"] = {target ='PC', toolchain = 'default', build_xmodem='false', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
-PLATFORM["LPC-H2888"] = {target ='LPC-H2888', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
-PLATFORM["SIM"] = {target ='SIM', toolchain = 'default', build_xmodem='false', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
-PLATFORM["ET-STM32"] = {target ='ET-STM32', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='false',build_con_generic='true',build_con_tcp='true',build_adc='true'}
-PLATFORM["STM3210E-EVAL"] = {target ='STM3210E-EVAL', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='true',build_dhcpc='true',build_dns='false',build_con_generic='true',build_con_tcp='true',build_adc='true'}
-PLATFORM["MOD711"] = {target ='MOD711', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
-PLATFORM["STR9-COMSTICK"] = {target ='STR9-COMSTICK', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false'}
-
+PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true',build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
+PLATFORM["EK-LM3S9B62"] = {target ='EK-LM3S9B62', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true',build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
+PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true', build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
+PLATFORM["EAGLE-100"] = {target ='EAGLE-100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true', build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
+PLATFORM["SAM7-EX256"] = {target ='SAM7-EX256', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["STR9-COMSTICK"] = {target ='STR9-COMSTICK', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["STR-E912"] = {target ='STR-E912', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false',build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["PC"] = {target ='PC', toolchain = 'default', build_xmodem='false', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["SIM"] = {target ='SIM', toolchain = 'default', build_xmodem='false', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["LPC-H2888"] = {target ='LPC-H2888', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["MOD711"] = {target ='MOD711', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["ET-STM32"] = {target ='ET-STM32', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
+PLATFORM["STM3210E-EVAL"] = {target ='STM3210E-EVAL', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
+PLATFORM["ATEVK1100"] = {target ='ATEVK1100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
+PLATFORM["ELUA-PUC"] = {target ='ELUA-PUC', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='true'}
+--PLATFORM["MBED"] = {target ='MBED', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='true'}
 
 TARGETS = {
 			{value ="EK-LM3S8962", platform = 'lm3s', disabled = false},
+			{value ="EK-LM3S9B62", platform = 'lm3s', disabled = false},
 			{value ="EK-LM3S6965", platform = 'lm3s', disabled = false},
+			{value ="EAGLE-100", platform = 'lm3s', disabled = false},	
 			{value ="SAM7-EX256", platform = 'at91sam7x', disabled = false},
+			{value ="MOD711", platform = 'str7', disabled = false},
 			{value ="STR9-COMSTICK", platform = 'str9', disabled = false},
+			{value="STR-E912", platform = 'str9', disabled = false},
 			{value ="PC", platform = 'i386', disabled = false},
 			{value ="SIM", platform = 'sim', disabled = false},
 			{value ="LPC-H2888", platform = 'lpc288x', disabled = false},
-			{value ="MOD711", platform = 'str7', disabled = false},
 			{value ="STM3210E-EVAL", platform = 'stm32', disabled = false},
-			{value ="ATEVK1100", platform = 'avr32', disabled = false},
 			{value ="ET-STM32", platform = 'stm32', disabled = false},
-			{value ="EAGLE-100", platform = 'lm3s', disabled = false},
-			{value="STR-E912", platform = 'STR-E912', disabled = true},
-			{value="ELUA-PUC", platform = 'ELUA-PUC', disabled = true},
+			{value ="ATEVK1100", platform = 'avr32', disabled = false},
+			{value="ELUA-PUC", platform = 'lpc24xx', disabled = false},
+			{value ="MBED", platform = 'str9', disabled = true},
 		}
 		
 TOOLCHAINS = {
@@ -240,6 +247,12 @@ TOOLCHAINS = {
 				{value="EABI", option=locale_components.labels.toolchain_eabi, disabled = true},
 				{value="Yagarto", option=locale_components.labels.toolchain_yagarto, disabled = true},
 			}
+
+ROMFSMODE = {
+				{value="verbatim", option=locale_components.labels.romfsmode_verbatim, disabled=false},
+				{value="compress", option=locale_components.labels.romfsmode_compressed, disabled=false},
+				{value="compile", option=locale_components.labels.romfsmode_compiled, disabled=false},
+}
 
 function platforms_by_targets()
 	local platforms = {}
