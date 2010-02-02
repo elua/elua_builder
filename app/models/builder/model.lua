@@ -199,14 +199,15 @@ function generate(id)
     	-- Run scons
 		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log_b.txt]]
     	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log_b.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip ."
-
+		
     	os.execute(scons_str)
 		os.execute(move_clear_str)  
+		error(scons_str)
 end
 
 PLATFORM = {}
 PLATFORM["EK-LM3S8962"] = {target ='EK-LM3S8962', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true',build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
-PLATFORM["EK-LM3S9B62"] = {target ='EK-LM3S9B62', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true',build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
+PLATFORM["EK-LM3S9B92"] = {target ='EK-LM3S9B92', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true',build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
 PLATFORM["EK-LM3S6965"] = {target ='EK-LM3S6965', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true', build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
 PLATFORM["EAGLE-100"] = {target ='EAGLE-100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='true', build_term='true', build_uip='true',build_dhcpc='false',build_dns='true',build_con_generic='true',build_con_tcp='false',build_adc='true', build_rpc='true'}
 PLATFORM["SAM7-EX256"] = {target ='SAM7-EX256', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
@@ -224,7 +225,7 @@ PLATFORM["ELUA-PUC"] = {target ='ELUA-PUC', toolchain = 'default', build_xmodem=
 
 TARGETS = {
 			{value ="EK-LM3S8962", platform = 'lm3s', disabled = false},
-			{value ="EK-LM3S9B62", platform = 'lm3s', disabled = false},
+			{value ="EK-LM3S9B92", platform = 'lm3s', disabled = false},
 			{value ="EK-LM3S6965", platform = 'lm3s', disabled = false},
 			{value ="EAGLE-100", platform = 'lm3s', disabled = false},	
 			{value ="SAM7-EX256", platform = 'at91sam7x', disabled = false},
