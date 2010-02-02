@@ -23,9 +23,9 @@ function repository()
 		end
 	end
 	if (query.only_user_files ~= "true")then
-		local romfs_v06 = FileModel.ROMFS_V06
+		local romfs_v07 = FileModel.ROMFS_V07
 		
-		for _,v in pairs(romfs_v06) do
+		for _,v in pairs(romfs_v07) do
 			table.insert(items,{id = {id = v.id, category = v.category}, filename = v.filename, category = v.category, created_at = v.created_at})
 		end
 	end	
