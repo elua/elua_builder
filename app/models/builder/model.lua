@@ -141,6 +141,17 @@ function download(id)
     	open:close()
    	end
 end
+local function setDefaultValues(configs)
+	local defaults = {
+			ip0 = "192",ip1 = "168", ip2 = "100", ip3 = "5",
+			mask0 = "255", mask1 = "255", mask2 = "255", mask3 = "0",
+			gateway0 = "192", gateway1 = "168", gateway2 = "100", gateway3 = "20",
+			dns0 = "192", dns1 = "168", dns2 = "100", dns3 = "20",  
+		}
+	for i,v in pairs(defaults)do
+		configs[i] = (configs[i] == "" or configs[i] == nil) and v or configs[i]
+	end
+end
 
 function generate(id)
 		local build = getBuild(tonumber(id))
@@ -151,6 +162,8 @@ function generate(id)
 		if (build.configs ~= nil and type(build.configs) == "string") then
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
+
+		setDefaultValues(build.configs)
 		build.configs = change_true_false(build.configs)
 		--for i,v in pairs(change_true_false(build.configs))do
 		--	cgilua.put(i,(v),"<br>")
