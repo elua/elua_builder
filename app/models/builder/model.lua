@@ -210,8 +210,8 @@ function generate(id)
     	local romfsmode_str = "romfs="..build.configs.romfsmode
     	
     	-- Run scons
-		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log_b.txt]]
-    	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log_b.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip ."
+		local scons_str = [[cd ]]..dir..[[;scons board=]]..build.configs.target..[[ -c ;scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log.txt 2> log_errors.txt]]
+    	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip ."
 
     	os.execute(scons_str)
 		os.execute(move_clear_str)  

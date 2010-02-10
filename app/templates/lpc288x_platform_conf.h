@@ -15,7 +15,7 @@ $build_shell #define BUILD_SHELL
 $build_romfs #define BUILD_ROMFS
 $build_term #define BUILD_TERM
 $build_con_generic #define BUILD_CON_GENERIC
-$build_rpc #define BUILD_RPC
+// #define BUILD_RPC
 
 // *****************************************************************************
 // UART/Timer IDs configuration data (used in main.c)

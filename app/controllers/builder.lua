@@ -50,7 +50,7 @@ function files()
 					for i=1,length_build_file_id do
 						local file_id = build.file_id[i]
 						if string.sub(file_id,0,1)== '0' then
-							local romfs = FileModel.ROMFS_V06
+							local romfs = FileModel.ROMFS_V07
 							local length_romfs = #romfs
 							for i=1,length_romfs do
 								local file_romfs = romfs[i]
@@ -71,7 +71,7 @@ function files()
 					end
 				else
 					if string.sub(build.file_id,0,1)== '0' then
-						local romfs = FileModel.ROMFS_V06
+						local romfs = FileModel.ROMFS_V07
 						local length_romfs = #romfs
 						for i=1,length_romfs do
 							local file_romfs = romfs[i]
