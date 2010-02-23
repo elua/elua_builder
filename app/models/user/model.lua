@@ -7,6 +7,15 @@ sqlI = require "sqlInjection"
 User = mapper:new("users")
 
 
+-- Sets here the controllers and action that are exceptions to the validation
+function checkExceptions()
+	local exceptions = {
+		user = {index = true, authenticate = true, create = true, forgot = true, forgot_password = true, register = true, denied = true},
+		default = {index = true},
+	}
+	return (exceptions[APP.controller] ~= nil and exceptions[APP.controller][APP.action]) and true or false
+end
+
 function save(values)
 	values.passwd = md5.sumhexa(values.passwd)
 	values.actived = true
@@ -64,16 +73,27 @@ function checkEmail(email)
 end
 
 function authenticate(user)
-	local ok, user = checkUser(user.login,user.passwd)
-	if ok then
-		cgilua.cookies.set ('system_cookie', user.id)
+	local login = user.login
+	local passwd = user.passwd
+	local ok, user = checkUser(login,passwd)
+	if (type(user) == "table") then
+		require "cgilua.cookies"
+		cgilua.cookies.set(CONFIG.COOKIE_NAME, md5.crypt(login,CONFIG.MD5KEY).."#&#"..md5.crypt(passwd,CONFIG.MD5KEY))
+		return user
 	end
 end
 
 function getCurrentUser()
-	local user_id = cgilua.cookies.get('system_cookie')
-	if user_id ~= nil then
-		return getUser(user_id)
+	require "cgilua.cookies"
+	local cookieUser = cgilua.cookies.get(CONFIG.COOKIE_NAME)
+	if(cookieUser ~= nil)then
+		local cookieData = {}
+		
+		cookieData = string.split(cgilua.cookies.get(CONFIG.COOKIE_NAME),"#&#")
+		if (cookieData ~= nil)then
+			local ok, user = checkUser(md5.decrypt(tostring(cookieData[1]),CONFIG.MD5KEY), md5.decrypt(tostring(cookieData[2]),CONFIG.MD5KEY))
+			if ok then return user end
+		end
 	end
 end
 
@@ -84,6 +104,11 @@ function checkNotExistLogin(login)
 		return false
 	end
 	return true
+end
+
+function logout()
+	require "cgilua.cookies"
+	return cgilua.cookies.delete(CONFIG.COOKIE_NAME)
 end
 
 -- Form values

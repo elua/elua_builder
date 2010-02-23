@@ -125,6 +125,11 @@ function repository()
 	local items = BuilderModel.getBuilds()
 	 
 	local DT = require("dataTable")
+	for i,v in pairs(items)do
+		local configs = assert(loadstring("return "..v.configs)())
+		v.configs = (type(configs) == "table" and configs.scons) and configs.scons or ''
+	end
+	
 	local rep = DT.repository:new(items,{startIndex=startIndex,results=results,sort=sort,dir=dir})
 	 
 	rep:response('text','plain','UTF-8')

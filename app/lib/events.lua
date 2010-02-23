@@ -11,7 +11,16 @@ function mvc_events.beforeAnyAction(jump)
     local envApp = luasql.mysql()
     local conn = envApp:connect(CONFIG.DB.dbname,CONFIG.DB.username,CONFIG.DB.password)
     mapper = orbit.model.new("", conn, "mysql")
-
+    
+    local UserModel = require "user.model"
+   
+    if(not UserModel.checkExceptions()) then
+    	if (UserModel.getCurrentUser() == nil or type(UserModel.getCurrentUser()) ~= "table")then
+			flash.set("validationMessages",locale_general.denied_msg)
+			redirect({control="user",act="index",redir=makeURL(cgilua.QUERY)})
+			return false
+		end
+	end
 end
 
 function mvc_events.afterAnyAction()

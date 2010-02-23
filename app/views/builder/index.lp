@@ -25,6 +25,7 @@ function confirmDeleteBuild(id)
 		window.location.href="<%=makeURL({control= "builder", act="delete"})%>&id="+id;
 	}
 }
+
 </script>
 
 

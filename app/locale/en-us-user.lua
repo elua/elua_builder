@@ -10,6 +10,7 @@ locale_index = {
 			},
 	label_submit = "Submit",
 	copyright = "Copyright 2009 eLua Builder. All rights reserved.",
+
 		
 }
 

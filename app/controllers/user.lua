@@ -19,6 +19,7 @@ function forgot_password()
 		validator:validate('email',locale_register.validator.valid_email, UserModel.checkEmail)
 		if(validator:isValid())then
 			user = UserModel.userHash(email)
+			user.address = CONFIG.APP_DOMAIN
 			local reset_password_message = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."reset_password_message.lp", user,"string")
 			sendmail(CONFIG.MAIL_SERVER.systemMailFrom, email, '', locale_index.labels.change_passwd, reset_password_message)
 			flash.set('email_reset',locale_register.validator.email_reset)
@@ -94,7 +95,8 @@ function authenticate()
 end
 
 function logout()
-	cgilua.cookies.delete ('system_cookie')
+	local User = require "user.model"
+	User.logout()
 	redirect({control="user", act="index"})
 end
 
@@ -127,6 +129,7 @@ function update()
 	user_obj.id = current_user.id
 	if (user_obj.change_passwd ~= "true")then
 		user_obj.passwd = current_user.passwd
+		user_obj.co_passwd = current_user.passwd
 	end
 	
 	local val = require "validation"
@@ -150,7 +153,12 @@ function update()
 	end
 	
 	if(validator:isValid())then
-		UserModel.save(user_obj)
+		local user = UserModel.save(user_obj)
+		
+		if type(user) == "table" then	
+			UserModel.authenticate({login = user_obj.login, passwd = user_obj.co_passwd})
+			UserModel.authenticate({login = user_obj.login, passwd = user_obj.co_passwd})
+		end
 		flash.set('validationMessages',"")
 		flash.set('notice',locale_register.validator.notice)
 		redirect({control="builder", act="index"})
@@ -205,4 +213,6 @@ function register()
 	end
 end
 
-
+function denied()
+	render("denied.lp")
+end
