@@ -14,7 +14,7 @@ CONFIG.LIB_PATH     = CONFIG.PATH.."/lib/"
 CONFIG.LUA_PATH     = CONFIG.LIB_PATH.."?/init.lua;"..CONFIG.LIB_PATH.."?/?.lua;"..CONFIG.LIB_PATH.."?.lua;"
 package.path = CONFIG.LUA_PATH..[[/?.lua;]]..package.path
 
-CONFIG.COOKIE_NAME = "app_onyx"
+CONFIG.COOKIE_NAME = "complement"
 CONFIG.MD5KEY = "lua-kepler"
 
 
@@ -30,6 +30,7 @@ CONFIG.MVC_TMP = CONFIG.PATH.."/tmp/"
 CONFIG.MVC_REPORTS = CONFIG.PATH.."/app/reports/"
 CONFIG.MVC_USERS = CONFIG.PATH.."/app/users/"
 CONFIG.ELUA_BASE = CONFIG.PATH.."/elua_src_base/"
+CONFIG.APP_DOMAIN = "ubuntu/carlos-elua_builder/start.lua"
 
 
 --MAIL Server Variables
