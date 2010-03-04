@@ -1,7 +1,7 @@
 -- #### Application variables ###
 CONFIG = {}
-CONFIG.PATH = [[/var/www/led/carlos/elua_builder]]
-CONFIG.APP_NAME = "carlos-elua_builder"
+CONFIG.PATH = [[/var/www/led/carlos/elua_builder_pre0.1]]
+CONFIG.APP_NAME = "carlos-elua_builder_pre0.1"
 CONFIG.ENABLE_SESSIONS = true
 CONFIG.MAX_FILE_SIZE = 60000 * 1024    -- in bytes
 CONFIG.LANGUAGE     = "en-us"
@@ -30,7 +30,7 @@ CONFIG.MVC_TMP = CONFIG.PATH.."/tmp/"
 CONFIG.MVC_REPORTS = CONFIG.PATH.."/app/reports/"
 CONFIG.MVC_USERS = CONFIG.PATH.."/app/users/"
 CONFIG.ELUA_BASE = CONFIG.PATH.."/elua_src_base/"
-CONFIG.APP_DOMAIN = "ubuntu/carlos-elua_builder/start.lua"
+CONFIG.APP_DOMAIN = "ubuntu/carlos-elua_builder_pre0.1/start.lua"
 
 
 --MAIL Server Variables
