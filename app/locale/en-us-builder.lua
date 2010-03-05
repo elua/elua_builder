@@ -35,6 +35,12 @@ locale_index = {
 				open_file = "The selected file does not exist.",
 				file_type = "File Type",
 				view = "Only user files",
+				basic = "Basic",
+				advanced = "Advanced",
+				mode = "Mode selection",
+				general = "General",
+				net ="Net",
+				luarpc = "LuaRPC",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",
