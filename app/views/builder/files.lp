@@ -1,6 +1,6 @@
 <% f = require "luawebforms" %>
 <% dt = require("dataTable.show")%>
-
+<% jquery = true %>
 <% render("header.lp","_shared") %>
 
 <% dt.printJSheaders("lib/yui/js/") %>
@@ -10,88 +10,88 @@
 
 function checked_con_generic()
 {
-	if ($('build_con_generic').checked) {
-		$('build_con_tcp').checked = false;
-		$('build_term').disabled = false;
-		if($('build_term').checked){
-			$('build_shell').disabled = false;		
-			if($('build_shell').checked){
-				$('build_xmodem').disabled = false;
+	if ($('#build_con_generic').is(':checked')) {
+		$('#build_con_tcp').attr('checked',false);
+		$('#build_term').attr('disabled',false);
+		if($('#build_term').is(':checked')){
+			$('#build_shell').attr('disabled',false);		
+			if($('#build_shell').is(':checked')){
+				$('#build_xmodem').attr('disabled',false);
 			}
 		}
 	}
-	else if(!$('build_con_tcp').checked){
-		$('build_term').disabled = true;
-		$('build_shell').disabled = true;
-		$('build_xmodem').disabled = true;
+	else if(!$('#build_con_tcp').is(':checked')){
+		$('#build_term').attr('disabled',true);
+		$('#build_shell').attr('disabled',true);
+		$('#build_xmodem').attr('disabled',true);
 	}
 }
 
 function checked_con_tcp()
 {
-	if ($('build_con_tcp').checked) {
-		$('build_con_generic').checked = false;
-		$('build_term').disabled = false;
-		if($('build_term').checked){
-			$('build_shell').disabled = false;		
-			if($('build_shell').checked){
-				$('build_xmodem').disabled = false;
+	if ($('#build_con_tcp').is(':checked')) {
+		$('#build_con_generic').attr('checked',false);
+		$('#build_term').attr('disabled',false);
+		if($('#build_term').is(':checked')){
+			$('#build_shell').attr('disabled',false);		
+			if($('#build_shell').is(':checked')){
+				$('#build_xmodem').attr('disabled',false);
 			}
 		}	
 	}	
-	else if (!$('build_con_generic').checked){
-		$('build_term').disabled = true;
-		$('build_shell').disabled = true;
-		$('build_xmodem').disabled = true;
+	else if (!$('#build_con_generic').is(':checked')){
+		$('#build_term').attr('disabled',true);
+		$('#build_shell').attr('disabled',true);
+		$('#build_xmodem').attr('disabled',true);
 	}	
 }
 
 function checked_term()
 {
-	if($('build_term').checked){
-		$('build_shell').disabled = false;
+	if($('#build_term').is(':checked')){
+		$('#build_shell').attr('disabled',false);
 	}
 	else{
-		$('build_shell').disabled = true;
+		$('#build_shell').attr('disabled',true);
 	}
 }
 
 function checked_shell()
 {
-	if ($('build_shell').checked) {
-		$('build_xmodem').disabled = false;
+	if ($('#build_shell').is(':checked')) {
+		$('#build_xmodem').attr('disabled',false);
 	}
 	else{
-		$('build_xmodem').disabled = true;
+		$('#build_xmodem').attr('disabled',true);
 	}
 }
 
 function checked_ip()
 {
-	if ($('build_uip').checked) {
-		Element.show('ip_box');
-		$('build_dhcpc').disabled = false;
-		$('build_dns').disabled = false;
-		if ($('build_dns').checked) 
-			Element.show('dns_box');
+	if ($('#build_uip').is(':checked')) {
+		$('#ip_box').show();
+		$('#build_dhcpc').attr('disabled',false);
+		$('#build_dns').attr('disabled',false);
+		if ($('#build_dns').is(':checked')) 
+			$('#dns_box').show();
 		else 
-			Element.hide('dns_box');
+			$('#dns_box').hide();
 	}
 	else {
-		Element.hide('ip_box');
-		Element.hide('dns_box');
-		$('build_dhcpc').disabled = true;
-		$('build_dns').disabled = true;
+		$('#ip_box').hide();
+		$('#dns_box').hide();
+		$('#build_dhcpc').attr('disabled',true);
+		$('#build_dns').attr('disabled',true);
 	}
 }
 
 function checked_dns()
 {
-	if ($('build_dns').checked) {
-		Element.show('dns_box');
+	if ($('#build_dns').is(':checked')) {
+		$('#dns_box').show();
 	}
 	else{
-		Element.hide('dns_box');
+		$('#dns_box').hide();
 	}
 }
 
@@ -159,7 +159,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 
 
 <div id="create_page_build">
-	<%= f.form({action = makeURL({control='builder',act='files'}), onsubmit="$('send').disabled=true;Element.show('generating')"}) %>
+	<%= f.form({action = makeURL({control='builder',act='files'}), onsubmit="$('#send').attr('disabled',true);$('#generating').show()"})%>
 		<%= f.hidden_field({name='id', value=build.id}) %>
 		<%= f.hidden_field({name='created_at', value=build.created_at}) %>
 		<br>
@@ -175,7 +175,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 				<div id="box_title_build">
 					<div class="box_text_build"><%= locale_components.target_title %></div>
 				</div>
-				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("window.location.href='"..makeURL().."&target='+this.value+'&title='+$('title').value") or nil},BuildModel.TARGETS, build.configs.target) %></div>
+				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("window.location.href='"..makeURL().."&target='+this.value+'&title='+$('#title').val()") or nil},BuildModel.TARGETS, build.configs.target) %></div>
 			</div>
 			
 			<!--<div>
@@ -341,13 +341,13 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 						<%
 							local columns_files = { 
 													{key="id", label = locale_index.label_select, width=40, formatter="myActions", className="columnCenter"},
-													
-													{key="filename", label= locale_index.labels.filename,  sortable=true,width=360},
-													{key="category", label= locale_index.labels.file_type, sortable=true, width=123},
+													{key="id", label = locale_index.label_autorun, width=100, formatter="autorun", className="columnCenter"},
+													{key="filename", label= locale_index.labels.filename,  sortable=true,width=200},
+													{key="category", label= locale_index.labels.file_type, sortable=true, width=100},
 													{key="created_at", label=locale_index.labels.created_at, sortable=true, width=150},
 							}
 							
-							--{key="id", label = locale_index.label_autorun, width=100, formatter="autorun", className="columnCenter"},
+							
 							
 							extraFormatters = [[
 			                                
@@ -358,11 +358,11 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 			                                };
 			                                YAHOO.widget.DataTable.Formatter.myActions = this.actions;  
 											
-											/*
+											
 											this.autorun = function(elLiner, oRecord, oColumn, oData) {
 			                                    elLiner.innerHTML = "<input type='radio' name='autorun_file_id' value='"+oData['id']+" /> ";
 			                                };
-			                                YAHOO.widget.DataTable.Formatter.autorun = this.autorun;    */                                                     
+			                                YAHOO.widget.DataTable.Formatter.autorun = this.autorun;                                                        
 			                ]]
 							
 							local configs_files = {
@@ -370,7 +370,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 													serverPagination = false,
 													defaultSorting = 'filename',
 													paginatorPosition = "bottom",
-													rowsPerPage = 10,
+													rowsPerPage = 5,
 													rowsPerPageOptions = {5,10,15,20,30,40,60},
 			
 							}

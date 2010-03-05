@@ -158,8 +158,10 @@ function generate(id)
 		local name = build.title
 		local dir = checkDir()
 		local luaReports  = require "luaReports"
+		local configs = nil
 		local values = {}
 		if (build.configs ~= nil and type(build.configs) == "string") then
+			configs = assert(loadstring("return "..build.configs)())
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
 
@@ -213,8 +215,8 @@ function generate(id)
 		local scons_str = [[scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log.txt 2> log_errors.txt]]
     	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip ."
 		local complement = [[cd ]]..dir..[[;]]
-		build.configs.scons = scons_str
-		update(tableToString(build.configs), build.id)
+		configs.scons = scons_str
+		update(tableToString(configs), build.id)
     	os.execute(complement..scons_str)
 		os.execute(move_clear_str)  
 end
