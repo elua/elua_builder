@@ -39,7 +39,7 @@ locale_index = {
 				advanced = "Advanced",
 				mode = "Mode selection",
 				general = "General",
-				net ="Net",
+				net ="Network Options",
 				luarpc = "LuaRPC",
 	},
 	validator = {
@@ -58,6 +58,8 @@ locale_index = {
 locale_components = {
 	target_title = "Target Platform",
 	component_title = "eLua Components",
+	net_title = "Network Options",
+	luarpc_title = "LuaRPC",
 	toolchain_title = "Toolchain",
 	lua_optimize = "Lua Optimize RAM Flag",
 	labels = {
