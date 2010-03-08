@@ -34,6 +34,31 @@ body{
 			text-align:right;
 }
 
+.box_dns{
+			text-align:right;
+			background-color:#ffffff;
+			border-color: #ffffff;
+}
+
+#tabs {
+		width:752px;
+}
+
+#box_title_tabs {
+					background-color: #f2f2f2;
+					height:26px;
+					width:715px;
+					
+					padding:6px 0px 0px -20px;	
+					z-index:1000;	
+					text-align:left;
+					word-spacing: normal;
+					color:#000000;
+					font-family:"Arial";
+					font-size: 16px;
+					font-weight: bold;
+}
+
 #box_title_build {
 					background-color: #f2f2f2;
 					height:26px;
