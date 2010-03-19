@@ -205,8 +205,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 					<div>
 						<%
 							local columns_files = { 
-													{key="id", label = locale_index.label_select, width=40, formatter="myActions", className="columnCenter"},
-													{key="id", label = locale_index.label_autorun, width=100, formatter="autorun", className="columnCenter"},
+													{key="id", label = locale_index.label_select, width=20, formatter="myActions", className="columnCenter"},
 													{key="filename", label= locale_index.labels.filename,  sortable=true,width=200},
 													{key="category", label= locale_index.labels.file_type, sortable=true, width=100},
 													{key="created_at", label=locale_index.labels.created_at, sortable=true, width=150},
@@ -219,7 +218,7 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 			                                //--- COLUMN FORMATTERS
 			                                this.actions = function(elLiner, oRecord, oColumn, oData) {
 												
-			                                    elLiner.innerHTML = "<input type='checkbox' name='file_id' value='"+oData['id']+"' "+ (oData['checked'] == true?'checked':'') +" border='0' style='margin-bottom:5px;'/> ";
+			                                    elLiner.innerHTML = "<a href='javascript:add_file(" + oData['id'] + ",\""+oRecord.getData('filename')+"\",\""+oRecord.getData('category')+"\");'><img src=images/buttons/btn_novoprojeto.gif border=0 title=']]..locale_index.label_addfile..[['></a>";
 			                                };
 			                                YAHOO.widget.DataTable.Formatter.myActions = this.actions;  
 											
@@ -243,9 +242,41 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 							dt.showDataTable(configs_files, columns_files, datasource_files, nil, extraFormatters)	
 						%>
 					</div>
+					<script>
+			            var files = [];
+					    function add_file(id, filename, category,autorun){
+						     if(! files[id]){
+							 	var checked = autorun?'checked':'';
+						      	$('#file_list').append('<tr id="elem_'+id+'"><td align=center><input type=\'hidden\' name=\'file_id\' value=\''+id+'\' /><a href="#" onclick="remove_file(\''+id+'\');"><img src=\'images/buttons/cancel.png\' border=\'0\' style=\'vertical-align:middle;margin-right:5px;\' /></a></td><td align=center><input type="radio" name="autorun_file_id" value="'+id+'" '+checked+' onchange="toogle_check(this)" onclick="toogle_check(this)"></td><td>'+filename+'</td><td align=center>'+category+'</td></tr>');
+						      	files[id] = true;          
+						     }
+					    }
+					    function remove_file(id){
+							
+							$('#elem_'+id).remove();
+							files[id] = false; 
+					    }
+			    
+			     </script>
+			   <br />   
+			   <h3><%=locale_index.label_add_files%></h3>  
+			   <table id="file_list">
+					<th>	
+						<td width=60px align=center><b><%=locale_index.label_autorun%></b></td>
+						<td width=300px align=center><b><%=locale_index.labels.filename%></b></td>
+						<td width=160px align=center><b><%=locale_index.labels.file_type%></b></td>
+					</th>
+			    
+			   </table>
 				</div>
 			</div>	
-			
+			<script>
+				window.onload = function(){
+					<%for i,v in pairs(build_files)do%>
+					add_file(<%= v.id%>,'<%= v.filename%>','<%= v.category%>', <%= tostring(tonumber(v.id) == tonumber(build.configs.autorun_file_id))%>);
+					<% end %>
+				}
+			</script>
 			<!--Mode Selection-->
 			<div>
 				<div id="box_title_build">

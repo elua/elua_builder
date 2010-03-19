@@ -79,7 +79,7 @@ function checkDir()
 	return path
 end
 
-ROMFS_V07 = {
+SUGGESTED_ROMFS = {
 				{id="0.1",filename = 'adcpoll.lua', category= 'V0.7 File',created_at=""},
 				{id="0.2",filename = 'adcscope.lua', category= 'V0.7 File',created_at=""},
 				{id="0.3",filename = 'bisect.lua', category= 'V0.7 File',created_at=""},
@@ -106,3 +106,11 @@ ROMFS_V07 = {
 				{id="0.24",filename = 'tetrives.lua', category= 'V0.7 File',created_at=""}, 
 				{id="0.25",filename = 'tvbgone.lua', category= 'V0.7 File',created_at=""}, 
 			}
+
+function sugestedRomFSByID()
+	local temp = {}
+	for _,v in pairs(SUGGESTED_ROMFS)do
+		temp[v.id] = v
+	end
+	return temp
+end

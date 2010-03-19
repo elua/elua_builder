@@ -9,7 +9,7 @@ lfs = require("lfs")
 function getBuilds()
 	local UserModel = require "user.model"
 	user = UserModel.getCurrentUser()
-	local builds = db:selectall("*","builds","user_id = "..user.id)
+	local builds = db:selectall("*","builds","user_id = "..user.id,'order by created_at desc')
 	return builds
 end
 
@@ -213,10 +213,11 @@ function generate(id)
     	
     	-- Run scons
 		local scons_str = [[scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log.txt 2> log_errors.txt]]
-    	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -r *; mv ../build_"..build.id..".zip ."
+    	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -rf *; mv ../build_"..build.id..".zip ."
 		local complement = [[cd ]]..dir..[[;]]
 		configs.scons = scons_str
 		update(tableToString(configs), build.id)
+    	
     	os.execute(complement..scons_str)
 		os.execute(move_clear_str)  
 end

@@ -23,9 +23,9 @@ function repository()
 		end
 	end
 	if (query.only_user_files ~= "true")then
-		local romfs_v07 = FileModel.ROMFS_V07
+		local romfs = FileModel.SUGGESTED_ROMFS
 		
-		for _,v in pairs(romfs_v07) do
+		for _,v in pairs(romfs) do
 			table.insert(items,{id = {id = v.id, category = v.category}, filename = v.filename, category = v.category, created_at = v.created_at})
 		end
 	end	
@@ -101,7 +101,7 @@ function download()
     		open:close()
    		end
 	else
-		local romfs = FileModel.ROMFS_V06
+		local romfs = FileModel.SUGGESTED_ROMFS
 		local length_romfs = #romfs
 		
 		for i=1,length_romfs do

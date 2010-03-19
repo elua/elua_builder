@@ -17,6 +17,7 @@ end
 function files()	
 	build =  {}
 	id = cgilua.QUERY.id
+	build_files = {}
 	local UserModel = require "user.model"
 	local FileModel = require "file.model" 
 	local user = UserModel.getCurrentUser()
@@ -26,13 +27,12 @@ function files()
 	end
 	if tonumber(id) then
 		build = BuildModel.getBuild(id)
-		
 		if (build.configs ~= nil and type(build.configs) == "string") then
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
+		build_files = FileModel.getFilesByBuild(build.id) 
 		render("files.lp")
-	else
-			
+	else		
 		if isPOST() then
 			build = cgilua.POST
 			val = require "validation"
@@ -45,59 +45,33 @@ function files()
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
 		
 			if(validator:isValid())then
-				if (type(build.file_id) == "table") then
-					local length_build_file_id = #build.file_id
-					for i=1,length_build_file_id do
-						local file_id = build.file_id[i]
+				local build_obj = BuildModel.save(build)
+				if tonumber(build_obj.id) then
+					BuildModel.deleteFilesFromBuild(build_obj.id)
+					build.file_id = type(build.file_id) == "table" and build.file_id or {build.file_id}
+					local t = ''
+					local suggested_romfs = FileModel.sugestedRomFSByID()
+					for i,file_id in pairs(build.file_id) do
 						if string.sub(file_id,0,1)== '0' then
-							local romfs = FileModel.ROMFS_V07
-							local length_romfs = #romfs
-							for i=1,length_romfs do
-								local file_romfs = romfs[i]
-								if file_romfs.id == file_id then
-									filename = file_romfs.filename
-									BuildModel.copyPathFile(filename)
-									FileModel.save(filename)
-									file = FileModel.getFileByName(filename)
-									build.file_id[i]= file.id	
-								end
-							end	
-						end
-					end	
-					local build_obj = BuildModel.save(build)
-					BuildModel.deleteFilesFromBuild(build.id)
-					for _,file_id in pairs(build.file_id)do	
-						BuildModel.saveBuildFile(file_id,build_obj.id)
-					end
-				else
-					if string.sub(build.file_id,0,1)== '0' then
-						local romfs = FileModel.ROMFS_V07
-						local length_romfs = #romfs
-						for i=1,length_romfs do
-							local file_romfs = romfs[i]
-							if file_romfs.id == build.file_id then
+							local file_romfs = suggested_romfs[file_id]
+							if file_romfs ~= nil then
 								filename = file_romfs.filename
-								
 								BuildModel.copyPathFile(filename)
 								FileModel.save(filename)
-								file = FileModel.getFileByName(filename)
-								build.file_id = file.id	
+								local file = FileModel.getFileByName(filename)
+								build.file_id[i]= file.id
 							end
-						end	
-						local build_obj = BuildModel.save(build)
-						BuildModel.deleteFilesFromBuild(build.id)
-						BuildModel.saveBuildFile(build.file_id,build_obj.id)
-					else
-						local build_obj = BuildModel.save(build)
-						BuildModel.saveBuildFile(build.file_id,build_obj.id)		
-					end
-				end			
-				-- Generates a build				
-				BuildModel.generate(build.id)
+						end
+						BuildModel.saveBuildFile(build.file_id[i],build_obj.id)	
+					end	
+				end
+				-- Generates a build	
+				BuildModel.generate(build_obj.id)
 				redirect({control="builder",act="index"})
 			else				
 				build = {}
 				build.configs = cgilua.POST
+				build.title = cgilua.POST.title
 				flash.set('validationMessagesBuild',validator:htmlMessages())		
 				render("files.lp")
 			end
@@ -105,11 +79,11 @@ function files()
 			local target = cgilua.QUERY.target
 			build.configs = {}
 			if (target ~= nil and target ~= '')then
-				build.configs = BuildModel.PLATFORM[target]
-			else
-				
+				build.configs = BuildModel.PLATFORM[target]			
 			end
-			build.title = cgilua.QUERY.title			
+			local date = os.date()
+			build.title = cgilua.QUERY.title
+			build.title = (build.title == '' or build.title == nil) and "New Build "..date or build.title
 			render("files.lp")
 		end
 	end
