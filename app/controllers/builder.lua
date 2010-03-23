@@ -14,6 +14,17 @@ function index()
 	
 end
 
+function tabs_content()
+	BuildModel = require "builder.model"
+	local target = cgilua.POST.target
+	build = {}
+	build.configs = {}
+	if (target ~= nil and target ~= '')then
+		build.configs = BuildModel.PLATFORM[target]			
+	end
+	render('tabs_content.lp')
+end
+
 function files()	
 	build =  {}
 	id = cgilua.QUERY.id
@@ -72,18 +83,16 @@ function files()
 				build = {}
 				build.configs = cgilua.POST
 				build.title = cgilua.POST.title
+				build_files = cgilua.POST.file_id
 				flash.set('validationMessagesBuild',validator:htmlMessages())		
 				render("files.lp")
 			end
 		else
-			local target = cgilua.QUERY.target
 			build.configs = {}
-			if (target ~= nil and target ~= '')then
-				build.configs = BuildModel.PLATFORM[target]			
-			end
 			local date = os.date()
 			build.title = cgilua.QUERY.title
 			build.title = (build.title == '' or build.title == nil) and "New Build "..date or build.title
+			
 			render("files.lp")
 		end
 	end
