@@ -288,7 +288,7 @@ function PL(url, div_id,loadObj,func)
 	          });
 }
 
-function ajax_request(url,pars, div_id,loadObj,func)
+function ajax_request_old_prototype(url,pars, div_id,loadObj,func)
 {
 	showResponse = function(originalRequest)
 	        {
@@ -317,6 +317,21 @@ function ajax_request(url,pars, div_id,loadObj,func)
 				onLoading: open_loading(loadObj),
 	            onSuccess: showResponse
 	          });
+}
+
+function ajax_request(url, pars, div_id, loadObj, func){
+	$.ajax({
+		url: url,
+		global: false,
+		type: "POST",
+		data: (pars),
+		dataType: "html",
+		success: function(data){
+			$(div_id).html(data)
+			func();
+		}
+	}).responseText;
+	
 }
 
 function showHide(element,contentButtonID,contentOpen,ContentClose)
