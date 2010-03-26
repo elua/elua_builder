@@ -59,22 +59,26 @@ function files()
 				local build_obj = BuildModel.save(build)
 				if tonumber(build_obj.id) then
 					BuildModel.deleteFilesFromBuild(build_obj.id)
-					build.file_id = type(build.file_id) == "table" and build.file_id or {build.file_id}
-					local t = ''
-					local suggested_romfs = FileModel.sugestedRomFSByID()
-					for i,file_id in pairs(build.file_id) do
-						if string.sub(file_id,0,1)== '0' then
-							local file_romfs = suggested_romfs[file_id]
-							if file_romfs ~= nil then
-								filename = file_romfs.filename
-								BuildModel.copyPathFile(filename)
-								FileModel.save(filename)
-								local file = FileModel.getFileByName(filename)
-								build.file_id[i]= file.id
+					if build.file_id ~= nil and build.file_id ~= '' then
+						
+						build.file_id = type(build.file_id) == "table" and build.file_id or {build.file_id}
+						local t = ''
+						local suggested_romfs = FileModel.sugestedRomFSByID()
+						for i,file_id in pairs(build.file_id) do
+							if string.sub(file_id,0,1)== '0' then
+								local file_romfs = suggested_romfs[file_id]
+								if file_romfs ~= nil then
+									filename = file_romfs.filename
+									BuildModel.copyPathFile(filename)
+									FileModel.save(filename)
+									local file = FileModel.getFileByName(filename)
+									build.file_id[i]= file.id
+								end
 							end
+							BuildModel.saveBuildFile(build.file_id[i],build_obj.id)	
 						end
-						BuildModel.saveBuildFile(build.file_id[i],build_obj.id)	
-					end	
+					
+					end
 				end
 				-- Generates a build	
 				BuildModel.generate(build_obj.id)
