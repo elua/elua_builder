@@ -166,7 +166,7 @@ function generate(id)
 		end
 
 		setDefaultValues(build.configs)
-		build.configs = change_true_false(build.configs)
+		
 		--for i,v in pairs(change_true_false(build.configs))do
 		--	cgilua.put(i,(v),"<br>")
 		--end
@@ -188,10 +188,13 @@ function generate(id)
 				os.execute("cp -r -u "..path.."/rom_fs/"..v.filename.." "..dir.."/romfs")
 			end	
 		end
-		local platform = platforms_by_targets()[build.configs.target]
 		
+		local platform = platforms_by_targets()[build.configs.target]
+		build.configs = change_true_false(build.configs)
 		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", {files = files},"string")
 		--error(sconstructStr)
+		local build_configs = CONFIGS
+		local platform_confStr =luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build_configs,"string")
 		local platform_confStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build.configs,"string")
 		
 		local destination = io.open(dir.."/SConstruct", "w")
@@ -239,6 +242,21 @@ PLATFORM["STM3210E-EVAL"] = {target ='STM3210E-EVAL', toolchain = 'default', bui
 PLATFORM["ATEVK1100"] = {target ='ATEVK1100', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='false'}
 PLATFORM["ELUA-PUC"] = {target ='ELUA-PUC', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='true'}
 --PLATFORM["MBED"] = {target ='MBED', toolchain = 'default', build_xmodem='true', build_shell='true', build_romfs='true', build_mmcfs='false', build_term='true',build_uip='false',build_dhcpc='false',build_dns='false',build_con_generic='true',build_con_tcp='false',build_adc='false', build_rpc='true'}
+
+CONFIGS = {
+			build_xmodem='//', 
+			build_shell='//', 
+			build_romfs='//', 
+			build_mmcfs='//', 
+			build_term='//',
+			build_uip='//',
+			build_dhcpc='//',
+			build_dns='//',
+			build_con_generic='//',
+			build_con_tcp='//',
+			build_adc='//', 
+			build_rpc='//',
+}
 
 TARGETS = {
 			{value ="EK-LM3S8962", platform = 'lm3s', disabled = false},

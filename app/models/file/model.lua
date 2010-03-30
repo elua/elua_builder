@@ -32,6 +32,28 @@ function getFilesByBuildIndex(build_id)
 	end
 end
 
+
+function getFilesByIDs(file_ids)
+	file_ids = tonumber(file_ids) and {file_ids} or file_ids
+	if (type(file_ids) == "table")then
+		
+		local UserModel = require "user.model"
+		local user = UserModel.getCurrentUser()
+		local files = db:selectall("*","files","user_id = "..user.id.." and id IN ("..table.concat(file_ids,",")..")")
+		
+		local temp_selected_ROMFS = {}
+
+		for _,v in pairs(file_ids)do 
+			if string.sub(v,0,1)== '0' then	temp_selected_ROMFS[v] = true end
+		end
+		
+		for _,v in pairs(SUGGESTED_ROMFS)do 
+			if temp_selected_ROMFS[v.id] then table.insert(files,v)	end 
+		end
+		return files
+	end
+
+end
 function getFileByName(filename)
 	local UserModel = require "user.model"
 	filename = sqlI.sqlInjection(filename,"string")

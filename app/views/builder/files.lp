@@ -245,16 +245,15 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 					</div>
 					<script>
 			            var files = [];
-					    function add_file(id, filename, category,autorun){
+					    function add_file(id, filename, category, autorun){
 						     if(! files[id]){
 							 	var checked = autorun?'checked':'';
-						      	$('#file_list').append('<tr id="elem_'+id+'"><td align=center><input type=\'hidden\' name=\'file_id\' value=\''+id+'\' /><a href="#" onclick="remove_file(\''+id+'\');"><img src=\'images/buttons/cancel.png\' border=\'0\' style=\'vertical-align:middle;margin-right:5px;\' /></a></td><td align=center><input type="radio" name="autorun_file_id" value="'+id+'" '+checked+' onchange="toogle_check(this)" onclick="toogle_check(this)"></td><td>'+filename+'</td><td align=center>'+category+'</td></tr>');
-						      	files[id] = true;          
+						      	$('#file_list').append('<tr id="id"><td align=center><input type=\'hidden\' name=\'file_id\' value=\''+id+'\' /><a href="#" onclick="remove_file(\''+id+'\');"><img src=\'images/buttons/cancel.png\' border=\'0\' style=\'vertical-align:middle;margin-right:5px;\' /></a></td><td align=center><input type="radio" name="autorun_file_id" value="'+id+'" '+checked+' onchange="toogle_check(this)" onclick="toogle_check(this)"></td><td>'+filename+'</td><td align=center>'+category+'</td></tr>');
+						      	files[id] = true;      
 						     }
 					    }
 					    function remove_file(id){
-							
-							$('#elem_'+id).remove();
+							$('#id').remove();
 							files[id] = false; 
 					    }
 			    
