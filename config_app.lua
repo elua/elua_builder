@@ -28,7 +28,7 @@ CONFIG.MVC_WEB = CONFIG.PATH.."/app/web/"
 CONFIG.MVC_TEMPLATES = CONFIG.PATH.."/app/templates/"
 CONFIG.MVC_TMP = CONFIG.PATH.."/tmp/"
 CONFIG.MVC_REPORTS = CONFIG.PATH.."/app/reports/"
-CONFIG.MVC_USERS = CONFIG.PATH.."/app/users/"
+CONFIG.MVC_USERS = CONFIG.PATH.."/users/"
 CONFIG.ELUA_BASE = CONFIG.PATH.."/elua_src_base/"
 CONFIG.APP_DOMAIN = "ubuntu/carlos-elua_builder/start.lua"
 
