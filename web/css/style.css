@@ -348,10 +348,37 @@ tbody {
 	position:absolute;
 	text-align: center;
 	width:300px; 
-	height:100px;
-	top:500px;
+	height:160px;
+	top:250px;
 	left:50%;
 	margin-left:-150px;
 	background-color:#ffffff;
 	border: 1px solid #c0c0c0;
 }
+
+.box_file_list {
+					position:absolute;
+					width:595px; 
+					height:auto;
+					top:70px;
+					left:50%;
+					margin-left:-300px;
+					background-color:#ffffff;
+					border: 1px solid #c0c0c0;
+}
+
+.background_box {
+					position:absolute;
+					width:900px; 
+					height:800px;
+					top:0px;
+					left:50%;
+					margin-left:-450px;
+					background-color:transparent;
+					border: 0px solid #c0c0c0;
+}
+
+.table_align {
+				width:782px; 
+}
+
