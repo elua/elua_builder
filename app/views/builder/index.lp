@@ -67,7 +67,7 @@ function confirmDeleteBuild(id)
 						paginatorID = "paginatorBuilds",
 						paginatorPosition = "bottom",
 						rowsPerPage = 10,
-						rowsPerPageOptions = {5,10,15,20,30,40,60},
+						rowsPerPageOptions = {5,10,15,20,25},
 
 		}
 		local datasource_builds = makeURL({control='builder',act='repository'})
@@ -114,7 +114,7 @@ function confirmDeleteBuild(id)
 						paginatorID = "paginatorFiles",
 						paginatorPosition = "bottom",
 						rowsPerPage = 10,
-						rowsPerPageOptions = {5,10,15,20,30,40,60},
+						rowsPerPageOptions = {5,10,15,20,25},
 
 		}
 		local datasource_files = makeURL({control='files',act='repository'})

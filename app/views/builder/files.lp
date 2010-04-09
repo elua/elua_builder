@@ -165,6 +165,14 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 		alert (errorString);
 }
 
+function box_view(value){
+	$('#background_box').show();
+}
+
+function box_close(){
+	$('#background_box').hide();
+	$('#view_file_list').attr('checked',false);
+}
 </script>
 
 <% if flash.get("validationMessagesBuild") ~= nil then %>
@@ -199,50 +207,76 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 			<!--Files ROMFS -->
 			<div>
 				<div id="box_title_build">
-					<div class="box_text_build"><%=locale_index.files_romfs_title%></div>
-				</div>
-				<div class="build_components">
-					<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
-					<div>
-						<%
-							local columns_files = { 
-													{key="id", label = locale_index.label_select, width=20, formatter="myActions", className="columnCenter"},
-													{key="filename", label= locale_index.labels.filename,  sortable=true,width=200},
-													{key="category", label= locale_index.labels.file_type, sortable=true, width=100},
-													{key="created_at", label=locale_index.labels.created_at, sortable=true, width=150},
-							}
-							
-							
-							
-							extraFormatters = [[
-			                                
-			                                //--- COLUMN FORMATTERS
-			                                this.actions = function(elLiner, oRecord, oColumn, oData) {
+					<div class="box_text_build">
+						<%=locale_index.files_romfs_title%>
+						<div class="links_right">
+							<a href="javascript:void(0);" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list" onclick="box_view();">
+								<img src="images/buttons/btn_novoprojeto.gif" border=0><b><%=locale_index.labels.box_view%></b>
+							</a>
+						</div>
+					</div>		
+				</div><br>
+				<table id="file_list" class="table_align">
+					<th>	
+						<td width=15% align=center><b><%=locale_index.label_autorun%></b></td>
+						<td width=45% align=center><b><%=locale_index.labels.filename%></b></td>
+						<td width=35% align=center><b><%=locale_index.labels.file_type%></b></td>
+					</th>
+				</table><br>
+				<script>
+					window.onload = function(){
+						<%for i,v in pairs(build_files)do%>
+						add_file(<%= v.id%>,'<%= v.filename%>','<%= v.category%>', <%= tostring(tonumber(v.id) == tonumber(build.configs.autorun_file_id))%>);
+						<% end %>
+					}
+				</script>
+			</div>	
+			<div class="background_box" style="display:none;" id="background_box">	
+				<div class="box_file_list" id='files_list'>
+					<div class="build_components">
+						<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
+						<div class="links_right"><a href="javascript:void(0);" title="<%=locale_index.labels.close_box%>" onclick="box_close();"><img src="images/buttons/ksame.png" border=0></a></div>
+						<div>
+							<%
+								local columns_files = { 
+														{key="id", label = locale_index.label_select, width=20, formatter="myActions", className="columnCenter"},
+														{key="filename", label= locale_index.labels.filename,  sortable=true,width=200},
+														{key="category", label= locale_index.labels.file_type, sortable=true, width=100},
+														{key="created_at", label=locale_index.labels.created_at, sortable=true, width=150},
+								}
+								
+								
+								
+								extraFormatters = [[
+				                                
+				                                //--- COLUMN FORMATTERS
+				                                this.actions = function(elLiner, oRecord, oColumn, oData) {
+													
+				                                    elLiner.innerHTML = "<a href='javascript:add_file(" + oData['id'] + ",\""+oRecord.getData('filename')+"\",\""+oRecord.getData('category')+"\");'><img src=images/buttons/btn_novoprojeto.gif border=0 title=']]..locale_index.label_addfile..[['></a>";
+				                                };
+				                                YAHOO.widget.DataTable.Formatter.myActions = this.actions;  
 												
-			                                    elLiner.innerHTML = "<a href='javascript:add_file(" + oData['id'] + ",\""+oRecord.getData('filename')+"\",\""+oRecord.getData('category')+"\");'><img src=images/buttons/btn_novoprojeto.gif border=0 title=']]..locale_index.label_addfile..[['></a>";
-			                                };
-			                                YAHOO.widget.DataTable.Formatter.myActions = this.actions;  
-											
-											
-											this.autorun = function(elLiner, oRecord, oColumn, oData) {
-			                                    elLiner.innerHTML = "<input type='radio' name='autorun_file_id' value='"+oData['id']+"' onchange='toogle_check(this)' onclick='toogle_check(this)'> ";
-			                                };
-			                                YAHOO.widget.DataTable.Formatter.autorun = this.autorun;                                                        
-			                ]]
-							
-							local configs_files = {
-													dataSetID = "dataSetFiles",
-													serverPagination = false,
-													defaultSorting = 'filename',
-													paginatorPosition = "bottom",
-													rowsPerPage = 5,
-													rowsPerPageOptions = {5,10,15,20,30,40,60},
-			
-							}
-							local datasource_files = makeURL({control='files',act='repository',build_id = id })
-							dt.showDataTable(configs_files, columns_files, datasource_files, nil, extraFormatters)	
-						%>
-					</div>
+												
+												this.autorun = function(elLiner, oRecord, oColumn, oData) {
+				                                    elLiner.innerHTML = "<input type='radio' name='autorun_file_id' value='"+oData['id']+"' onchange='toogle_check(this)' onclick='toogle_check(this)'> ";
+				                                };
+				                                YAHOO.widget.DataTable.Formatter.autorun = this.autorun;                                                        
+				                ]]
+								
+								local configs_files = {
+														dataSetID = "dataSetFiles",
+														serverPagination = false,
+														defaultSorting = 'filename',
+														paginatorPosition = "bottom",
+														rowsPerPage = 15,
+														rowsPerPageOptions = {5,10,15,20,25},
+				
+								}
+								local datasource_files = makeURL({control='files',act='repository',build_id = id })
+								dt.showDataTable(configs_files, columns_files, datasource_files, nil, extraFormatters)	
+							%>
+						</div>
+					</div>					
 					<script>
 			            var files = [];
 					    function add_file(id, filename, category, autorun){
@@ -256,27 +290,9 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 							$('#id').remove();
 							files[id] = false; 
 					    }
-			    
-			     </script>
-			   <br />   
-			   <h3><%=locale_index.label_add_files%></h3>  
-			   <table id="file_list">
-					<th>	
-						<td width=60px align=center><b><%=locale_index.label_autorun%></b></td>
-						<td width=300px align=center><b><%=locale_index.labels.filename%></b></td>
-						<td width=160px align=center><b><%=locale_index.labels.file_type%></b></td>
-					</th>
-			    
-			   </table>
+				    </script>
 				</div>
-			</div>	
-			<script>
-				window.onload = function(){
-					<%for i,v in pairs(build_files)do%>
-					add_file(<%= v.id%>,'<%= v.filename%>','<%= v.category%>', <%= tostring(tonumber(v.id) == tonumber(build.configs.autorun_file_id))%>);
-					<% end %>
-				}
-			</script>
+			</div>
 			<!--Mode Selection-->
 			<div>
 				<div id="box_title_build">

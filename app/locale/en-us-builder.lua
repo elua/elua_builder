@@ -43,6 +43,8 @@ locale_index = {
 				general = "General",
 				net ="Network Options",
 				luarpc = "LuaRPC",
+				box_view = "Add Files",
+				close_box = "Close",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",
