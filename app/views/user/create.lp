@@ -21,7 +21,7 @@
 	<%= f.form({action=makeURL({control='user',act='register'})}) %>
 		<div class=""><%= locale_create.labels.name %>:<span class="required">*</span></span></div> <%= f.text_field({name='name', class="field name_field", value = user.name, maxlength = 80 }) %> <br><br>
 		<div class=""><%= locale_create.labels.email %>:<span class="required">*</span></div> <%= f.text_field({name='email',class="field name_field", value = user.email, maxlength = 80}) %> <br><br>
-		<div class=""><%= locale_create.labels.login %>:<span class="required">*</span></div> <%= f.text_field({name='login', class="field login_field", value = user.login, maxlength = 10}) %> <br><br>
+		<div class=""><%= locale_create.labels.login %>:<span class="required">*</span></div> <%= f.text_field({name='login', class="field login_field", value = user.login, maxlength = 30}) %> <br><br>
 		<div class=""><%= locale_create.labels.passwd %>:<span class="required">*</span></div> <%= f.password_field({name='passwd', class="field login_field", value = user.password, maxlength = 12}) %> <br><br>
 		<div class=""><%= locale_create.labels.co_passwd %>:<span class="required">*</span></div> <%= f.password_field({name='co_passwd', class="field login_field", value = "", maxlength = 12}) %> <br><br>
 		<div class=""><%= locale_create.labels.country %>:</div><%=f.select({name='country', class="select_field", prompt = locale_create.country_prompt}, User.COUNTRY, user.country)%> <br><br>

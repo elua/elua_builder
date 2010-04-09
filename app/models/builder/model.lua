@@ -217,7 +217,7 @@ function generate(id)
     	-- Run scons
 		local scons_str = [[scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log.txt 2> log_errors.txt;]]
     	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -rf *; mv ../build_"..build.id..".zip ."
-		local complement = [[export PATH=/usr/local/cross-cortex/bin:/usr/local/cross-cortex:$PATH;cd ]]..dir..[[;]]
+		local complement = [[export PATH=/usr/local/cross-cortex/bin:/usr/local/cross-cortex:/usr/local/cross-arm/bin:/usr/local/cross-arm:$PATH;cd ]]..dir..[[;]]
 		configs.scons = scons_str
 		update(tableToString(configs), build.id)
     	

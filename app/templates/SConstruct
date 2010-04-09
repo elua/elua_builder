@@ -26,6 +26,26 @@ toolchain_list = {
     'cross_lua' : 'float_arm 64',
     'cross_lualong' : 'int 32'
   },
+  'arm-gcc-79' : { 
+    'compile' : 'arm-elf-gcc-79', 
+    'link' : 'arm-elf-ld-79', 
+    'asm' : 'arm-elf-as-79', 
+    'bin' : 'arm-elf-objcopy-79', 
+    'size' : 'arm-elf-size-79',
+    'cross_cpumode' : 'little',
+    'cross_lua' : 'float_arm 64',
+    'cross_lualong' : 'int 32'
+  },
+  'arm-gcc-cortex-m3' : { 
+    'compile' : 'arm-elf-gcc-cortex-m3', 
+    'link' : 'arm-elf-ld-cortex-m3', 
+    'asm' : 'arm-elf-as-cortex-m3', 
+    'bin' : 'arm-elf-objcopy-cortex-m3', 
+    'size' : 'arm-elf-size-cortex-m3',
+    'cross_cpumode' : 'little',
+    'cross_lua' : 'float_arm 64',
+    'cross_lualong' : 'int 32'
+  },
   'arm-eabi-gcc' : {
     'compile' : 'arm-eabi-gcc',
     'link' : 'arm-eabi-ld',
@@ -68,6 +88,7 @@ toolchain_list = {
   }
 }
 
+
 # Toolchain Aliases
 toolchain_list['devkitarm'] = toolchain_list['arm-eabi-gcc']
 
@@ -75,16 +96,17 @@ toolchain_list['devkitarm'] = toolchain_list['arm-eabi-gcc']
 # The first toolchain in the toolchains list is the default one
 # (the one that will be used if none is specified)
 platform_list = {  
-  'at91sam7x' : { 'cpus' : [ 'AT91SAM7X256', 'AT91SAM7X512' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
-  'lm3s' : { 'cpus' : [ 'LM3S8962', 'LM3S6965', 'LM3S6918', 'LM3S9B92' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
-  'str9' : { 'cpus' : [ 'STR912FAW44' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'at91sam7x' : { 'cpus' : [ 'AT91SAM7X256', 'AT91SAM7X512' ], 'toolchains' : [ 'arm-gcc-79', 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'lm3s' : { 'cpus' : [ 'LM3S8962', 'LM3S6965', 'LM3S6918', 'LM3S9B92' ], 'toolchains' : [ 'arm-gcc-cortex-m3', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'str9' : { 'cpus' : [ 'STR912FAW44' ], 'toolchains' : [ 'arm-gcc-79', 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
   'i386' : { 'cpus' : [ 'I386' ], 'toolchains' : [ 'i686-gcc' ] },
   'sim' : { 'cpus' : [ 'LINUX' ], 'toolchains' : [ 'i686-gcc' ] },
-  'lpc288x' : { 'cpus' : [ 'LPC2888' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
-  'str7' : { 'cpus' : [ 'STR711FR2' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
-  'stm32' : { 'cpus' : [ 'STM32F103ZE', 'STM32F103RE' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'lpc288x' : { 'cpus' : [ 'LPC2888' ], 'toolchains' : [ 'arm-gcc-79', 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'str7' : { 'cpus' : [ 'STR711FR2' ], 'toolchains' : [ 'arm-gcc-79', 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'stm32' : { 'cpus' : [ 'STM32F103ZE', 'STM32F103RE' ], 'toolchains' : [ 'arm-gcc-79', 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
   'avr32' : { 'cpus' : [ 'AT32UC3A0512' ], 'toolchains' : [ 'avr32-gcc' ] },
-  'lpc24xx' : { 'cpus' : [ 'LPC2468' ], 'toolchains' : [ 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] }
+  'lpc24xx' : { 'cpus' : [ 'LPC2468' ], 'toolchains' : [ 'arm-gcc-79', 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] },
+  'lpc17xx' : { 'cpus' : [ 'LPC1768' ], 'toolchains' : [ 'arm-gcc-cortex-m3', 'arm-gcc', 'codesourcery', 'devkitarm', 'arm-eabi-gcc' ] }
 }
 
 # List of board/CPU combinations
@@ -102,7 +124,8 @@ board_list = { 'SAM7-EX256' : [ 'AT91SAM7X256', 'AT91SAM7X512' ],
                'ATEVK1100' : [ 'AT32UC3A0512' ],
                'ET-STM32' : [ 'STM32F103RE' ],
                'EAGLE-100' : [ 'LM3S6918' ],
-               'ELUA-PUC' : ['LPC2468' ]
+               'ELUA-PUC' : ['LPC2468' ],
+               'MBED' : ['LPC1768']
             }
 
 # ROMFS file list "groups"
@@ -128,6 +151,7 @@ file_list = { 'SAM7-EX256' : [ 'builds_files' ],
               'ET-STM32' : [ 'builds_files' ],
               'EAGLE-100' : [ 'builds_files' ],
               'ELUA-PUC' : [ 'builds_files' ],
+			  'MBED' : [ 'builds_files' ],
 }
 
 # Variants: board = <boardname>
