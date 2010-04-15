@@ -12,23 +12,10 @@ function repository()
 	local query = cgilua.QUERY
 	local build_id = cgilua.QUERY.build_id
 	local FileModel = require("file.model")
-	
-	local items = FileModel.getFiles()
-	local build_files_index = FileModel.getFilesByBuildIndex(build_id)
-	for _,v in pairs(items)do
-		if type(build_files_index) == "table" then
-			v.id = {id = v.id, checked = build_files_index[v.id]}
-		else
-			v.id = {id = v.id, checked = false}
-		end
+	local items = FileModel.getAllFiles()
+	for i,v in pairs(items)do
+		v.id  = v.id..'_'..v.category_id
 	end
-	if (query.only_user_files ~= "true")then
-		local romfs = FileModel.SUGGESTED_ROMFS
-		
-		for _,v in pairs(romfs) do
-			table.insert(items,{id = {id = v.id, category = v.category}, filename = v.filename, category = v.category, created_at = v.created_at})
-		end
-	end	
 	local DT = require("dataTable")
 	local rep = DT.repository:new(items,{startIndex=startIndex,results=results,sort=sort,dir=dir})
 	 
@@ -71,13 +58,13 @@ function download()
 	local UserModel = require "user.model"
 	local FileModel = require "file.model" 
 	local id = cgilua.QUERY.id
-	local user = UserModel.getCurrentUser()
-	local file = db:selectall("*","files","id = "..id)
-	if type(file[1])=='table' then
-		local filename = file[1].filename
+	local file = FileModel.getFileByID(id)
+	if file.category_id == tonumber(1) then
+		local user = UserModel.getCurrentUser()
+		local user_file = db:selectall("*","files","id = "..tonumber(file.id))
+		local filename = user_file[1].filename
 		io:tmpfile(CONFIG.MVC_TMP)
 		open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/rom_fs/"..filename, "rb")
-
    		if (open==nil) then --ops, something went wrong, file does not exists!
     		cgilua.put("<h2>".."The selected file does not exist".."</h2>")
    		else
@@ -103,18 +90,17 @@ function download()
     		open:close()
    		end
 	else
-		local romfs = FileModel.SUGGESTED_ROMFS
+		local romfs = FileModel.getSuggestedFiles()
 		local length_romfs = #romfs
-		
 		for i=1,length_romfs do
-			file_romfs = romfs[i]
-			if file_romfs.id == id then
-				filename = file_romfs.filename
-				
+			if romfs[i].id == file.id then
+				filename = romfs[i].filename	
 			end
 		end
+		local category = file.category_id	
+		local category = FileModel.categoryNameById(file.category_id)
 		io:tmpfile(CONFIG.MVC_TMP)
-		open, errorMsg =io.open(CONFIG.ELUA_BASE..'romfs/'..filename, "rb")
+		open, errorMsg =io.open(CONFIG.MVC_ROMFS..category.."/"..filename, "rb")
 		if (open==nil) then --ops, something went wrong, file does not exists!
 	    	cgilua.put("<h2>".."The selected file does not exist".."</h2>")
 	   	else

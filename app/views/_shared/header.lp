@@ -13,6 +13,8 @@
 		<% loadJS('lib/jquery/ui.core.js')%>
 		<% loadJS('lib/jquery/ui.tabs.js')%>
 		<% loadCSS('lib/jquery/css/ui.all.css')%>
+		<% loadJS('lib/jquery/ui.draggable.js') %>
+
 	<% else %>
 		<% loadJS('lib/prototype-1.6.0.2.js') %>
 		<% loadJS('lib/effects.js') %>

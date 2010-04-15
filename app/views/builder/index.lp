@@ -96,10 +96,10 @@ function confirmDeleteBuild(id)
                                 
                                 //--- COLUMN FORMATTERS
                                 this.action = function(elLiner, oRecord, oColumn, oData) {
-									elLiner.innerHTML += " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oRecord.getData('id')['id']+"'><img src=images/buttons/download.png border=0 title=]]..locale_index.label_download..[[></a>";
-									if (oRecord.getData('category') != 'V0.6 File')
+									elLiner.innerHTML += " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oRecord.getData('id')+"'><img src=images/buttons/download.png border=0 title=]]..locale_index.label_download..[[></a>";
+									if (oRecord.getData('category') == 'User file')
 									{
-                                    	elLiner.innerHTML += "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oRecord.getData('id')['id']+")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
+                                    	elLiner.innerHTML += "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oRecord.getData('id')+")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
 									}
 									
 									

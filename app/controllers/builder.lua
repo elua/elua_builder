@@ -41,7 +41,7 @@ function files()
 		if (build.configs ~= nil and type(build.configs) == "string") then
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
-		build_files = FileModel.getFilesByBuild(build.id) 
+		build_files = FileModel.getFilesByBuild(build.id)
 		render("files.lp")
 	else		
 		if isPOST() then
@@ -55,15 +55,13 @@ function files()
 			
 			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
-		
+			
 			if(validator:isValid())then
 				local build_obj = BuildModel.save(build)
 				if tonumber(build_obj.id) then
 					BuildModel.deleteFilesFromBuild(build_obj.id)
-					if build.file_id ~= nil and build.file_id ~= '' then
-						
-						build.file_id = type(build.file_id) == "table" and build.file_id or {build.file_id}
-						local t = ''
+					if build.file_id ~= nil and build.file_id ~= '' then					
+						build_files = FileModel.getFilesByIDs(build.file_id)
 						local suggested_romfs = FileModel.sugestedRomFSByID()
 						for i,file_id in pairs(build.file_id) do
 							if string.sub(file_id,0,1)== '0' then
@@ -89,7 +87,7 @@ function files()
 				build.configs = cgilua.POST
 				build.title = cgilua.POST.title
 
-				build_files = FileModel.getFilesByIDs(build.file_id)
+				build_files = FileModel.getFilesByIDs(build.file_id) or {}
 				
 				--build_files = cgilua.POST.file_id
 				flash.set('validationMessagesBuild',validator:htmlMessages())		

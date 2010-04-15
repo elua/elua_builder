@@ -174,6 +174,8 @@ function generate(id)
 		local UserModel = require "user.model"
 		local user = UserModel.getCurrentUser()
 		os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
+		-- removing files
+		os.execute("rm -r "..dir.."/romfs/*")
 		
 		-- copy romfs files
 		local FileModel = require "file.model"
@@ -216,7 +218,7 @@ function generate(id)
     	
     	-- Run scons
 		local scons_str = [[scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log.txt 2> log_errors.txt;]]
-    	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -rf *; mv ../build_"..build.id..".zip ."
+    	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip romfs/* *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -rf *; mv ../build_"..build.id..".zip ."
 		local complement = [[export PATH=/usr/local/cross-cortex/bin:/usr/local/cross-cortex:/usr/local/cross-arm/bin:/usr/local/cross-arm:$PATH;cd ]]..dir..[[;]]
 		configs.scons = scons_str
 		update(tableToString(configs), build.id)
