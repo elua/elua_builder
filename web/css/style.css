@@ -59,7 +59,7 @@ body{
 					font-weight: bold;
 }
 
-#box_title_build {
+.box_title_build {
 					background-color: #f2f2f2;
 					height:26px;
 					width:780px;
@@ -380,5 +380,9 @@ tbody {
 
 .table_align {
 				width:782px; 
+}
+
+.box_size{
+			width:100%;
 }
 
