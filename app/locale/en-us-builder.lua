@@ -46,6 +46,7 @@ locale_index = {
 				box_view = "Add Files",
 				close_box = "Close",
 				files_list = "Stored Files",
+				home = "Home",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",

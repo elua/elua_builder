@@ -54,8 +54,8 @@ function save(values)
 	return build
 end
 
-function saveBuildFile(file_id,build_id)
-	local build_file = BuildFile:new({file_id = file_id,build_id = build_id})
+function saveBuildFile(file_id,build_id, category_id)
+	local build_file = BuildFile:new({file_id = file_id,build_id = build_id, user_file = category_id})
 	return build_file:save()
 end
 
@@ -73,13 +73,14 @@ function checkNotExistBuild(title)
 	return true
 end
 
-function copyPathFile(filename)
+function copyPathSuggestedFile(id)
 	local UserModel = require "user.model"
 	local FileModel = require "file.model" 
+	local file_id = id
 	local user = UserModel.getCurrentUser()
-	local dir = FileModel.checkDir()
 	local path = CONFIG.MVC_USERS..user.login
-	os.execute("cp -u "..CONFIG.ELUA_BASE..'romfs/'..filename.." "..path.."/rom_fs/"..filename.."")
+	local suggested_file = FileModel.getSuggestedFile(file_id)
+	os.execute("cp -u "..CONFIG.MVC_ROMFS..suggested_file.category.."/"..suggested_file.filename" "..path.."/rom_fs/"..suggested_file.filename"")
 end
 
 function setDefaultValues(build)
@@ -153,8 +154,8 @@ local function setDefaultValues(configs)
 	end
 end
 
-function generate(id)
-		local build = getBuild(tonumber(id))
+function generate(build_obj)
+		local build = getBuild(tonumber(build_obj.id))
 		local name = build.title
 		local dir = checkDir()
 		local luaReports  = require "luaReports"

@@ -26,7 +26,7 @@
 
 <div id="block">
 	<!-- Logo -->
-	<div class="logo"><img src="images/logo.png"></div>
+	<div class="logo"><a href="<%= makeURL({control="builder", act="index"})%>"><img src="images/logo.png" label="<%=locale_index.labels.home%>" border=0></a></div>
 	<!-- Central Box -->
 	<div id="top_block"></div>
 	<div id="bg_block">

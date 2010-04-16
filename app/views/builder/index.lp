@@ -83,7 +83,16 @@ function confirmDeleteBuild(id)
 		</form> 
 	</div><br><br>
 <div>
-<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
+<div>
+	<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
+	<div id="notice">
+		<%= flash.get("removeSucessMessages")%></div>
+		<% if flash.get("removefailureMessages") ~= nil then %>
+			<div id="errorExplanation"><%= flash.get("removefailureMessages")%> </div>
+		<% end %>
+	</div>	
+</div>
+
 	<%
 		local columns_files = { 
 							{key="id", label = locale_index.label_actions, width=80, formatter="action", className="columnCenter"},
@@ -99,7 +108,7 @@ function confirmDeleteBuild(id)
 									elLiner.innerHTML += " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oRecord.getData('id')+"'><img src=images/buttons/download.png border=0 title=]]..locale_index.label_download..[[></a>";
 									if (oRecord.getData('category') == 'User file')
 									{
-                                    	elLiner.innerHTML += "<a href='javascript:void(0)' onClick='confirmDeleteFile("+oRecord.getData('id')+")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
+                                    	elLiner.innerHTML += "<a href='javascript:void(0)' onClick='confirmDeleteFile(\""+oRecord.getData('id')+"\")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
 									}
 									
 									

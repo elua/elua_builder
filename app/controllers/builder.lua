@@ -46,7 +46,6 @@ function files()
 	else		
 		if isPOST() then
 			build = cgilua.POST
-			
 			val = require "validation"
 			validator = val.implement.new(build)
 			build = BuildModel.setDefaultValues(build)
@@ -61,8 +60,26 @@ function files()
 				if tonumber(build_obj.id) then
 					BuildModel.deleteFilesFromBuild(build_obj.id)
 					if build.file_id ~= nil and build.file_id ~= '' then					
-						build_files = FileModel.getFilesByIDs(build.file_id)
-						local suggested_romfs = FileModel.sugestedRomFSByID()
+						file_id = type(build.file_id) == "table" and build.file_id or {build.file_id}
+						--local build_files = FileModel.getFilesByIDs(build.file_id)
+						--local suggested_romfs = FileModel.sugestedRomFSByID()
+						local size_file_id = #file_id
+						local files = {}
+						for i=1,size_file_id do
+							files[i] = FileModel.getFileByID(file_id[i])
+							if tonumber(files[i].category_id) == 1 then
+								--BuildModel.copyPathSuggestedFile(files[i].id)
+								open,filename = FileModel.getDirFile(files[i].id, files[i].category_id)
+								FileModel.save(filename)
+								BuildModel.saveBuildFile(files[i].id,build_obj.id, files[i].category_id)
+							else
+								BuildModel.copyPathSuggestedFile(files[i].id)
+								open,filename = FileModel.getDirFile(files[i].id, files[i].category_id)	
+								BuildModel.saveBuildFile(files[i].id,build_obj.id, files[i].category_id)
+							end
+						end
+						build_obj.file_id = files
+						--[[
 						for i,file_id in pairs(build.file_id) do
 							if string.sub(file_id,0,1)== '0' then
 								local file_romfs = suggested_romfs[file_id]
@@ -75,12 +92,12 @@ function files()
 								end
 							end
 							BuildModel.saveBuildFile(build.file_id[i],build_obj.id)	
-						end
+						end ]]--
 					
 					end
 				end
 				-- Generates a build	
-				BuildModel.generate(build_obj.id)
+				BuildModel.generate(build_obj)
 				redirect({control="builder",act="index"})
 			else				
 				build = cgilua.POST or {}
