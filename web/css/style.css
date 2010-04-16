@@ -340,7 +340,7 @@ tbody {
 
 .yui-skin-sam .columnCenter{text-align:center;}
 .yui-skin-sam .columnCenter div{text-align:center;}
-.links_right{float:right;font-size:12px;margin:5px 15px 10px 0px;}
+.links_right{float:right;font-size:12px;margin:0px 15px 0px 0px;}
 .hello{float:right;font-size:14px;font-weight:bold;padding-right:50px;}
 .upload{float:left;font-size:14px;font-weight:bold;}
 
