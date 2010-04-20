@@ -14,6 +14,18 @@ function getFiles()
 	return files
 end
 
+function getUserFile(file_id)
+	local UserModel = require "user.model"
+	local user = UserModel.getCurrentUser()
+	local files = db:selectall("*","files","user_id = "..tonumber(user.id).." and id= '"..tonumber(file_id).."'")
+	return files
+end
+
+function getFileSuggested(file_id)
+	local files = db:selectall("*","suggested_files","id = "..file_id)
+	return files   
+end
+
 function sugestedRomFSByID()
 	local temp = {}
 	local SUGGESTED_ROMFS = getSuggestedFiles()

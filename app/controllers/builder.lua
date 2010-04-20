@@ -41,7 +41,21 @@ function files()
 		if (build.configs ~= nil and type(build.configs) == "string") then
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
-		build_files = FileModel.getFilesByBuild(build.id)
+		local files_build = FileModel.getFilesByBuild(id)
+		local size_files_build = #files_build
+		for j=1,size_files_build do
+			if (tonumber(files_build[j].user_file) == 1) then
+				local file = FileModel.getUserFile(tonumber(files_build[j].file_id))	
+				build_files[j].id = file.id..'_'..file.category_id
+				build_files[j].filename = file.filename
+				build_files[j].category = file.category_id
+			else
+				local file = FileModel.getFileSuggested(files_build[j].file_id)	
+				build_files[j].id = file.id..'_'..file.category_id
+				build_files[j].filename = file.filename
+				build_files[j].category = file.category_id
+			end
+		end
 		render("files.lp")
 	else		
 		if isPOST() then
@@ -68,10 +82,9 @@ function files()
 						for i=1,size_file_id do
 							files[i] = FileModel.getFileByID(file_id[i])
 							if tonumber(files[i].category_id) == 1 then
-								--BuildModel.copyPathSuggestedFile(files[i].id)
 								open,filename = FileModel.getDirFile(files[i].id, files[i].category_id)
 								FileModel.save(filename)
-								BuildModel.saveBuildFile(files[i].id,build_obj.id, files[i].category_id)
+								BuildModel.saveBuildFile(files[i].id, build_obj.id, files[i].category_id)
 							else
 								BuildModel.copyPathSuggestedFile(files[i].id)
 								open,filename = FileModel.getDirFile(files[i].id, files[i].category_id)	
@@ -79,21 +92,6 @@ function files()
 							end
 						end
 						build_obj.file_id = files
-						--[[
-						for i,file_id in pairs(build.file_id) do
-							if string.sub(file_id,0,1)== '0' then
-								local file_romfs = suggested_romfs[file_id]
-								if file_romfs ~= nil then
-									filename = file_romfs.filename
-									BuildModel.copyPathFile(filename)
-									FileModel.save(filename)
-									local file = FileModel.getFileByName(filename)
-									build.file_id[i]= file.id
-								end
-							end
-							BuildModel.saveBuildFile(build.file_id[i],build_obj.id)	
-						end ]]--
-					
 					end
 				end
 				-- Generates a build	

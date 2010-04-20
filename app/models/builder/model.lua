@@ -80,7 +80,7 @@ function copyPathSuggestedFile(id)
 	local user = UserModel.getCurrentUser()
 	local path = CONFIG.MVC_USERS..user.login
 	local suggested_file = FileModel.getSuggestedFile(file_id)
-	os.execute("cp -u "..CONFIG.MVC_ROMFS..suggested_file.category.."/"..suggested_file.filename" "..path.."/rom_fs/"..suggested_file.filename"")
+	os.execute("cp -u "..CONFIG.MVC_ROMFS..suggested_file.category.."/"..suggested_file.filename.." "..path.."/rom_fs/"..suggested_file.filename)
 end
 
 function setDefaultValues(build)
@@ -155,77 +155,91 @@ local function setDefaultValues(configs)
 end
 
 function generate(build_obj)
-		local build = getBuild(tonumber(build_obj.id))
-		local name = build.title
-		local dir = checkDir()
-		local luaReports  = require "luaReports"
-		local configs = nil
-		local values = {}
-		if (build.configs ~= nil and type(build.configs) == "string") then
-			configs = assert(loadstring("return "..build.configs)())
-			build.configs = assert(loadstring("return "..build.configs)())
-		end
-
-		setDefaultValues(build.configs)
-		
-		--for i,v in pairs(change_true_false(build.configs))do
-		--	cgilua.put(i,(v),"<br>")
-		--end
-		-- copy source files
-		local UserModel = require "user.model"
-		local user = UserModel.getCurrentUser()
-		os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
-		-- removing files
-		os.execute("rm -r "..dir.."/romfs/*")
-		
-		-- copy romfs files
-		local FileModel = require "file.model"
-		local files = FileModel.getFilesByBuild(build.id)
-		
-		local path = CONFIG.MVC_USERS..user.login
-		for i,v in pairs(files) do
-			if(tonumber(v.id) == tonumber(build.configs.autorun_file_id))then
-				os.execute("cp -u "..path.."/rom_fs/"..v.filename.." "..dir.."/romfs/autorun.lua")
-				files[i].filename = "autorun.lua"
+	local build = getBuild(tonumber(build_obj.id))
+	local name = build.title
+	local dir = checkDir()
+	local luaReports  = require "luaReports"
+	local configs = nil
+	local values = {}
+	if (build.configs ~= nil and type(build.configs) == "string") then
+		configs = assert(loadstring("return "..build.configs)())
+		build.configs = assert(loadstring("return "..build.configs)())
+	end
+	setDefaultValues(build.configs)
+	local files_id = build.configs.file_id
+	local size_file_id = #file_id
+	
+	-- copy source files
+	local UserModel = require "user.model"
+	local user = UserModel.getCurrentUser()
+	os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
+	-- removing files
+	os.execute("rm -r "..dir.."/romfs/*")
+	
+	-- copy romfs files
+	local FileModel = require "file.model"
+	local path = CONFIG.MVC_USERS..user.login
+	for j = 1, size_file_id  do
+		file[j] = FileModel.getFileByID(files_id[j])
+		if tonumber(file[j].category_id) == 1 then
+			local user_file = db:selectall("*","files","user_id = "..tonumber(user.id).." and id= '"..tonumber(file[j].id).."'")
+			local filename = user_file[1].filename
+			io:tmpfile(CONFIG.MVC_TMP)
+			if (tonumber(file[j].id) == tonumber(build.configs.autorun_file_id)) then
+				os.execute("cp -u "..path.."/rom_fs/"..filename.." "..dir.."/romfs/autorun.lua")
+				--files[j].filename = "autorun.lua"
 			else
-				os.execute("cp -r -u "..path.."/rom_fs/"..v.filename.." "..dir.."/romfs")
-			end	
+				os.execute("cp -r -u "..path.."/rom_fs/"..filename.." "..dir.."/romfs")
+			end
+		else
+			local suggested_file = FileModel.getSuggestedFile(file[j].id)
+			local filename = suggested_file.filename
+			local category = suggested_file.category
+			if (tonumber(file[j].id) == tonumber(build.configs.autorun_file_id)) then
+				os.execute("cp -u ".."suggested_files/"..category.."/"..filename.." "..dir.."/romfs/autorun.lua")
+				--files[j].filename = "autorun.lua"
+			else
+				os.execute("cp -r -u ".."suggested_files/"..category.."/"..filename.." "..dir.."/romfs")
+			end
 		end
-		
-		local platform = platforms_by_targets()[build.configs.target]
-		build.configs = change_true_false(build.configs)
-		local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", {files = files},"string")
-		--error(sconstructStr)
-		local build_configs = CONFIGS
-		local platform_confStr =luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build_configs,"string")
-		local platform_confStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build.configs,"string")
-		
-		local destination = io.open(dir.."/SConstruct", "w")
-		if destination then
-    		destination:write(sconstructStr)
-    		destination:close()
-    	end
-    	
-    	local platform_save = io.open(dir.."/src/platform/"..platform.."/platform_conf.h", "w")
-		if platform_save then
-    		platform_save:write(platform_confStr)
-    		platform_save:close()
-    	end
-    	
-    	local toolchain_str = build.configs.toolchain == "default" and "" or " toolchain="..build.configs.toolchain
-    	local lua_optimize_str = build.configs.lua_optimize == true and "optram=1" or ""
-    	
-    	local romfsmode_str = "romfs="..build.configs.romfsmode
-    	
-    	-- Run scons
-		local scons_str = [[scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log.txt 2> log_errors.txt;]]
-    	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip romfs/* *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -rf *; mv ../build_"..build.id..".zip ."
-		local complement = [[export PATH=/usr/local/cross-cortex/bin:/usr/local/cross-cortex:/usr/local/cross-arm/bin:/usr/local/cross-arm:$PATH;cd ]]..dir..[[;]]
-		configs.scons = scons_str
-		update(tableToString(configs), build.id)
-    	
-    	os.execute(complement..scons_str)
-		os.execute(move_clear_str)  
+	end
+	
+	local files = FileModel.getFilesByBuild(build.id)
+	
+	local platform = platforms_by_targets()[build.configs.target]
+	build.configs = change_true_false(build.configs)
+	local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", {files = files},"string")
+	--error(sconstructStr)
+	local build_configs = CONFIGS
+	local platform_confStr =luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build_configs,"string")
+	local platform_confStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build.configs,"string")
+	
+	local destination = io.open(dir.."/SConstruct", "w")
+	if destination then
+		destination:write(sconstructStr)
+		destination:close()
+	end
+	
+	local platform_save = io.open(dir.."/src/platform/"..platform.."/platform_conf.h", "w")
+	if platform_save then
+		platform_save:write(platform_confStr)
+		platform_save:close()
+	end
+	
+	local toolchain_str = build.configs.toolchain == "default" and "" or " toolchain="..build.configs.toolchain
+	local lua_optimize_str = build.configs.lua_optimize == true and "optram=1" or ""
+	
+	local romfsmode_str = "romfs="..build.configs.romfsmode
+	
+	-- Run scons
+	local scons_str = [[scons board=]]..build.configs.target..[[ ]]..toolchain_str..[[ ]]..lua_optimize_str..[[ ]]..romfsmode_str..[[ prog > log.txt 2> log_errors.txt;]]
+	local move_clear_str = "cd "..dir..";zip ../build_"..build.id..".zip romfs/* *.bin *.elf SConstruct log*.txt src/platform/"..platform.."/platform_conf.h;rm -rf *; mv ../build_"..build.id..".zip ."
+	local complement = [[export PATH=/usr/local/cross-cortex/bin:/usr/local/cross-cortex:/usr/local/cross-arm/bin:/usr/local/cross-arm:$PATH;cd ]]..dir..[[;]]
+	configs.scons = scons_str
+	update(tableToString(configs), build.id)
+	
+	os.execute(complement..scons_str)
+	os.execute(move_clear_str)  
 end
 
 PLATFORM = {}
