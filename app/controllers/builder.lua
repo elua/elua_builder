@@ -4,7 +4,6 @@
 -- and if any was required, the 'index' function will be used.
 --------------------------------------------------------------------
 
-
 function index()
 	local UserModel = require "user.model"
 	local BuildModel = require "builder.model"
@@ -41,7 +40,8 @@ function files()
 		if (build.configs ~= nil and type(build.configs) == "string") then
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
-		local files_build = FileModel.getFilesByBuild(id)
+		
+		local files_build = FileModel.getFilesByBuild(tonumber(id))
 		local size_files_build = #files_build
 		for j=1,size_files_build do
 			if (tonumber(files_build[j].user_file) == 1) then
@@ -50,7 +50,7 @@ function files()
 				build_files[j].filename = file.filename
 				build_files[j].category = file.category_id
 			else
-				local file = FileModel.getFileSuggested(files_build[j].file_id)	
+				local file = FileModel.getFileSuggested(tonumber(files_build[j].file_id))	
 				build_files[j].id = file.id..'_'..file.category_id
 				build_files[j].filename = file.filename
 				build_files[j].category = file.category_id
