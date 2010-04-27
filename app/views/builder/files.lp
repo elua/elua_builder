@@ -211,7 +211,7 @@ function box_close(){
 					</div>	
 					<div class="links_right">
 						<a href="javascript:void(0);" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list" onclick="box_view();">
-							<img src="images/buttons/btn_novoprojeto.gif" border=0><b><%=locale_index.labels.box_view%></b>
+							<img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b>
 						</a>
 					</div>		
 				</div><br>

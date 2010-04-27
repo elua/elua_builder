@@ -29,12 +29,11 @@
 	<div class="logo"><a href="<%= makeURL({control="builder", act="index"})%>"><img src="images/logo.png" label="<%=locale_index.labels.home%>" border=0></a></div>
 	<!-- Central Box -->
 	<% if  logged_user then %>
-		<div>
-			<div class="links_right">
-				<a href="<%= makeURL({control="user", act="edit"})%>"> <img src="images/buttons/account.png" border=0>&nbsp; <%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-				<a href="<%= makeURL({control="user", act="logout"})%>"><img src="images/buttons/logout.png" border=0>&nbsp; <%=locale_index.labels.logout%></a>				
-			</div>
+		<div class="links_right">
 			<div class="hello"><%=locale_index.labels.greeting%>, <%= current_user.name %></div>
+			<a href="<%= makeURL({control="user", act="edit"})%>"> <img src="images/buttons/account.png" border=0>&nbsp; <%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+			<a href="<%= makeURL({control="user", act="logout"})%>"><img src="images/buttons/logout.png" border=0>&nbsp; <%=locale_index.labels.logout%></a>				
+		
 		</div>
 	<%end%>
 	

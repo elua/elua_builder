@@ -12,7 +12,9 @@ function repository()
 	local query = cgilua.QUERY
 	local build_id = cgilua.QUERY.build_id
 	local FileModel = require("file.model")
-	local items = FileModel.getAllFiles()
+	local params = cgilua.QUERY
+	
+	local items = FileModel.getAllFiles(params)
 	for i,v in pairs(items)do
 		v.id  = v.id..'_'..v.category_id
 	end

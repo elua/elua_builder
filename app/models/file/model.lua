@@ -71,13 +71,16 @@ function getFilesByBuild(build_id)
 	return files
 end
 
-function getAllFiles()
+function getAllFiles(params)
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
-	
-	local files = db:selectall([[f.id, f.filename, c.name as category,c.id as category_id from files f inner join categories c on c.id = f.category_id where f.user_id = ]]..user.id..[[ UNION
-								select s.id, s.filename,c.name as category, c.id as category_id]],
-								[[suggested_files s inner join categories c on c.id = s.category_id]])
+	local where = ''
+	if type(params) == 'table' then
+		where = params.only_user_files == 'true' and ' and c.id = 1' or ''
+	end
+	local files = db:selectall([[f.id, f.filename, c.name as category,c.id as category_id, f.created_at from files f inner join categories c on c.id = f.category_id where f.user_id = ]]..user.id..[[ UNION
+								select s.id, s.filename,c.name as category, c.id as category_id, s.created_at]],
+								[[suggested_files s inner join categories c on c.id = s.category_id]]..where)
 	return files
 	
 end

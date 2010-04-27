@@ -12,7 +12,7 @@ locale_index = {
 				edit_account = "Account",
 			},
 	label_submit = "Submit",
-	copyright = "Copyright 2010 eluaproject.net",
+	
 
 		
 }

@@ -1,5 +1,5 @@
 locale_index = {
-	copyright = "Copyright 2010 eluaproject.net",
+	copyright = "eluaproject.net",
 	upload_title = "Upload",
 	builds_title = "Build Configurations",
 	edit_build_title = "Edit Build Configuration",

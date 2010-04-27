@@ -2,7 +2,7 @@
 	</div>
 	<div id="footer">
 		<div class="hr1"></div>
-		<%=locale_index.copyright%>
+		<%=locale_general.copyright%>
 	</div>
 	<div id="bottom_block">	</div>
 </div>
