@@ -177,7 +177,7 @@ function box_close(){
 
 <div id='loading' style='display:none;'>Loading...</div>
 
-<div id="box_title"><%=  build.id ~= nil and locale_index.builds_title or locale_index.new_builds_title %></div>
+<div id="box_title"><%=  build.id ~= nil and locale_index.edit_build_title or locale_index.new_build_title %></div>
 <% if flash.get("validationMessagesBuild") ~= nil then %>
 <br>
 	<%= flash.get("validationMessagesBuild")%>
@@ -224,8 +224,10 @@ function box_close(){
 				</table><br>
 				<script>
 					window.onload = function(){
-						<%for i,v in pairs(build_files)do%>
-						add_file(<%= v.id%>,'<%= v.filename%>','<%= v.category%>', <%= tostring(tonumber(v.id) == tonumber(build.configs.autorun_file_id))%>);
+						<%for i,v in pairs(build_files)do
+							local id = v.file_id.."_"..v.category_id
+						%>
+							add_file('<%= id%>','<%= v.filename%>','<%= v.category%>', <%= tostring(id == build.configs.autorun_file_id)%>);
 						<% end %>
 					}
 				</script>

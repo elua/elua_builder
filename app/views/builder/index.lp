@@ -132,6 +132,4 @@ function confirmDeleteBuild(id)
 	<br>
 	<!--<h2><%= locale_index.upload_title %> </h2><br>-->
 	
-</div><br>
-
 <% render("footer.lp","_shared") %>

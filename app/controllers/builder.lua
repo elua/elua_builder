@@ -40,22 +40,7 @@ function files()
 		if (build.configs ~= nil and type(build.configs) == "string") then
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
-		
-		local files_build = FileModel.getFilesByBuild(tonumber(id))
-		local size_files_build = #files_build
-		for j=1,size_files_build do
-			if (tonumber(files_build[j].user_file) == 1) then
-				local file = FileModel.getUserFile(tonumber(files_build[j].file_id))	
-				build_files[j].id = file.id..'_'..file.category_id
-				build_files[j].filename = file.filename
-				build_files[j].category = file.category_id
-			else
-				local file = FileModel.getFileSuggested(tonumber(files_build[j].file_id))	
-				build_files[j].id = file.id..'_'..file.category_id
-				build_files[j].filename = file.filename
-				build_files[j].category = file.category_id
-			end
-		end
+		build_files = FileModel.getFilesByBuild(tonumber(id))
 		render("files.lp")
 	else		
 		if isPOST() then

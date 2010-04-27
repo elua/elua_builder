@@ -167,7 +167,7 @@ function generate(build_obj)
 	end
 	setDefaultValues(build.configs)
 	local files_id = build.configs.file_id
-	local size_file_id = #file_id
+	local size_file_id = #files_id
 	
 	-- copy source files
 	local UserModel = require "user.model"
@@ -195,11 +195,13 @@ function generate(build_obj)
 			local suggested_file = FileModel.getSuggestedFile(file[j].id)
 			local filename = suggested_file.filename
 			local category = suggested_file.category
+			local diretory_category = string.gsub(category,' ','_') 
+			local path = CONFIG.MVC_ROMFS..diretory_category
 			if (tonumber(file[j].id) == tonumber(build.configs.autorun_file_id)) then
-				os.execute("cp -u ".."suggested_files/"..category.."/"..filename.." "..dir.."/romfs/autorun.lua")
+				os.execute("cp -u "..path.."/"..filename.." "..dir.."/romfs/autorun.lua")
 				--files[j].filename = "autorun.lua"
 			else
-				os.execute("cp -r -u ".."suggested_files/"..category.."/"..filename.." "..dir.."/romfs")
+				os.execute("cp -r -u "..path.."/"..filename.." "..dir.."/romfs")
 			end
 		end
 	end

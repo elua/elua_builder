@@ -9,7 +9,7 @@ locale_index = {
 				change_passwd = "Elua Builder Password Reset Confirmation",
 			},
 	label_submit = "Submit",
-	copyright = "Copyright 2009 eLua Builder. All rights reserved.",
+	copyright = "Copyright 2010 eluaproject.net",
 
 		
 }

@@ -54,12 +54,20 @@ function getSuggestedFile(id)
 	end
 end
 
+function filesByBuild(build_id)
+	local build_id = tonumber(build_id)
+	local files = db:selectall("*","builds_files","build_id = "..build_id)
+	return suggested_files
+end
+
 function getFilesByBuild(build_id)
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
-	local files = db:selectall("f.*,bf.build_id",
-								"files f inner join builds_files bf on bf.file_id = f.id",
-								"f.user_id = "..user.id.." and bf.build_id = "..sqlI.sqlInjection(build_id,"number"))
+	local files = db:selectall("bf.*,c.name as category,c.id as category_id, CASE WHEN f.filename IS NULL THEN s.filename ELSE f.filename END as filename",
+								[[builds_files bf left join files f on f.id = bf.file_id and bf.user_file = 1
+								  left join suggested_files s on s.id = bf.file_id and bf.user_file <> 1
+								  left join categories c on c.id = f.category_id or c.id = s.category_id]],
+								  "bf.build_id = "..sqlI.sqlInjection(build_id,"number"))
 	return files
 end
 
