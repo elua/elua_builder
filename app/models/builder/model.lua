@@ -178,14 +178,20 @@ function generate(build_obj)
 	-- copy romfs files
 	local FileModel = require "file.model"
 	local path = CONFIG.MVC_USERS..user.login
-	local autorun_file_id = string.split(build.configs.autorun_file_id,"_")
+	if (build.configs.autorun_file_id == nil or build.configs.autorun_file_id == "") then
+		autorun_file_id = '0'
+		local autorun = autorun_file_id
+	else
+		local autorun_file_id = FileModel.getFileByID(build.configs.autorun_file_id)
+		local autorun = autorun_file_id[1]
+	end
 	local build_files = FileModel.getFilesByBuild(tonumber(build.id))
 	local size_file_id = #build_files
 	for j = 1, size_file_id  do
 		if tonumber(build_files[j].category_id) == 1 then
 			local filename = build_files[j].filename
 			io:tmpfile(CONFIG.MVC_TMP)
-			if (tonumber(build_files[j].file_id) == tonumber(autorun_file_id[1])) then
+			if (tonumber(build_files[j].file_id) == tonumber(autorun)) then
 				os.execute("cp "..path.."/rom_fs/"..filename.." "..dir.."/romfs/autorun.lua")
 				build_files[j].filename = 'autorun.lua'
 			else
@@ -196,7 +202,7 @@ function generate(build_obj)
 			local category = build_files[j].category
 			local diretory_category = string.gsub(category,' ','_') 
 			local path = CONFIG.MVC_ROMFS..diretory_category
-			if (tonumber(build_files[j].file_id) == tonumber(autorun_file_id[1])) then
+			if (tonumber(build_files[j].file_id) == tonumber(autorun)) then
 				os.execute("cp "..path.."/"..filename.." "..dir.."/romfs/autorun.lua")
 				build_files[j].filename = 'autorun.lua'
 			else

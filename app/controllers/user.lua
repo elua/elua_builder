@@ -64,7 +64,8 @@ end
 
 function authenticate()
 	user_aut = cgilua.POST
-
+	local UserModel = require "user.model"
+	current_user = UserModel.getCurrentUser()
 	if isPOST() then
 		local User = require "user.model"
 		--error("depois do modelo de usuário")
@@ -102,6 +103,8 @@ end
 
 function create()
 	User = require "user.model"
+	local UserModel = require "user.model"
+	current_user = UserModel.getCurrentUser()
 	local users = User.getCurrentUser()
 	if users ~= nil then
 		user_obj = users
@@ -112,6 +115,8 @@ end
 
 function edit()
 	User_Model = require "user.model"
+	local UserModel = require "user.model"
+	current_user = UserModel.getCurrentUser()
 	local users = User_Model.getCurrentUser()
 	if users ~= nil then
 		user_obj = users
@@ -122,7 +127,7 @@ end
 
 function update()
 	local UserModel = require "user.model"
-	local current_user = UserModel.getCurrentUser()
+	current_user = UserModel.getCurrentUser()
 	local user_obj = cgilua.POST
 	--error(tableToString(user_obj))
 	user_obj.login = current_user.login

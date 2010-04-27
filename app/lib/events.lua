@@ -21,6 +21,8 @@ function mvc_events.beforeAnyAction(jump)
 			return false
 		end
 	end
+	
+	logged_user = UserModel.getCurrentUser() and UserModel.getCurrentUser() ~= ""
 end
 
 function mvc_events.afterAnyAction()

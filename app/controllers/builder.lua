@@ -15,6 +15,7 @@ end
 
 function tabs_content()
 	BuildModel = require "builder.model"
+	current_user = UserModel.getCurrentUser()
 	local target = cgilua.POST.target
 	build = {}
 	build.configs = {}
@@ -30,6 +31,7 @@ function files()
 	build_files = {}
 	local UserModel = require "user.model"
 	local FileModel = require "file.model" 
+	current_user = UserModel.getCurrentUser()
 	local user = UserModel.getCurrentUser()
 	BuildModel = require "builder.model"	
 	for _,v in pairs(BuildModel.TARGETS) do 

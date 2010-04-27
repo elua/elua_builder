@@ -7,7 +7,6 @@
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
 
-<div class="hello"><%=locale_index.labels.greeting%>, <%= current_user.name %></div>
 <br /><br />
 <script>
 function confirmDeleteFile(id)
@@ -32,11 +31,6 @@ function confirmDeleteBuild(id)
 
 <div id="box_title">
 	<div style="float:left;"><%=locale_index.builds_title%> </div>
-	<div class="links_right">
-		<!--<div style="float:right; font-size:12px; margin:-20px 15px 10px 0px;"></div>-->
-			<a href="<%= makeURL({control="user", act="edit"})%>"> <img src="images/buttons/account.png" border=0>&nbsp; <%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-			<a href="<%= makeURL({control="user", act="logout"})%>"><img src="images/buttons/logout.png" border=0>&nbsp; <%=locale_index.labels.logout%></a>				
-	</div>
 </div>
 <br />
 <div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>" class="button_submit"> </a> </div><br>

@@ -2,9 +2,9 @@
 	<div class="box_file_list" id='files_list'>
 		
 		<div class="box_title_build box_size">
-			<div class="box_text_build"><%= locale_index.labels.files_list %></div>
-			<div class="links_right"><a href="javascript:void(0);" title="<%=locale_index.labels.close_box%>" onclick="box_close();"><img src="images/buttons/ksame.png" border=0></a></div>
-		</div>
+			<div class="box_text_build"><%= locale_index.labels.files_list %>
+			<div class="links_right"><a href="javascript:void(0);" title="<%=locale_index.labels.close_box%>" onclick="box_close();"><img src="images/buttons/logout.png" border=0></a></div>
+		</div></div>
 		<div class="build_components">
 			<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
 			<div>
