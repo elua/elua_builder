@@ -340,8 +340,8 @@ tbody {
 
 .yui-skin-sam .columnCenter{text-align:center;}
 .yui-skin-sam .columnCenter div{text-align:center;}
-.links_right{float:right;font-size:12px;margin:0px 15px 0px 0px;}
-.hello{float:right;font-size:14px;font-weight:bold;padding-right:50px;}
+.links_right{float:right;font-size:12px;margin:5px 2px 0px 15px;padding-right:10px;}
+.hello{float:right;font-size:14px;font-weight:bold;}
 .upload{float:left;font-size:14px;font-weight:bold;}
 
 .generate {
@@ -364,7 +364,7 @@ tbody {
 					left:50%;
 					margin-left:-300px;
 					background-color:#ffffff;
-					border: 1px solid #c0c0c0;
+					border: 3px solid #c0c0c0;
 }
 
 .background_box {
