@@ -167,7 +167,6 @@ function generate(build_obj)
 	end
 	setDefaultValues(build.configs)
 	local files_id = build.configs.file_id
-	local size_file_id = #files_id
 	
 	-- copy source files
 	local UserModel = require "user.model"
@@ -179,35 +178,33 @@ function generate(build_obj)
 	-- copy romfs files
 	local FileModel = require "file.model"
 	local path = CONFIG.MVC_USERS..user.login
+	local autorun_file_id = string.split(build.configs.autorun_file_id,"_")
+	local build_files = FileModel.getFilesByBuild(tonumber(build.id))
+	local size_file_id = #build_files
 	for j = 1, size_file_id  do
-		file[j] = FileModel.getFileByID(files_id[j])
-		if tonumber(file[j].category_id) == 1 then
-			local user_file = db:selectall("*","files","user_id = "..tonumber(user.id).." and id= '"..tonumber(file[j].id).."'")
-			local filename = user_file[1].filename
+		if tonumber(build_files[j].category_id) == 1 then
+			local filename = build_files[j].filename
 			io:tmpfile(CONFIG.MVC_TMP)
-			if (tonumber(file[j].id) == tonumber(build.configs.autorun_file_id)) then
-				os.execute("cp -u "..path.."/rom_fs/"..filename.." "..dir.."/romfs/autorun.lua")
-				--files[j].filename = "autorun.lua"
+			if (tonumber(build_files[j].file_id) == tonumber(autorun_file_id[1])) then
+				os.execute("cp "..path.."/rom_fs/"..filename.." "..dir.."/romfs/autorun.lua")
+				build_files[j].filename = 'autorun.lua'
 			else
-				os.execute("cp -r -u "..path.."/rom_fs/"..filename.." "..dir.."/romfs")
+				os.execute("cp -r "..path.."/rom_fs/"..filename.." "..dir.."/romfs")
 			end
 		else
-			local suggested_file = FileModel.getSuggestedFile(file[j].id)
-			local filename = suggested_file.filename
-			local category = suggested_file.category
+			local filename = build_files[j].filename
+			local category = build_files[j].category
 			local diretory_category = string.gsub(category,' ','_') 
 			local path = CONFIG.MVC_ROMFS..diretory_category
-			if (tonumber(file[j].id) == tonumber(build.configs.autorun_file_id)) then
-				os.execute("cp -u "..path.."/"..filename.." "..dir.."/romfs/autorun.lua")
-				--files[j].filename = "autorun.lua"
+			if (tonumber(build_files[j].file_id) == tonumber(autorun_file_id[1])) then
+				os.execute("cp "..path.."/"..filename.." "..dir.."/romfs/autorun.lua")
+				build_files[j].filename = 'autorun.lua'
 			else
-				os.execute("cp -r -u "..path.."/"..filename.." "..dir.."/romfs")
+				os.execute("cp -r "..path.."/"..filename.." "..dir.."/romfs")
 			end
 		end
 	end
-	
-	local files = FileModel.getFilesByBuild(build.id)
-	
+	local files = build_files
 	local platform = platforms_by_targets()[build.configs.target]
 	build.configs = change_true_false(build.configs)
 	local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", {files = files},"string")

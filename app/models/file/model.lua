@@ -108,9 +108,10 @@ function getDirFile(id,category_id)
 		end
 	else
 		local suggested_file = getSuggestedFile(file_id)
+		local diretory_category = string.gsub(suggested_file.category,' ','_') 
 		if (type(suggested_file) == "table") then
 			io:tmpfile(CONFIG.MVC_TMP)
-			open, errorMsg =io.open(CONFIG.MVC_ROMFS..suggested_file.category.."/"..suggested_file.filename, "rb")
+			open, errorMsg =io.open(CONFIG.MVC_ROMFS..diretory_category.."/"..suggested_file.filename, "rb")
 			return open,suggested_file.filename
 		end
 	end
