@@ -50,7 +50,6 @@ function files()
 			build = BuildModel.setDefaultValues(build)
 			build.file_id = (build.file_id == nil) and "" or build.file_id	
 			build.configs = tableToString(build)
-			
 			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
 			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
 			
