@@ -36,6 +36,7 @@ function sugestedRomFSByID()
 	return temp
 end
 
+
 function getSuggestedFiles()
 	local suggested_files = db:selectall("s.*,c.name as category",
 							   "suggested_files s inner join categories c on c.id = s.category_id ")
@@ -74,15 +75,51 @@ end
 function getAllFiles(params)
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
-	local where = ''
+	local where_suggested = ''
+	local where_user = ''
 	if type(params) == 'table' then
-		where = params.only_user_files == 'true' and ' and c.id = 1' or ''
+		where_suggested = params.only_user_files == 'true' and ' and c.id = 1' or ''
+		
+		if(type(params.by_category) == 'table')then
+			local temp_ids = ''
+			
+			for i,v in pairs(params.by_category) do
+				if(i == 1)then
+					where_user = where_user..(type(params.by_category[1]) == 'table' and ' AND f.id IN('..table.concat(params.by_category[1],',')..')' or ' AND f.id = 0')					
+				else
+					
+					temp_ids = temp_ids .. table.concat(v,',')..','
+				end
+			end
+			where_user = where_user .. (params.by_category[1] == nil and ' AND f.id = 0' or '')
+			where_suggested = where_suggested..(temp_ids == '' and ' AND s.id = 0' or ' AND s.id IN('..string.match(temp_ids,'^(.+),$')..')')								
+		end
+		
 	end
-	local files = db:selectall([[f.id, f.filename, c.name as category,c.id as category_id, f.created_at from files f inner join categories c on c.id = f.category_id where f.user_id = ]]..user.id..[[ UNION
-								select s.id, s.filename,c.name as category, c.id as category_id, s.created_at]],
-								[[suggested_files s inner join categories c on c.id = s.category_id]]..where)
+	local files = db:selectall([[f.id, f.id as file_id, f.filename, c.name as category,c.id as category_id, f.created_at from files f inner join categories c on c.id = f.category_id where
+								 f.user_id = ]]..user.id..where_user..[[
+								 UNION
+								 select s.id, s.id as file_id, s.filename,c.name as category, c.id as category_id, s.created_at]],
+								[[suggested_files s inner join categories c on c.id = s.category_id]]..where_suggested)
 	return files
 	
+end
+
+function getFilesByIDs(file_ids)
+	if (file_ids ~= nil and file_ids ~= '')then
+		file_ids = type(file_ids) == 'table' and file_ids or {file_ids}
+		local ids_by_category = {}
+		for _,v in pairs(file_ids) do 
+			local splited = string.split(v,"_")
+			splited[1] = tonumber(splited[1])
+			splited[2] = tonumber(splited[2])
+			if #splited == 2 then
+				ids_by_category[splited[2]] = type(ids_by_category[splited[2]]) == 'table' and ids_by_category[splited[2]] or {}
+				table.insert(ids_by_category[splited[2]],splited[1])
+			end
+		end
+		return getAllFiles({by_category = ids_by_category})
+	end
 end
 
 function getFilesByBuildIndex(build_id)
