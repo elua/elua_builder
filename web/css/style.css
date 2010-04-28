@@ -3,7 +3,7 @@ body{
 }
 
 .logo {
-		margin-left: 10px;	
+		margin-left: 10px;	float:left;
 }
 
 
@@ -75,6 +75,7 @@ body{
 }
 
 .box_text_build {
+						padding-top:4px;
 						margin: 0px 0px 10px 20px;												
 }
 
@@ -160,10 +161,13 @@ body{
 			font-size: medium;
 			font-weight: bold;	
 }
-
+#login_combo #errorExplanation{
+					color:#ee1226;
+					margin: 0px 10px 0px 125px;
+}
 #errorExplanation{
 					color:#ee1226;
-					margin: 0px 10px 0px 155px;
+					margin: 0px 10px 0px 0px;
 }
 
 #errorExplanation li {
@@ -341,7 +345,7 @@ tbody {
 .yui-skin-sam .columnCenter{text-align:center;}
 .yui-skin-sam .columnCenter div{text-align:center;}
 .links_right{float:right;font-size:12px;margin:5px 2px 0px 15px;padding-right:10px;}
-.hello{float:right;font-size:14px;font-weight:bold;}
+.hello{float:left;font-size:14px;font-weight:bold;margin-right:8px;}
 .upload{float:left;font-size:14px;font-weight:bold;}
 
 .generate {
