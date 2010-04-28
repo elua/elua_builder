@@ -1,4 +1,4 @@
-insert into suggested_files(name, category_id,created_at) values
+insert into suggested_files(filename, category_id,created_at) values
         ('adcpoll.lua', 2,now()),
 		('adcscope.lua',2,now()),
 		('bisect.lua', 2,now()),
@@ -24,3 +24,6 @@ insert into suggested_files(name, category_id,created_at) values
 		('test.lua', 2,now()),
 		('tetrives.lua', 2,now()),
 		('tvbgone.lua', 2,now());
+		
+insert into categories(name) values ('User file');
+insert into categories(name) values ('V0.7 file');
