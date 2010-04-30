@@ -52,9 +52,11 @@
             var files = [];
 		    function add_file(id, filename, category, autorun){
 			     if(! files[id]){
-				 	var checked = autorun?'checked':'';
-			      	$('#file_list').append('<tr id="line_'+id+'"><td align=center><input type=\'hidden\' name=\'file_id\' value="'+id+'" /><a href="#" onclick="remove_file(\''+id+'\');"><img src=\'images/buttons/cancel.png\' border=\'0\' style=\'vertical-align:middle;margin-right:5px;\' /></a></td><td align=center><input type="radio" name="autorun_file_id" value="'+id+'" '+checked+' onchange="toogle_check(this)" onclick="toogle_check(this)"></td><td>'+filename+'</td><td align=center>'+category+'</td></tr>');
-			      	files[id] = true;      
+					var checked = (filename == 'autorun.lua')?'checked':'';
+					checked = (autorun)?'checked':'';
+					
+					$('#file_list').append('<tr id="line_'+id+'"><td align=center><input type=\'hidden\' name=\'file_id\' value="'+id+'" /><a href="#" onclick="remove_file(\''+id+'\');"><img src=\'images/buttons/cancel.png\' border=\'0\' style=\'vertical-align:middle;margin-right:5px;\' /></a></td><td align=center><input type="radio" name="autorun_file_id" value="'+id+'" '+checked+' onchange="toogle_check(this)" onclick="toogle_check(this)"></td><td>'+filename+'</td><td align=center>'+category+'</td></tr>');
+		      		files[id] = true; 
 			     }
 		    }
 		    function remove_file(id){

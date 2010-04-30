@@ -18,6 +18,31 @@ function getBuild(id)
 	return build[1]
 end
 
+function validate(build)
+	local val = require "validation"
+	local validator = val.implement.new(build)
+
+	validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
+	validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
+	validator:validate('autorun_file_id',locale_index.validator.autorun, checkAutorun, build.file_id)
+	return validator
+end
+
+function checkAutorun(autorun_file_id, file_ids)
+	if (autorun_file_id ~= '' and autorun_file_id ~= nil)then
+		local FileModel = require "file.model"
+		local autorun_file = FileModel.getFileByID(autorun_file_id)
+		local files = FileModel.getFilesByIDs(file_ids)
+		
+		for i,v in pairs(files) do
+			if (v.filename == 'autorun.lua' and not(v.file_id == autorun_file.id and v.category_id == autorun_file.category_id)) then
+				return false
+			end
+		end
+	end
+	return true
+end
+
 local function checkDir()
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
@@ -114,7 +139,7 @@ function download(id)
 	local id = cgilua.QUERY.id
 	local user = UserModel.getCurrentUser()
 	local build = db:selectall("*","builds","id = "..id)
-	local build_name = build[1].title
+	local build_name = string.gsub(build[1].title,'[\/:?"<>|]','_')
 	
 	io:tmpfile(CONFIG.MVC_TMP)
 	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/builds/"..id.."/build_"..build[1].id..".zip", "rb")
@@ -192,21 +217,20 @@ function generate(build_obj)
 			local filename = build_files[j].filename
 			io:tmpfile(CONFIG.MVC_TMP)
 			if (tonumber(build_files[j].file_id) == tonumber(autorun)) then
-				os.execute("cp "..path.."/rom_fs/"..filename.." "..dir.."/romfs/autorun.lua")
+				os.execute("cp '"..path.."/rom_fs/"..filename.."' '"..dir.."/romfs/autorun.lua'")
 				build_files[j].filename = 'autorun.lua'
 			else
-				os.execute("cp -r "..path.."/rom_fs/"..filename.." "..dir.."/romfs")
+				os.execute("cp -r '"..path.."/rom_fs/"..filename.."' '"..dir.."/romfs'")
 			end
 		else
 			local filename = build_files[j].filename
-			local category = build_files[j].category
-			local diretory_category = string.gsub(category,' ','_') 
-			local path = CONFIG.MVC_ROMFS..diretory_category
+			local category = build_files[j].category 
+			local path = CONFIG.MVC_ROMFS..category
 			if (tonumber(build_files[j].file_id) == tonumber(autorun)) then
-				os.execute("cp "..path.."/"..filename.." "..dir.."/romfs/autorun.lua")
+				os.execute("cp '"..path.."/"..filename.."' '"..dir.."/romfs/autorun.lua'")
 				build_files[j].filename = 'autorun.lua'
 			else
-				os.execute("cp -r "..path.."/"..filename.." "..dir.."/romfs")
+				os.execute("cp -r '"..path.."/"..filename.."' '"..dir.."/romfs'")
 			end
 		end
 	end

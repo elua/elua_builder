@@ -59,6 +59,7 @@ locale_index = {
 					gateway_address = "The gateway IP",
 					dns_address = "The DNS",
 					address_valid = "is not valid.",
+					autorun = "You cannot have selected autorun option distinct of the physical autorun file.",
 	}
 }
 	
