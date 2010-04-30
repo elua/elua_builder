@@ -30,8 +30,9 @@ CONFIG.MVC_TMP = CONFIG.PATH.."/tmp/"
 CONFIG.MVC_REPORTS = CONFIG.PATH.."/app/reports/"
 CONFIG.MVC_USERS = CONFIG.PATH.."/users/"
 CONFIG.ELUA_BASE = CONFIG.PATH.."/elua_src_base/"
-CONFIG.APP_DOMAIN = "ubuntu/carlos-elua_builder/start.lua"
 CONFIG.MVC_ROMFS = CONFIG.PATH.."/suggested_files/"
+CONFIG.APP_DOMAIN = "ubuntu/carlos-elua_builder/start.lua"
+
 
 
 --MAIL Server Variables
