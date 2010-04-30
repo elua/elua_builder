@@ -48,13 +48,12 @@ function files()
 	else		
 		if isPOST() then
 			build = cgilua.POST
-			val = require "validation"
-			validator = val.implement.new(build)
+			
 			build = BuildModel.setDefaultValues(build)
 			build.file_id = (build.file_id == nil) and "" or build.file_id	
 			build.configs = tableToString(build)
-			validator:validate('title',locale_index.validator.title_build, val.checks.isNotEmpty)
-			validator:validate('target',locale_index.validator.title_target, val.checks.isNotEmpty)
+			
+			local validator = BuildModel.validate(build)
 			
 			if(validator:isValid())then
 				local build_obj = BuildModel.save(build)
@@ -62,8 +61,6 @@ function files()
 					BuildModel.deleteFilesFromBuild(build_obj.id)
 					if build.file_id ~= nil and build.file_id ~= '' then					
 						file_id = type(build.file_id) == "table" and build.file_id or {build.file_id}
-						--local build_files = FileModel.getFilesByIDs(build.file_id)
-						--local suggested_romfs = FileModel.sugestedRomFSByID()
 						local size_file_id = #file_id
 						local files = {}
 						for i=1,size_file_id do
