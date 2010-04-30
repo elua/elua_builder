@@ -208,11 +208,11 @@ function box_close(){
 				<div class="box_title_build">
 					<div class="box_text_build">
 						<%=locale_index.files_romfs_title%>
-					</div>	
-					<div class="links_right">
+						<div class="links_right">
 						<a href="javascript:void(0);" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list" onclick="box_view();">
 							<img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b>
 						</a>
+					</div>	
 					</div>		
 				</div><br>
 				<table id="file_list" class="table_align">

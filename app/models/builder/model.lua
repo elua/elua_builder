@@ -180,15 +180,15 @@ function generate(build_obj)
 	local path = CONFIG.MVC_USERS..user.login
 	if (build.configs.autorun_file_id == nil or build.configs.autorun_file_id == "") then
 		autorun_file_id = '0'
-		local autorun = autorun_file_id
+		autorun = autorun_file_id
 	else
 		local autorun_file_id = FileModel.getFileByID(build.configs.autorun_file_id)
-		local autorun = autorun_file_id[1]
+		autorun = autorun_file_id.id
 	end
 	local build_files = FileModel.getFilesByBuild(tonumber(build.id))
 	local size_file_id = #build_files
 	for j = 1, size_file_id  do
-		if tonumber(build_files[j].category_id) == 1 then
+		if tonumber(build_files[j].category_id) == 1 then		
 			local filename = build_files[j].filename
 			io:tmpfile(CONFIG.MVC_TMP)
 			if (tonumber(build_files[j].file_id) == tonumber(autorun)) then
