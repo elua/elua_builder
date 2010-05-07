@@ -1,6 +1,7 @@
 <% f = require "luawebforms" %>
 <% dt = require("dataTable.show")%>
 
+<% jquery = true %>
 <% render("header.lp","_shared") %>
 
 <% dt.printJSheaders("lib/yui/js/") %>
@@ -30,7 +31,8 @@ function confirmDeleteBuild(id)
 
 
 <div id="box_title">
-	<div style="float:left;"><%=locale_index.builds_title%> </div>
+	<div style="float:left;"><%=locale_index.builds_title%> </div>&nbsp;
+	<a id="help_builds_title" href="#"><img src="images/buttons/help.png" border='0'></a>
 </div>
 <br />
 <div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>" class="button_submit"> </a> </div><br>
@@ -69,7 +71,10 @@ function confirmDeleteBuild(id)
 	%>
 </div><br><br />
 
-<div id="box_title"><%=locale_index.files_title%></div><br />
+<div id="box_title">
+	<%=locale_index.files_title%>&nbsp;
+	<a id="help_stored_files" href="#"><img src="images/buttons/help.png" border='0'></a>
+</div><br />
 <div class="upload">
 		<form method="POST" enctype="multipart/form-data" action="start.lua?control=files&act=upload" onsubmit="return( $('filename').value != '');"> 
 			<input type="file" name="file" id="filename"> 
@@ -125,5 +130,7 @@ function confirmDeleteBuild(id)
 	%>
 	<br>
 	<!--<h2><%= locale_index.upload_title %> </h2><br>-->
+	
+<% render("help/index.lp") %>
 	
 <% render("footer.lp","_shared") %>

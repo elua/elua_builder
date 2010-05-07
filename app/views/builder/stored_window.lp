@@ -2,7 +2,8 @@
 	<div class="box_file_list" id='files_list'>
 		
 		<div class="box_title_build box_size">
-			<div class="box_text_build"><%= locale_index.labels.files_list %>
+			<div class="box_text_build"><%= locale_index.labels.files_list %>&nbsp;
+			<a id="help_stored_files_list" href="#"><img src="images/buttons/help_2.png" border='0'></a>
 			<div class="links_right"><a href="javascript:void(0);" title="<%=locale_index.labels.close_box%>" onclick="box_close();"><img src="images/buttons/logout.png" border=0></a></div>
 		</div></div>
 		<div class="build_components">
@@ -67,3 +68,4 @@
 	</div>
 </div>
 <script>$("#files_list").draggable({ handle: '#title_flies_list' });</script>
+<% render("help/stored_window.lp") %>

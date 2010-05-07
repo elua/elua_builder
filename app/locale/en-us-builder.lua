@@ -4,7 +4,7 @@ locale_index = {
 	builds_title = "Build Configurations",
 	edit_build_title = "Edit Build Configuration",
 	new_build_title = "New Build Configuration",
-	files_title = "Stored Files for the ROM File System",
+	files_title = "Stored Files",
 	label_progress = "Progress",
 	label_back = "Back",
 	label_remove = "Remove",
@@ -48,6 +48,7 @@ locale_index = {
 				close_box = "Close",
 				files_list = "Stored Files",
 				home = "Home",
+				file_systems = "File Systems",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",
@@ -70,6 +71,7 @@ locale_components = {
 	luarpc_title = "LuaRPC",
 	toolchain_title = "Toolchain",
 	lua_optimize = "Lua Optimize RAM Flag",
+	file_systems_title = "File Systems",
 	labels = {
 				target = "Target",
 				build_xmodem = "BUILD_XMODEM",
@@ -111,4 +113,14 @@ locale_components = {
 	build_adc = "Analog to Digital Converter module support.",
 	build_rpc = "",
 	build_mmcfs = "",
+}
+
+locale_help ={
+				what_build_configurations_title = "O que é",
+				what_build_configurations = "... descrição",
+				new_build_configurations_title = "título nem build",
+				new_build_configurations = "... descrição",
+				buttons_build_configurations_title = "buttons",
+				buttons_build_configurations = "... descrição",
+				stored_files = "Help stored files",
 }

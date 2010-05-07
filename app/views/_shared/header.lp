@@ -14,7 +14,9 @@
 		<% loadJS('lib/jquery/ui.tabs.js')%>
 		<% loadCSS('lib/jquery/css/ui.all.css')%>
 		<% loadJS('lib/jquery/ui.draggable.js') %>
-
+		<% loadJS('lib/jquery/jQuery.bubbletip-1.0.6.js') %>
+		<% loadCSS('lib/jquery/bubbletip/bubbletip.css')%>
+		<% loadCSS('lib/jquery/bubbletip/bubbletip-IE.css')%>
 	<% else %>
 		<% loadJS('lib/prototype-1.6.0.2.js') %>
 		<% loadJS('lib/effects.js') %>

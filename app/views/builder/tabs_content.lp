@@ -3,12 +3,16 @@
 	    <li><a href="#general"><span><%=locale_index.labels.general%></span></a></li>
 		<li><a href="#components"><span><%=locale_components.component_title%></span></a></li>
 		<li><a href="#net"><span><%=locale_index.labels.net%></span></a></li>
+		<li><a href="#file_systems"><span><%=locale_index.labels.file_systems%></span></a></li>
 		<!--<li><a href="#luarpc"><span><%=locale_index.labels.luarpc%></span></a></li>-->
 	</ul>
 
 		<div id="general">
 			<div id="box_title_tabs">
-				<div class="box_text_build"><%= locale_components.toolchain_title %></div>
+				<div class="box_text_build">
+					<%= locale_components.toolchain_title %> &nbsp;
+					<a id="help_toolchain" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+				</div>
 			</div>
 			<div class="build_components">
 				<%=f.select({name="toolchain", class="select_field"},BuildModel.TOOLCHAINS, build.configs.toolchain)%>
@@ -16,7 +20,10 @@
 			</div>
 			
 			<div id="box_title_tabs">
-				<div class="box_text_build"><%=locale_index.files_romfsmode_title%></div>
+				<div class="box_text_build">
+					<%=locale_index.files_romfsmode_title%>&nbsp;
+					<a id="help_romfs_build_mode" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+				</div>
 			</div>
 			<div class="build_components">
 				<%=f.select({name="romfsmode", class="select_field"},BuildModel.ROMFSMODE, build.configs.romfsmode)%>
@@ -32,7 +39,10 @@
 		<div id="components">
 			<div>
 				<div id="box_title_tabs">
-					<div class="box_text_build"><%= locale_components.component_title %></div>
+					<div class="box_text_build">
+						<%= locale_components.component_title %>&nbsp;
+						<a id="help_components" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+					</div>
 				</div>
 				<div class="build_components">
 					<table> 
@@ -45,29 +55,22 @@
 						<tbody>
 							<tr> 
 								<td class="td_check_box">
-									<%= f.check_box({name='build_romfs', id='build_romfs',disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_romfs}) %>
-								</td> 
-								<td title="<%=locale_components.build_romfs%>" ><%= locale_components.labels.build_romfs %>	</td> 
-							</tr> 
-							
-							<tr> 
-								<td class="td_check_box">
 									<%= f.check_box({name='build_term', id= 'build_term', disabled=true, onclick='checked_term();'},BuildModel.CHECK_DEFAULT_VALUE,{build.configs.build_term}) %>
 							</td> 
-								<td title="<%=locale_components.build_term%>" ><%= locale_components.labels.build_term %>	</td> 
+								<td><%= locale_components.labels.build_term %>	</td> 
 								
 							</tr> 
 							<tr> 
 							<td class="td_check_box">
 									<%= f.check_box({name='build_shell', id= 'build_shell',disabled=true, onclick='checked_shell();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_shell}) %>
 								</td> 
-								<td title="<%=locale_components.build_shell%>" ><%= locale_components.labels.build_shell %>	</td> 
+								<td><%= locale_components.labels.build_shell %>	</td> 
 							</tr>  
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_xmodem', id= 'build_xmodem', disabled=true},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_xmodem}) %>
 								</td> 
-								<td title="<%=locale_components.build_xmodem%>" ><%= locale_components.labels.build_xmodem %></td> 
+								<td><%= locale_components.labels.build_xmodem %></td> 
 								
 							</tr>
 						
@@ -75,22 +78,13 @@
 								<td class="td_check_box">
 									<%= f.check_box({name='build_adc', id='build_adc', disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_adc}) %>
 								</td> 
-								<td title="<%=locale_components.build_adc%>" ><%= locale_components.labels.build_adc %>	</td> 
-							</tr>
-							
-							<tr> 
-								<td class="td_check_box">
-									<%= f.check_box({name='build_mmcfs', id='build_mmcfs', disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_mmcfs}) %>
-								</td> 
-								<td title="<%=locale_components.build_mmcfs%>" ><%= locale_components.labels.build_mmcfs %>	</td> 
+								<td><%= locale_components.labels.build_adc %>	</td> 
 							</tr>
 							<tr> 
 								<td class="td_check_box">
 									<%= f.check_box({name='build_rpc', id='build_rpc', disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_rpc}) %>
 								</td> 
-								<td title="<%=locale_components.build_rpc%>" >
-									<%= locale_components.labels.build_rpc %>	
-								</td> 
+								<td><%= locale_components.labels.build_rpc %></td> 
 							</tr>
 						</tbody>
 					</table>
@@ -103,7 +97,10 @@
 	<div id="net">
 		<div>
 			<div id="box_title_tabs">
-				<div class="box_text_build"><%=locale_components.net_title%></div>
+				<div class="box_text_build">
+					<%=locale_components.net_title%>&nbsp;
+					<a id="help_network" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+				</div>
 			</div>
 			<div class="build_components">
 				<table>
@@ -111,23 +108,19 @@
 						<td class="td_check_box">
 							<%= f.check_box({name='build_con_tcp', id='build_con_tcp',disabled=false, onclick='checked_con_tcp();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_tcp}) %>
 						</td> 
-						<td title="<%=locale_components.build_con_tcp%>" >
-							<%= locale_components.labels.build_con_tcp %>	
-						</td> 
+						<td><%= locale_components.labels.build_con_tcp %></td> 
 					</tr>
 					<tr> 
 						<td class="td_check_box">
 							<%= f.check_box({name='build_con_generic', disabled=false, id='build_con_generic',onclick='checked_con_generic();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_con_generic}) %>
 						</td> 
-						<td title="<%=locale_components.build_con_generic%>" ><%= locale_components.labels.build_con_generic %>	</td> 
+						<td><%= locale_components.labels.build_con_generic %></td> 
 					</tr>  
 					<tr> 
 						<td class="td_check_box">
 							<%= f.check_box({name='build_uip', id='build_uip', disabled=false, onclick='checked_ip();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_uip}) %>
 						</td> 
-						<td title="<%=locale_components.build_uip%>" >
-							<%= locale_components.labels.build_uip %>	
-						</td> 
+						<td><%= locale_components.labels.build_uip %></td> 
 						<td id="ip_box" style="display:none;">
 							<div class="box_ip">
 								<%= locale_components.labels.ip %>
@@ -157,9 +150,7 @@
 						<td class="td_check_box">
 							<%= f.check_box({name='build_dns', id='build_dns',disabled=true, onclick='checked_dns();'},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dns}) %>
 						</td> 
-						<td title="<%=locale_components.build_dns%>" >
-							<%= locale_components.labels.build_dns %>	
-						</td> 
+						<td><%= locale_components.labels.build_dns %></td> 
 						<td id="dns_box" style="display:none;">
 							<div class="box_dns">
 								<%= locale_components.labels.dns %>
@@ -174,16 +165,38 @@
 						<td class="td_check_box">
 							<%= f.check_box({name='build_dhcpc', id='build_dhcpc',disabled=true},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_dhcpc}) %>
 						</td> 
-						<td title="<%=locale_components.build_dhcpc%>" >
-							<%= locale_components.labels.build_dhcpc %>	
-						</td> 
-						
+						<td><%= locale_components.labels.build_dhcpc %></td> 
 					</tr> 
 				</table>
 			</div>
 		</div>
 	</div>
-	
+	<div id="file_systems">
+		<div>
+			<div id="box_title_tabs">
+				<div class="box_text_build">
+					<%= locale_components.file_systems_title %>&nbsp;
+					<a id="help_file_systems" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+				</div>
+			</div>
+			<div class="build_components">
+				<table>
+					<tr> 
+						<td class="td_check_box">
+							<%= f.check_box({name='build_romfs', id='build_romfs',disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_romfs}) %>
+						</td> 
+						<td><%= locale_components.labels.build_romfs %>	</td> 
+					</tr> 
+					<tr> 
+						<td class="td_check_box">
+							<%= f.check_box({name='build_mmcfs', id='build_mmcfs', disabled=false},BuildModel.CHECK_DEFAULT_VALUE, {build.configs.build_mmcfs}) %>
+						</td> 
+						<td><%= locale_components.labels.build_mmcfs %>	</td> 
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 	<!--<div id="luarpc">
 		<div>
 			<div id="box_title_tabs">
@@ -191,3 +204,4 @@
 			</div>
 		</div>
 	</div>-->
+<% render("help/tabs_content.lp") %>

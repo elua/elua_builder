@@ -177,7 +177,10 @@ function box_close(){
 
 <div id='loading' style='display:none;'>Loading...</div>
 
-<div id="box_title"><%=  build.id ~= nil and locale_index.edit_build_title or locale_index.new_build_title %></div>
+<div id="box_title">
+	<%=  build.id ~= nil and locale_index.edit_build_title or locale_index.new_build_title %>&nbsp;
+	<a id="help_build_configuration" href="#"><img src="images/buttons/help.png" border='0'></a>
+</div>
 <% if flash.get("validationMessagesBuild") ~= nil then %>
 <br>
 	<%= flash.get("validationMessagesBuild")%>
@@ -198,7 +201,10 @@ function box_close(){
 			
 			<div>
 				<div class="box_title_build">
-					<div class="box_text_build"><%= locale_components.target_title %></div>
+					<div class="box_text_build">
+						<%= locale_components.target_title %>&nbsp;
+						<a id="help_target_title" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+					</div>
 				</div>
 				
 				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("ajax_request('"..makeURL({control='builder',act='tabs_content'}).."',{target:this.value}, '#tabs','loading',reload_tabs);") or nil},BuildModel.TARGETS, build.configs.target) %></div>
@@ -207,7 +213,8 @@ function box_close(){
 			<div>
 				<div class="box_title_build">
 					<div class="box_text_build">
-						<%=locale_index.files_romfs_title%>
+						<%=locale_index.files_romfs_title%>&nbsp;
+						<a id="help_rom_file_system" href="#"><img src="images/buttons/help_2.png" border='0'></a>
 						<div class="links_right">
 						<a href="javascript:void(0);" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list" onclick="box_view();">
 							<img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b>
@@ -238,7 +245,8 @@ function box_close(){
 					<div class="box_text_build" >
 						<%= locale_index.labels.mode %>:
 						<input type="button" name='basic' id='basic' value='<%=locale_index.labels.basic%>', onclick="basic_mode();">
-						<input type="button" name='advanced' id='advanced' value='<%=locale_index.labels.advanced%>', onclick="advanced_mode();">
+						<input type="button" name='advanced' id='advanced' value='<%=locale_index.labels.advanced%>', onclick="advanced_mode();"> &nbsp;
+						<a id="help_mode_selection" href="#"><img src="images/buttons/help_2.png" border='0'></a>
 					</div>
 					<script>basic_mode();</script>
 				</div>
@@ -281,4 +289,5 @@ function box_close(){
 	<img src="images/ajax-loader.gif"><br/><br/>
 	<h2>Build is being generated.</h2>
 </div>
+<% render("help/files.lp") %>
 <% render("footer.lp","_shared") %>
