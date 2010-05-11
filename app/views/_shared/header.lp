@@ -35,7 +35,6 @@
 			<div class="hello"><%=locale_index.labels.greeting%>, <%= current_user.name %></div>
 			<a href="<%= makeURL({control="user", act="edit"})%>"> <img src="images/buttons/account.png" border=0>&nbsp; <%=locale_index.labels.edit_account%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
 			<a href="<%= makeURL({control="user", act="logout"})%>"><img src="images/buttons/logout.png" border=0>&nbsp; <%=locale_index.labels.logout%></a>				
-		
 		</div>
 	<%end%>
 	

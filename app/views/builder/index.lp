@@ -39,10 +39,10 @@ function confirmDeleteBuild(id)
 <div >
 	<%
 		local columns_builds = {
-							{key="id", label = locale_index.label_actions, width=80, formatter="actions", className="columnCenter"},
+							{key="id", label = locale_index.label_actions, width=100, formatter="actions", className="columnCenter"},
 							{key="title", label= locale_index.labels.title ,  sortable=true,width=200},
 							{key="created_at", label=locale_index.labels.created_at, sortable=true, Width=60},
-							{key="configs", label=locale_index.labels.configs, sortable=true, width=353},
+							{key="configs", label=locale_index.labels.configs, sortable=true, width=333},
 		}
 		local extraFormatters = [[
                                 
@@ -94,10 +94,10 @@ function confirmDeleteBuild(id)
 
 	<%
 		local columns_files = { 
-							{key="id", label = locale_index.label_actions, width=80, formatter="action", className="columnCenter"},
-							{key="filename", label= locale_index.labels.filename,  sortable=true,width=400},
+							{key="id", label = locale_index.label_actions, width=100, formatter="action", className="columnCenter"},
+							{key="filename", label= locale_index.labels.filename,  sortable=true,width=370},
 							{key="category", label= locale_index.labels.file_type, sortable=true, width=123},
-							{key="created_at", label=locale_index.labels.created_at, sortable=true, width=130},
+							{key="created_at", label=locale_index.labels.created_at, sortable=true, width=140},
 		}
   
 		local extraFormatters = [[
