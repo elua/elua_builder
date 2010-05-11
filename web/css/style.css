@@ -345,8 +345,10 @@ tbody {
 
 .yui-skin-sam .columnCenter{text-align:center;}
 .yui-skin-sam .columnCenter div{text-align:center;}
-.links_right{float:right;font-size:12px;margin:5px 2px 0px 15px;padding-right:10px;}
-.hello{float:left;font-size:14px;font-weight:bold;margin-right:8px;}
+.links_right{float:right;font-size:12px;font-weight:bold;margin:4px 2px 4px 0px;padding-right:10px; text-underline-position: above;	}
+.links_right img { vertical-align: middle; }
+.logout_right{float:right;font-size:12px;margin:-3px 0px 0px 0px;padding-right:5px; }
+.hello{float:left;font-size:14px;font-weight:bold;margin-right:8px; margin-top: 2px;}
 .upload{float:left;font-size:14px;font-weight:bold;}
 
 .generate {
