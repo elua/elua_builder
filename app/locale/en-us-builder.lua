@@ -36,7 +36,7 @@ locale_index = {
 				edit_account = "Account",
 				confirmDownloadFile = "Confirms download file?",
 				open_file = "The selected file does not exist.",
-				file_type = "File Type",
+				file_type = "Category",
 				view = "Only user files",
 				basic = "Basic",
 				advanced = "Advanced",
@@ -116,11 +116,20 @@ locale_components = {
 }
 
 locale_help ={
-				what_build_configurations_title = "O que é",
-				what_build_configurations = "... descrição",
-				new_build_configurations_title = "título nem build",
-				new_build_configurations = "... descrição",
-				buttons_build_configurations_title = "buttons",
-				buttons_build_configurations = "... descrição",
-				stored_files = "Help stored files",
+				build_configurations = [[You can see below your <b>generated build configurations</b>.<br />
+										 To create a <b>new configuration</b> just click on the <b>New Build</b> button.<br />
+										 The available actions for a list are: <br />
+										 <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download binary build <br/>
+										 <img src='images/buttons/edit.png' border='0' width=15 align='absbottom'/> Edit build configuration<br />
+										 <img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove build configuration.
+										 ]],
+				stored_files = [[You can see below your stored files.<br />Stored files can be <b>uploaded files</b> or <b>suggested files</b> in each category (by eLua versions, user files, games, etc). <br />
+								To <b>upload a file</b>, just select a file and click on the <b>Upload</b> button.<br />
+								The available actions for a list are: <br />
+								<img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download file <br/>
+								<img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove file (Only user files can be removed) <br/>
+								To see only your uploaded files, check the option 'Only user files' .
+								
+				
+				]],
 }
