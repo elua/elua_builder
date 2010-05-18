@@ -4,8 +4,11 @@
 .bubbletip
 {
 	position: absolute;
-	z-index: 50;
+	z-index: 500;
 	border-collapse: collapse;
+}
+.bubbletip tbody{
+	background-color:transparent;
 }
 .bubbletip td.bt-topleft
 {
@@ -93,6 +96,14 @@
 {
 	background-color: #fff;
 	vertical-align: middle;
+	line-height:17px;
+
+}
+
+.bubbletip td.bt-content b
+{
+	color:#333333;
+
 }
 /*******************************/
 
