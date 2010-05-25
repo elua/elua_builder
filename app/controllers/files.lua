@@ -27,7 +27,7 @@ end
 function upload()
 	local FileModel = require("file.model") 
 	local file_upload = cgilua.POST.file
-    --error(tableToString(file_upload))
+    error(tableToString(file_upload))
     if file_upload and next(file_upload) and file_upload.filename ~= nil and file_upload.filename ~= "" then
 		local _, name = cgilua.splitonlast(file_upload.filename)
 		local file = file_upload.file

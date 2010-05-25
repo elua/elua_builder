@@ -17,12 +17,15 @@
 		<% loadJS('lib/jquery/jQuery.bubbletip-1.0.6.js') %>
 		<% loadCSS('lib/jquery/bubbletip/bubbletip.css')%>
 		<% loadCSS('lib/jquery/bubbletip/bubbletip-IE.css')%>
+		<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.js')%>
+		<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.min.js')%>
+		<% loadJS('lib/jquery/uploadify/swfobject.js')%>
+		<% loadCSS('lib/jquery/uploadify/uploadify.css')%>
 	<% else %>
 		<% loadJS('lib/prototype-1.6.0.2.js') %>
 		<% loadJS('lib/effects.js') %>
 	<% end %>
 
-	
 </head>
 <body>
 

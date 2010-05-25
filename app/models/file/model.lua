@@ -78,7 +78,14 @@ function getAllFiles(params)
 	local where_suggested = ''
 	local where_user = ''
 	if type(params) == 'table' then
-		where_suggested = params.only_user_files == 'true' and ' and c.id = 1' or ''
+		if params.filter == 'only_user_files' 	then	
+			where_suggested = params.filter == 'only_user_files' and ' and c.id = 1' or ''
+		elseif params.filter == 'only_V07_files' then
+			local suggested_files = getSuggestedFiles()
+			return suggested_files
+		else
+			where_suggested = ''
+		end
 		
 		if(type(params.by_category) == 'table')then
 			local temp_ids = ''

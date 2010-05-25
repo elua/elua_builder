@@ -7,7 +7,14 @@
 			<div class="logout_right"><a href="javascript:void(0);" title="<%=locale_index.labels.close_box%>" onclick="box_close();"><img src="images/buttons/logout.png" border=0></a></div>
 		</div></div>
 		<div class="build_components">
-			<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>
+			<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
+  				<option value="none" selected><%=locale_index.labels.default%></option>
+				<option value="only_user_files"><%=locale_index.labels.user_files%></option>
+  				<option value="only_V07_files"><%=locale_index.labels.v07_files%></option>
+			</select>
+			<!--
+			
+			<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>-->
 			<div>
 				<%
 					local columns_files = { 
