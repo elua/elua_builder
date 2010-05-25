@@ -92,6 +92,7 @@ function confirmDeleteBuild(id)
 						'uploader'  : 'lib/jquery/uploadify/uploadify.swf',
 						'script'    : 'http://ubuntu/carlos-elua_builder/start.lua?control=files&act=upload',
 						'cancelImg' : 'images/cancel.png',
+						'folder'    : 'lib/jquery/uploadify/uploads',
 						'auto'      : false,
 						'multi'     : true
 					});
