@@ -1,20 +1,14 @@
 <div id='msg_help_build_configuration' style="display:none;">
-	blablablsdsafdhjasdhfjashfkj<br>
-	blablablsdsafdhjasdhfjashfkj<br>
-	blablablsdsafdhjasdhfjashfkj<br>
+	<%= locale_help.build.main_build %>
 </div>
 <div id='msg_help_target_title' style="display:none;">
-	<b><%=locale_components.labels.target%></b>:&nbsp;<%=locale_components.target_info%>
+	<%= locale_help.build.target_platform %>
 </div>
 <div id='msg_help_rom_file_system' style="display:none;">
-	blablablsdsafdhjasdhfjashfkj<br>
-	blablablsdsafdhjasdhfjashfkj<br>
-	blablablsdsafdhjasdhfjashfkj<br>
+	<%= locale_help.build.ROM_FS %>
 </div>
 <div id='msg_help_mode_selection' style="display:none;">
-	blablablsdsafdhjasdhfjashfkj<br>
-	blablablsdsafdhjasdhfjashfkj<br>
-	blablablsdsafdhjasdhfjashfkj<br>
+	<%= locale_help.build.options_configuration %>
 </div>
 
 <script type="text/javascript">

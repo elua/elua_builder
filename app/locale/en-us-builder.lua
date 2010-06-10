@@ -134,4 +134,42 @@ locale_help ={
 								
 				
 				]],
+				stored_files_window = [[
+					About this window and how can be used.
+				
+				]],
+				build = {
+					main_build = [[ Main text about what you can do here.<br />
+									Second line.
+					]],
+					target_platform = [[ About target platform ]],
+					ROM_FS = [[ About ROM-FS]],
+					options_configuration = [[
+						Fast explanation about modes and how can be used.
+					
+					]]
+				},
+				advanced_tabs = {
+					toolchain = [[ About touchain]],
+					romfs_mode = [[About rom-fs mode]],
+					components = [[
+						BUILD_TERM: Video Terminal I/O support.<br />
+						BUILD_SHELL: ---.<br />
+						BUILD_XMODEM: XModem Protocol support for file transfers on the eLua Terminal.<br />
+						BUILD_ADC: Analog to Digital Converter module support.<br />
+						BUILD_RPC: --- 
+					
+					]],
+					network = [[
+						BUILD_CON_TCP: TCP/IP (Ethernet) Console support.<br />
+						BUILD_CON_GENERIC: Serial (UART) Console support.<br />
+						BUILD_UIP: TCP/IP Stack support. <br /> 
+						BUILD_DNS: A DNS client. <br />
+						BUILD_DHCPC: A DHCP client. 
+					]],
+					file_systems = [[
+						BUILD_ROMFS: A simple Flash read-only File System. <br />
+						BUILD_MMCFS: 
+					]]
+				}
 }
