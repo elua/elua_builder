@@ -41,7 +41,6 @@ function upload()
             cgilua.put(tostring(destination:close()))
         end
 	end
-	--redirect({control="builder", act="index"})
 end
 
 function delete()

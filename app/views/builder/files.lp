@@ -179,7 +179,7 @@ function box_close(){
 
 <div id="box_title">
 	<%=  build.id ~= nil and locale_index.edit_build_title or locale_index.new_build_title %>&nbsp;
-	<div class="help"><a id="help_build_configuration" href="#"><img src="images/buttons/help.png" border='0'></a></div>
+	<div class="help"><a id="help_build_configuration" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 </div>
 <% if flash.get("validationMessagesBuild") ~= nil then %>
 <br>

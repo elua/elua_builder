@@ -38,8 +38,8 @@ locale_index = {
 				open_file = "The selected file does not exist.",
 				file_type = "Category",
 				user_files = "Only user files",
-				v07_files = "Only V 0.7 files",
-				default = "No filter",
+				v07_files = "Only v0.7 files",
+				default = "All files",
 				basic = "Basic",
 				advanced = "Advanced",
 				mode = "Build Options Configuration",
@@ -118,30 +118,36 @@ locale_components = {
 }
 
 locale_help ={
-				build_configurations = [[You can see below your <b>generated build configurations</b>.<br />
-										 To create a <b>new configuration</b> just click on the <b>New Build</b> button.<br />
-										 The available actions for a list are: <br />
-										 <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download binary build <br/>
-										 <img src='images/buttons/edit.png' border='0' width=15 align='absbottom'/> Edit build configuration<br />
-										 <img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove build configuration.
-										 ]],
-				stored_files = [[You can see below your stored files.<br />Stored files can be <b>uploaded files</b> or <b>suggested files</b> in each category (by eLua versions, user files, games, etc). <br />
-								To <b>upload a file</b>, just select a file and click on the <b>Upload</b> button.<br />
-								The available actions for a list are: <br />
-								<img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download file <br/>
-								<img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove file (Only user files can be removed) <br/>
-								To see only your uploaded files, check the option 'Only user files' .
-								
-				
+				build_configurations = [[
+           This section keeps your previously saved build sessions, so you can reuse it over and over without having to reconfigure it's options.<br /> 
+		  		 To create a <b>new build entry</b>, click on the <b>New Build</b> button, configure your options and (don't forget ! :) click on the <b>save</b> button.<br />
+           The left icons on each list entry allows you to: <br />
+             <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download eLua built with these configuration options<br />
+             <img src='images/buttons/edit.png' border='0' width=15 align='absbottom'/> Edit the build configuration<br />
+             <img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Delete the build configuration<br />
 				]],
+
+				stored_files = [[
+           This section allows you to upload files from your computer and store them in our servers for use on the eLua File Systems on your builds.<br />
+           Press the <b>Browse</b> button to select the files you want to upload. Multiple selections are allowed.<br />
+           You can see below your stored files.<br />Stored files can be <b>uploaded files</b> or <b>suggested files</b> in each category (by eLua versions, user files, games, etc). <br />
+           To <b>upload a file</b>, just select a file and click on the <b>Upload</b> button.<br />
+           The available actions for a list are: <br />
+              <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download file <br/>
+							<img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove file (Only user files can be removed) <br/>
+           To see only your uploaded files, check the option 'Only user files' .
+				]],
+
 				stored_files_window = [[
 					About this window and how can be used.
 				
 				]],
+
 				build = {
-					main_build = [[ Main text about what you can do here.<br />
-									Second line.
-					]],
+					main_build = [[ 
+            Main text about what you can do here.<br />
+						Second line.
+				]],
 					target_platform = [[ About target platform ]],
 					ROM_FS = [[ About ROM-FS]],
 					options_configuration = [[
@@ -149,6 +155,7 @@ locale_help ={
 					
 					]]
 				},
+
 				advanced_tabs = {
 					toolchain = [[ About touchain]],
 					romfs_mode = [[About rom-fs mode]],

@@ -32,7 +32,7 @@ function confirmDeleteBuild(id)
 
 <div id="box_title">
 	<div style="float:left;"><%=locale_index.builds_title%> </div>&nbsp;
-	<div class="help"><a id="help_builds_title" href="#"><img src="images/buttons/help.png" border='0'></a></div>
+	<div class="help"><a id="help_builds_title" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 </div>
 <br />
 <div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>" class="button_submit"> </a> </div><br>
@@ -73,7 +73,7 @@ function confirmDeleteBuild(id)
 
 <div id="box_title">
 	<%=locale_index.files_title%>&nbsp;
-	<div class="help"><a id="help_stored_files" href="#"><img src="images/buttons/help.png" border='0'></a></div>
+	<div class="help"><a id="help_stored_files" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 </div><br />
 <div class="upload">
 		<!-- 
@@ -88,6 +88,10 @@ function confirmDeleteBuild(id)
 			<% local UserModel = require("user.model")%>
 			
 			<script type="text/javascript">
+				function reload_grid(event, data)
+				{
+					ref_dataSetFiles.myDataTable.reload('filter='+this.value);
+				}
 				$(document).ready(function() {
 					$('#filename').uploadify({
 						'uploader'  : 'lib/jquery/uploadify/uploadify.swf',
@@ -95,12 +99,17 @@ function confirmDeleteBuild(id)
 						'scriptData': {control:'files', act:'upload',h:'<%= current_user.user_hash %>'},
 						'cancelImg' : 'images/cancel.png',
 						'folder'    : 'lib/jquery/uploadify/uploads',
+						'sizeLimit' : '524288',
 						'auto'      : false,
-						'multi'     : true
+						'simUploadLimit': 10,
+						'queueSizeLimit' : 10,
+						'multi'     : true,
+						'onAllComplete' : reload_grid
 					});
 				}); 
 			</script>
-<div><br><br>
+</div>
+<br>
 <div>
 	<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
 		<option value="none" selected><%=locale_index.labels.default%></option>
@@ -108,7 +117,7 @@ function confirmDeleteBuild(id)
 		<option value="only_V07_files"><%=locale_index.labels.v07_files%></option>
 	</select>
 	<div id="notice">
-		<%= flash.get("removeSucessMessages")%></div>
+		<%= flash.get("removeSucessMessages")%>
 		<% if flash.get("removefailureMessages") ~= nil then %>
 			<div id="errorExplanation"><%= flash.get("removefailureMessages")%> </div>
 		<% end %>
@@ -141,7 +150,7 @@ function confirmDeleteBuild(id)
 		local configs_files = {
 						dataSetID = "dataSetFiles",
 						serverPagination = false,
-						defaultSorting = 'filename',
+						defaultSorting = 'created_at',
 						paginatorID = "paginatorFiles",
 						paginatorPosition = "bottom",
 						rowsPerPage = 10,

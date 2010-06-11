@@ -104,10 +104,10 @@ function getAllFiles(params)
 		
 	end
 	local files = db:selectall([[f.id, f.id as file_id, f.filename, c.name as category,c.id as category_id, f.created_at from files f inner join categories c on c.id = f.category_id where
-								 f.user_id = ]]..user.id..where_user..[[
+								 f.user_id = ]]..user.id..where_user..[[ 
 								 UNION
 								 select s.id, s.id as file_id, s.filename,c.name as category, c.id as category_id, s.created_at]],
-								[[suggested_files s inner join categories c on c.id = s.category_id]]..where_suggested)
+								[[suggested_files s inner join categories c on c.id = s.category_id]]..where_suggested.. " order by created_at desc")
 	return files
 	
 end
