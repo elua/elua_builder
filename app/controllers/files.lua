@@ -25,9 +25,10 @@ function repository()
 end
 
 function upload()
+	
 	local FileModel = require("file.model") 
-	local file_upload = cgilua.POST.file
-    error(tableToString(file_upload))
+	local file_upload = cgilua.POST.Filedata
+    --traceLog(tableToString(cgilua.POST))
     if file_upload and next(file_upload) and file_upload.filename ~= nil and file_upload.filename ~= "" then
 		local _, name = cgilua.splitonlast(file_upload.filename)
 		local file = file_upload.file
@@ -37,10 +38,10 @@ function upload()
         if destination then
             local bytes = file:read("*a")
             destination:write(bytes)
-            destination:close()
+            cgilua.put(tostring(destination:close()))
         end
 	end
-	redirect({control="builder", act="index"})
+	--redirect({control="builder", act="index"})
 end
 
 function delete()

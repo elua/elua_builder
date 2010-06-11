@@ -245,3 +245,9 @@ function tableToString(tb)
 		return str .."}"
 	end
 end
+
+traceLog = function(msg)
+  local log = (io.open(CONFIG.MVC_TMP..("log.txt"), "a+"))
+  log:write(msg)
+  log:close() 
+ end

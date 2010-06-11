@@ -179,7 +179,7 @@ function box_close(){
 
 <div id="box_title">
 	<%=  build.id ~= nil and locale_index.edit_build_title or locale_index.new_build_title %>&nbsp;
-	<a id="help_build_configuration" href="#"><img src="images/buttons/help.png" border='0'></a>
+	<div class="help"><a id="help_build_configuration" href="#"><img src="images/buttons/help.png" border='0'></a></div>
 </div>
 <% if flash.get("validationMessagesBuild") ~= nil then %>
 <br>
@@ -203,7 +203,7 @@ function box_close(){
 				<div class="box_title_build">
 					<div class="box_text_build">
 						<%= locale_components.target_title %>&nbsp;
-						<a id="help_target_title" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+						<div class="help_2"><a id="help_target_title" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 					</div>
 				</div>
 				
@@ -214,14 +214,15 @@ function box_close(){
 				<div class="box_title_build">
 					<div class="box_text_build">
 						<%=locale_index.files_romfs_title%>&nbsp;
-						<a id="help_rom_file_system" href="#"><img src="images/buttons/help_2.png" border='0'></a>
-						<div class="links_right">
-						<a href="javascript:void(0);" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list" onclick="box_view();">
-							<img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b>
-						</a>
-					</div>	
+						<div class="help_2"><a id="help_rom_file_system" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 					</div>		
-				</div><br>
+				</div>
+				<div class="links_right_add_files">
+					<a href="javascript:void(0);" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list" onclick="box_view();">
+						<img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b>
+					</a>
+				</div>	
+				<br>
 				<table id="file_list" class="table_align">
 					<th>	
 						<td width=15% align=center><b><%=locale_index.label_autorun%></b></td>
@@ -246,7 +247,7 @@ function box_close(){
 						<%= locale_index.labels.mode %>:
 						<input type="button" name='basic' id='basic' value='<%=locale_index.labels.basic%>', onclick="basic_mode();">
 						<input type="button" name='advanced' id='advanced' value='<%=locale_index.labels.advanced%>', onclick="advanced_mode();"> &nbsp;
-						<a id="help_mode_selection" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+						<div class="help_2"><a id="help_mode_selection" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 					</div>
 					<script>basic_mode();</script>
 				</div>

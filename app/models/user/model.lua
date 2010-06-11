@@ -94,7 +94,20 @@ function getCurrentUser()
 			local ok, user = checkUser(md5.decrypt(tostring(cookieData[1]),CONFIG.MD5KEY), md5.decrypt(tostring(cookieData[2]),CONFIG.MD5KEY))
 			if ok then return user end
 		end
+	else
+		local h = cgilua.POST.h
+		if h ~= nil and h ~= '' then
+			return getUserHash(h)
+		end
 	end
+end
+
+function getIdCurrentUser()
+	local user = getCurrentUser()
+	local ids = db:selectall("id","users","login = '"..user.login.."'")
+	local user_id = ids[1]
+	local id = user_id
+	return id
 end
 
 function checkNotExistLogin(login)

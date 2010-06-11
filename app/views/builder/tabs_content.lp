@@ -11,7 +11,7 @@
 			<div id="box_title_tabs">
 				<div class="box_text_build">
 					<%= locale_components.toolchain_title %> &nbsp;
-					<a id="help_toolchain" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+					<div class="help_2"><a id="help_toolchain" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 				</div>
 			</div>
 			<div class="build_components">
@@ -22,7 +22,7 @@
 			<div id="box_title_tabs">
 				<div class="box_text_build">
 					<%=locale_index.files_romfsmode_title%>&nbsp;
-					<a id="help_romfs_build_mode" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+					<div class="help_2"><a id="help_romfs_build_mode" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 				</div>
 			</div>
 			<div class="build_components">
@@ -41,7 +41,7 @@
 				<div id="box_title_tabs">
 					<div class="box_text_build">
 						<%= locale_components.component_title %>&nbsp;
-						<a id="help_components" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+						<div class="help_2"><a id="help_components" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 					</div>
 				</div>
 				<div class="build_components">
@@ -99,7 +99,7 @@
 			<div id="box_title_tabs">
 				<div class="box_text_build">
 					<%=locale_components.net_title%>&nbsp;
-					<a id="help_network" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+					<div class="help_2"><a id="help_network" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 				</div>
 			</div>
 			<div class="build_components">
@@ -176,7 +176,7 @@
 			<div id="box_title_tabs">
 				<div class="box_text_build">
 					<%= locale_components.file_systems_title %>&nbsp;
-					<a id="help_file_systems" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+					<div class="help_2"><a id="help_file_systems" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 				</div>
 			</div>
 			<div class="build_components">

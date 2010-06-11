@@ -32,7 +32,7 @@ function confirmDeleteBuild(id)
 
 <div id="box_title">
 	<div style="float:left;"><%=locale_index.builds_title%> </div>&nbsp;
-	<a id="help_builds_title" href="#"><img src="images/buttons/help.png" border='0'></a>
+	<div class="help"><a id="help_builds_title" href="#"><img src="images/buttons/help.png" border='0'></a></div>
 </div>
 <br />
 <div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>" class="button_submit"> </a> </div><br>
@@ -73,7 +73,7 @@ function confirmDeleteBuild(id)
 
 <div id="box_title">
 	<%=locale_index.files_title%>&nbsp;
-	<a id="help_stored_files" href="#"><img src="images/buttons/help.png" border='0'></a>
+	<div class="help"><a id="help_stored_files" href="#"><img src="images/buttons/help.png" border='0'></a></div>
 </div><br />
 <div class="upload">
 		<!-- 
@@ -82,15 +82,17 @@ function confirmDeleteBuild(id)
 				</form>
 			<input type="submit" value="Upload">  -->
 			
-			<input id="filename" name="file" type="file"/>
+			<input id="filename" name="filename" type="file"/>
 			<a href="javascript:$('#filename').uploadifyUpload();">Upload Files</a> | 
 			<a href="javascript:$('#filename').uploadifyClearQueue();">Clear Selected</a>
-		
+			<% local UserModel = require("user.model")%>
+			
 			<script type="text/javascript">
 				$(document).ready(function() {
 					$('#filename').uploadify({
 						'uploader'  : 'lib/jquery/uploadify/uploadify.swf',
-						'script'    : 'http://ubuntu/carlos-elua_builder/start.lua?control=files&act=upload',
+						'script'    : '<%= makeURL({control='files', act='upload'})%>',
+						'scriptData': {control:'files', act:'upload',h:'<%= current_user.user_hash %>'},
 						'cancelImg' : 'images/cancel.png',
 						'folder'    : 'lib/jquery/uploadify/uploads',
 						'auto'      : false,
