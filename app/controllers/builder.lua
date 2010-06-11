@@ -7,7 +7,7 @@
 function index()
 	local UserModel = require "user.model"
 	local BuildModel = require "builder.model"
-	
+	UserModel.saveHash(UserModel.getCurrentUser())
 	current_user = UserModel.getCurrentUser()
 	render("index.lp")
 	

@@ -23,7 +23,7 @@ locale_index = {
 	labels = {
 				greeting = "Hello",
 				filename = "File Name",
-				created_at = "Created at",
+				created_at = "Uploaded at",
 				title = "Build Name",
 				id = "Id",
 				configs = "Scons line command",
@@ -125,17 +125,21 @@ locale_help ={
              <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download eLua built with these configuration options<br />
              <img src='images/buttons/edit.png' border='0' width=15 align='absbottom'/> Edit the build configuration<br />
              <img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Delete the build configuration<br />
+           You can click on the column titles to sort the list by that key.<br />
 				]],
 
 				stored_files = [[
            This section allows you to upload files from your computer and store them in our servers for use on the eLua File Systems on your builds.<br />
            Press the <b>Browse</b> button to select the files you want to upload. Multiple selections are allowed.<br />
-           You can see below your stored files.<br />Stored files can be <b>uploaded files</b> or <b>suggested files</b> in each category (by eLua versions, user files, games, etc). <br />
+           The list shows your stored files and you can filter it with the small combo box options on the top left.<br />
+
+           Stored files can be <b>uploaded files</b> or <b>suggested files</b> in each category (by eLua versions, user files, games, etc). <br />
            To <b>upload a file</b>, just select a file and click on the <b>Upload</b> button.<br />
            The available actions for a list are: <br />
               <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download file <br/>
 							<img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove file (Only user files can be removed) <br/>
-           To see only your uploaded files, check the option 'Only user files' .
+           You can click on the column titles to sort the list by that key.<br />
+
 				]],
 
 				stored_files_window = [[

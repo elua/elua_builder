@@ -49,16 +49,21 @@ function checkUser(login, passwd)
 	end
 end
 
-function userHash(email)
-	local user = db:selectall("*","users","email = '"..email.."'")
-	local user = user[1]
+function saveHash(user)
 	local date = os.date()
 	local user_hash = md5.sumhexa(user.login..date)
 	db:update("users",{user_hash=user_hash},"id="..user.id)
 	user.user_hash = user_hash
-	--local user = db:selectall("*","users","email = '"..email.."'")
 	return user
 end
+
+function userHash(email)
+	local user = db:selectall("*","users","email = '"..sqlI.sqlInjection(email,"string").."'")
+	if type(user[1]) == 'table' then
+		return saveHash(user[1])
+	end
+end
+
 
 function checkEmail(email)
 	email = sqlI.sqlInjection(email,"string")
