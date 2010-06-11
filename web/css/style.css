@@ -63,7 +63,7 @@ body{
 .box_title_build {
 					background-color: #f2f2f2;
 					height:26px;
-					width:780px;
+					width:800px;
 					
 					padding:6px 0px 0px -20px;	
 					z-index:1000;	
@@ -76,7 +76,7 @@ body{
 }
 
 .box_text_build {
-						padding-top:4px;
+						padding-top:3px;
 						margin: 0px 0px 10px 20px;												
 }
 
@@ -349,7 +349,7 @@ tbody {
 .links_right img { vertical-align: middle; }
 .logout_right{float:right;font-size:12px;margin:-3px 0px 0px 0px;padding-right:5px; }
 .hello{float:left;font-size:14px;font-weight:bold;margin-right:8px; margin-top: 2px;}
-.upload{float:left;font-size:14px;font-weight:bold;}
+.upload{font-weight:bold; margin-bottom:10px;}
 
 .generate {
 	position:absolute;
@@ -386,10 +386,30 @@ tbody {
 }
 
 .table_align {
-				width:782px; 
+				width:800px; 
 }
 
 .box_size{
 			width:100%;
 }
 
+.help {
+		text-align: right;
+		margin: -20px 2px 0px 0px;
+}
+
+.help_2 {
+			text-align: right;
+			margin: -20px 2px 0px 0px;	
+}
+
+.links_right_add_files {
+						float:right;
+						font-size:12px;
+						font-weight:bold;
+						margin:	4px 10px 4px 0px;
+						padding-right:45px; 
+						text-underline-position: above;			
+}
+
+.links_right_add_files img { vertical-align: middle; }

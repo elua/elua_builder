@@ -18,8 +18,8 @@ cgilua.doif(CONFIG.MVC_LOCALE..currenty_lang.."-general.lua")
 ----------------------------------------------------------------------------
 package.path = CONFIG.MVC_MODEL..[[?.lua;]]..package.path
 APP = {}
-local controller = cgilua.QUERY.control or 'default'
-local action = cgilua.QUERY.act or 'index'
+local controller = cgilua.QUERY.control or cgilua.POST.control or 'default'
+local action = cgilua.QUERY.act or cgilua.POST.act or 'index'
 APP.controller = controller
 APP.action = action
 
