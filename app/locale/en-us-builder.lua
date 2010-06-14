@@ -132,55 +132,73 @@ locale_help ={
            This section allows you to upload files from your computer and store them in our servers for use on the eLua File Systems on your builds.<br />
            Press the <b>Browse</b> button to select the files you want to upload. Multiple selections are allowed.<br />
            The list shows your stored files and you can filter it with the small combo box options on the top left.<br />
-
-           Stored files can be <b>uploaded files</b> or <b>suggested files</b> in each category (by eLua versions, user files, games, etc). <br />
-           To <b>upload a file</b>, just select a file and click on the <b>Upload</b> button.<br />
-           The available actions for a list are: <br />
-              <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download file <br/>
-							<img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove file (Only user files can be removed) <br/>
+           Files included on the official distros are always available for your builds.<br />
+           The left icons on each list entry allows you to: <br />
+              <img src='images/buttons/download.png' border='0' width=15 align='absbottom'/> Download the file<br/>
+							<img src='images/buttons/delete.png' border='0' width=15 align='absbottom'/> Remove the file (only user files can be removed)<br/>
            You can click on the column titles to sort the list by that key.<br />
 
 				]],
 
 				stored_files_window = [[
-					About this window and how can be used.
-				
+           Click on the <b>+</b> icon to include the file on your build ROMFS<br />
 				]],
 
 				build = {
 					main_build = [[ 
-            Main text about what you can do here.<br />
-						Second line.
-				]],
-					target_platform = [[ About target platform ]],
-					ROM_FS = [[ About ROM-FS]],
+           Teste #########.<br />
+						econd line.
+				  ]],
+
+					target_platform = [[ 
+            Select on the combo box your desired target platform.<br />
+          ]],
+
+					ROM_FS = [[
+            This section lists the files to be built to your ROM File SystemAbout ROM-FS.<br />
+            Click on the top right <b>add files</b> icon to include files from your Stored Files list to the ROMFS on the build.<br />
+            Click on any of the <Autorun> radio buttons to make that file an Autorun File on your build.<br />
+            You can click on the column titles to sort the list by that key.<br />
+          ]],
+
 					options_configuration = [[
-						Fast explanation about modes and how can be used.
-					
-					]]
+						<b>Basic</b> mode shows only the essential options for a simple build.<br />
+            <b>Advanced</b> mode opens new tabs and offers more detailed options.<br />
+            Click on the button of the mode you want to work with.<br />
+ 					]]
 				},
 
 				advanced_tabs = {
-					toolchain = [[ About touchain]],
-					romfs_mode = [[About rom-fs mode]],
+					toolchain = [[
+            Select the toolchain you want to use for this build.<br />
+          ]],
+
+					romfs_mode = [[
+            Select the mode you want to build your ROMFS<br />
+              VERBATIM: Include files in the exact format you have uploaded (or the distro's originals)<br />
+              COMPRESS: Removes every possible character that still keep the file semantically identical to the original<br />
+              COMPILE: Compile the file and consider it's bytecode results as the file to be included in your ROMFS<br />
+          ]],
+
 					components = [[
-						BUILD_TERM: Video Terminal I/O support.<br />
-						BUILD_SHELL: ---.<br />
-						BUILD_XMODEM: XModem Protocol support for file transfers on the eLua Terminal.<br />
-						BUILD_ADC: Analog to Digital Converter module support.<br />
-						BUILD_RPC: --- 
-					
+						BUILD_TERM: Video Terminal I/O support<br />
+						BUILD_SHELL: The eLua Shell<br />
+						BUILD_XMODEM: XModem Protocol support for file transfers on the eLua Terminal<br />
+						BUILD_ADC: Analog to Digital Converter module support<br />
+						BUILD_RPC: Remote Procedure Call support<br />
 					]],
+
 					network = [[
-						BUILD_CON_TCP: TCP/IP (Ethernet) Console support.<br />
-						BUILD_CON_GENERIC: Serial (UART) Console support.<br />
-						BUILD_UIP: TCP/IP Stack support. <br /> 
-						BUILD_DNS: A DNS client. <br />
-						BUILD_DHCPC: A DHCP client. 
+						BUILD_CON_TCP: TCP/IP (Ethernet) Console support<br />
+						BUILD_CON_GENERIC: Serial (UART) Console support<br />
+						BUILD_UIP: TCP/IP Stack support<br /> 
+						BUILD_DNS: A DNS client for the NET module<br />
+						BUILD_DHCPC: A DHCP clientfor the NET module<br /> 
 					]],
+
 					file_systems = [[
-						BUILD_ROMFS: A simple Flash read-only File System. <br />
-						BUILD_MMCFS: 
+						BUILD_ROMFS: Flash read-only File System support<br />
+						BUILD_MMCFS: The SD/MMC File System support<br />
 					]]
 				}
 }
