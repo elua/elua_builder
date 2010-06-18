@@ -348,6 +348,9 @@ tbody {
 .links_right{float:right;font-size:12px;font-weight:bold;margin:4px 2px 4px 0px;padding-right:10px; text-underline-position: above;	}
 .links_right img { vertical-align: middle; }
 .logout_right{float:right;font-size:12px;margin:-3px 0px 0px 0px;padding-right:5px; }
+.logout_upload_right{float:right;font-size:12px;margin:-1px 0px 0px 0px;padding-right:5px; }
+.upload_right{float:right;font-size:12px;margin:-3px 0px 0px 0px;padding-right:20px;}
+.stored_window{padding:10px 0px 20px 0px;}
 .hello{float:left;font-size:14px;font-weight:bold;margin-right:8px; margin-top: 2px;}
 .upload{font-weight:bold; margin-bottom:10px;}
 
@@ -361,6 +364,17 @@ tbody {
 	margin-left:-150px;
 	background-color:#ffffff;
 	border: 1px solid #c0c0c0;
+}
+
+.box_upload_list{
+					position:absolute;
+					width:595px; 
+					height:auto;
+					top:60px;
+					left:50%;
+					margin-left:-300px;
+					background-color:#ffffff;
+					border: 3px solid #c0c0c0;
 }
 
 .box_file_list {
