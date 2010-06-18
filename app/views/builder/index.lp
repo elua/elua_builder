@@ -75,42 +75,34 @@ function confirmDeleteBuild(id)
 	<%=locale_index.files_title%>&nbsp;
 	<div class="help"><a id="help_stored_files" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 </div><br />
-<div class="upload">
-		<!-- 
-			<input type="file" name="file" id="filename"> 
-			<form method="POST" enctype="multipart/form-data" action="start.lua?control=files&act=upload" onsubmit="return( $('filename').value != '');">
-				</form>
-			<input type="submit" value="Upload">  -->
-			
-			<input id="filename" name="filename" type="file"/>
-			<a href="javascript:$('#filename').uploadifyUpload();">Upload Files</a> | 
-			<a href="javascript:$('#filename').uploadifyClearQueue();">Clear Selected</a>
-			<% local UserModel = require("user.model")%>
-			
-			<script type="text/javascript">
-				function reload_grid(event, data)
-				{
-					ref_dataSetFiles.myDataTable.reload('filter='+this.value);
-				}
-				$(document).ready(function() {
-					$('#filename').uploadify({
-						'uploader'  : 'lib/jquery/uploadify/uploadify.swf',
-						'script'    : '<%= makeURL({control='files', act='upload'})%>',
-						'scriptData': {control:'files', act:'upload',h:'<%= current_user.user_hash %>'},
-						'cancelImg' : 'images/cancel.png',
-						'folder'    : 'lib/jquery/uploadify/uploads',
-						'sizeLimit' : '524288',
-						'auto'      : false,
-						'simUploadLimit': 10,
-						'queueSizeLimit' : 10,
-						'multi'     : true,
-						'onAllComplete' : reload_grid
-					});
-				}); 
-			</script>
-</div>
-<br>
+	<input id="filename" name="filename" type="file"/>
+	<a href="javascript:$('#filename').uploadifyUpload();">Upload Files</a> | 
+	<a href="javascript:$('#filename').uploadifyClearQueue();">Clear Selected</a>
+	<% local UserModel = require("user.model")%>
+	
+	<script type="text/javascript">
+		function reload_grid(event, data)
+		{
+			ref_dataSetFiles.myDataTable.reload('filter='+this.value);
+		}
+		$(document).ready(function() {
+			$('#filename').uploadify({
+				'uploader'  : 'lib/jquery/uploadify/uploadify.swf',
+				'script'    : '<%= makeURL({control='files', act='upload'})%>',
+				'scriptData': {control:'files', act:'upload',h:'<%= current_user.user_hash %>'},
+				'cancelImg' : 'images/cancel.png',
+				'folder'    : 'lib/jquery/uploadify/uploads',
+				'sizeLimit' : '524288',
+				'auto'      : false,
+				'simUploadLimit': 10,
+				'queueSizeLimit' : 10,
+				'multi'     : true,
+				'onAllComplete' : reload_grid
+			});
+		}); 
+	</script>
 <div>
+	<br>
 	<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
 		<option value="none" selected><%=locale_index.labels.default%></option>
 		<option value="only_user_files"><%=locale_index.labels.user_files%></option>

@@ -173,6 +173,7 @@ function box_close(){
 	$('#background_box').hide();
 	$('#view_file_list').attr('checked',false);
 }
+
 </script>
 
 <div id='loading' style='display:none;'>Loading...</div>

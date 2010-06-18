@@ -138,3 +138,7 @@ function download()
 	local id = cgilua.QUERY.id
 	BuilderModel.download(id)
 end
+
+function upload_window()
+	render( "upload.lp")
+end

@@ -1,17 +1,37 @@
+<script>
+	function box_upload_view(value){
+		$('#upload_box').show();
+	}
+
+	function box_upload_close(){
+		$('#upload_box').hide();
+		$('#view_upload_box').attr('checked',false);
+	}
+</script>
 <div class="background_box" style="display:none;" id="background_box">	
 	<div class="box_file_list" id='files_list'>
 		
 		<div class="box_title_build box_size">
 			<div class="box_text_build"><%= locale_index.labels.files_list %>&nbsp;
-			<a id="help_stored_files_list" href="#"><img src="images/buttons/help_2.png" border='0'></a>
-			<div class="logout_right"><a href="javascript:void(0);" title="<%=locale_index.labels.close_box%>" onclick="box_close();"><img src="images/buttons/logout.png" border=0></a></div>
-		</div></div>
+				<a id="help_stored_files_list" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+				<div class="logout_right"><a href="javascript:void(0);" title="<%=locale_index.labels.close_box%>" onclick="box_close();"><img src="images/buttons/logout.png" border=0></a></div>
+			</div>
+		</div>
 		<div class="build_components">
-			<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
-  				<option value="none" selected><%=locale_index.labels.default%></option>
-				<option value="only_user_files"><%=locale_index.labels.user_files%></option>
-  				<option value="only_V07_files"><%=locale_index.labels.v07_files%></option>
-			</select>
+			<div class="stored_window">
+				<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
+	  				<option value="none" selected><%=locale_index.labels.default%></option>
+					<option value="only_user_files"><%=locale_index.labels.user_files%></option>
+	  				<option value="only_V07_files"><%=locale_index.labels.v07_files%></option>
+				</select>
+				<div class="upload_right">
+					<a href="javascript:void(0);" title="<%=locale_index.labels.upload%>" name="view_file_list" id="view_upload_box" onclick="box_upload_view();">
+						<b><%=locale_index.labels.upload%></b>
+					</a>
+				</div>	
+						
+			</div>
+			
 			<!--
 			
 			<input type=checkbox name="only_user_files" id="only_user_files" value="1" onclick="ref_dataSetFiles.myDataTable.reload('only_user_files='+this.checked);"><b><%=locale_index.labels.view%></b>-->
@@ -75,4 +95,5 @@
 	</div>
 </div>
 <script>$("#files_list").draggable({ handle: '#title_flies_list' });</script>
+<% render("upload.lp") %>
 <% render("help/stored_window.lp") %>
