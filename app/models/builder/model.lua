@@ -240,7 +240,7 @@ function generate(build_obj)
 	local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", {files = files},"string")
 	--error(sconstructStr)
 	local build_configs = CONFIGS
-	--local platform_confStr =luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build_configs,"string")
+	local platform_confStr =luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build_configs,"string")
 	local platform_confStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build.configs,"string")
 	
 	local destination = io.open(dir.."/SConstruct", "w")
