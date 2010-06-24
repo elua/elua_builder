@@ -227,6 +227,17 @@ body{
 				border:0px none;
 }
 
+.button_newbuild {
+					border-style:none;
+					width:102px;height:13px;
+					margin: -28px 10px 20px 15px;
+					color:#000000;
+					font-size: 15px;
+					font-weight: bold;	
+					border:0px none;
+}
+
+
 .field {
 		border:1px solid #88ceef;
 		background-color:#fff;
