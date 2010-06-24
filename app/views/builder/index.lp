@@ -34,8 +34,15 @@ function confirmDeleteBuild(id)
 	<div style="float:left;"><%=locale_index.builds_title%> </div>&nbsp;
 	<div class="help"><a id="help_builds_title" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 </div>
-<br />
-<div><a href="<%= makeURL({control= "builder", act="files"})%>"> <input type="button" value="<%=locale_index.labels.newbuild%>" class="button_submit"> </a> </div><br>
+<br>
+<div>
+	<a href="<%= makeURL({control= "builder", act="files"})%>"> 
+		<img src="images/buttons/button.png"  alt="<%=locale_index.labels.newbuild%>" title="<%=locale_index.labels.newbuild%>" border='0'> 
+		<div class="button_newbuild">
+			<%=locale_index.labels.newbuild%>
+		</div>
+	</a>
+</div><br>
 <div >
 	<%
 		local columns_builds = {
