@@ -278,7 +278,7 @@ function box_close(){
 		</div>
 		<!--Form Button -->
 		<div class="build_button">
-			<%= f.submit({id='send',class="button_submit",value = locale_components.label_build}) %>
+			<%= f.submit({id='send',class="button_submit",value = locale_components.label_build, onclick="showProgress()"}) %>
 		</div>
 	<%= f.form_close() %>
 	<div id="bottom_text" class="links">
@@ -286,9 +286,20 @@ function box_close(){
 	</div>
 </div>
 <% render("stored_window.lp") %>
+
+<script>
+	function showProgress() {
+	    var pb = document.getElementById("progressBar");
+	    pb.innerHTML = '<img src="images/ajax-loader.gif" width="200" height ="40"/>';
+	    pb.style.display = '';
+}
+</script>
+
 <div class="generate" style="display:none;" id='generating' >
 	<h2>Please wait.</h2><br/> 
-	<img src="images/ajax-loader.gif"><br/><br/>
+	<div id="progressBar" style="display: none;">
+		<img src="images/ajax-loader.gif" width="200" height ="40"/>
+	</div>
 	<h2>Build is being generated.</h2>
 </div>
 <% render("help/files.lp") %>

@@ -20,7 +20,13 @@ function repository()
 	end
 	local DT = require("dataTable")
 	local rep = DT.repository:new(items,{startIndex=startIndex,results=results,sort=sort,dir=dir})
-	 
+	
+	  -- Bust cache in the head
+    cgilua.header("Expires", "Mon, 26 Jul 1997 05:00:00 GMT")   -- Date in the past
+    cgilua.header("Last-Modified", os.date "!%%a, %%d %%b %%Y %%H:%%M:%%S GMT")
+    -- always modified
+    cgilua.header("Cache-Control", "no-cache, must-revalidate") -- HTTP/1.1
+    cgilua.header("Pragma", "no-cache")                         -- HTTP/1.0
 	rep:response('text','plain','UTF-8')
 end
 

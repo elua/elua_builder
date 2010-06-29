@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title><%= locale_general.page_title %></title>
+	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+	<META HTTP-EQUIV="Expires" CONTENT="-1">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<%
 	-- loadCSS("lib/yui/css/reset.css")
