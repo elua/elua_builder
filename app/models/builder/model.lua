@@ -43,7 +43,7 @@ function checkAutorun(autorun_file_id, file_ids)
 	return true
 end
 
-local function checkDir()
+local function checkDir(build)
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
 	local path = CONFIG.MVC_USERS..user.login
@@ -56,6 +56,7 @@ local function checkDir()
 	if dir == nil then
 		lfs.mkdir(path)
 	end
+	
 	local path = path.."/"..build.id
 	dir = lfs.attributes(path)
 	if dir == nil then
@@ -182,7 +183,7 @@ end
 function generate(build_obj)
 	local build = getBuild(tonumber(build_obj.id))
 	local name = build.title
-	local dir = checkDir()
+	local dir = checkDir(build)
 	local luaReports  = require "luaReports"
 	local configs = nil
 	local values = {}
@@ -196,10 +197,12 @@ function generate(build_obj)
 	-- copy source files
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
-	os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
 	-- removing files
+	os.execute("rm "..dir.."/*.bin;rm "..dir.."/*.elf" )
+	--coping elua base
+	os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
+	-- removing romfs files
 	os.execute("rm -r "..dir.."/romfs/*")
-	
 	-- copy romfs files
 	local FileModel = require "file.model"
 	local path = CONFIG.MVC_USERS..user.login
