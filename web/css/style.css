@@ -379,11 +379,11 @@ tbody {
 
 .box_upload_list{
 					position:absolute;
-					width:595px; 
+					width:565px; 
 					height:auto;
-					top:60px;
+					top:100px;
 					left:50%;
-					margin-left:-300px;
+					margin-left:-285px;
 					background-color:#ffffff;
 					border: 3px solid #c0c0c0;
 }
