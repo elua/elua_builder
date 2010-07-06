@@ -26,7 +26,7 @@
 				</select>
 				<div class="upload_right">
 					<a href="javascript:void(0);" title="<%=locale_index.labels.upload%>" name="view_file_list" id="view_upload_box" onclick="box_upload_view();">
-						<b><%=locale_index.labels.upload%></b>
+						<img src="images/buttons/Upload.png" border='0'></b>
 					</a>
 				</div>	
 						
