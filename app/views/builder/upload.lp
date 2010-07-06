@@ -25,7 +25,6 @@
 			}); 
 		</script>
 	</div>
-	
 	<div id="upload_buttons">
 		<button onclick="$('#filename').uploadifyUpload();">Upload Files</button>
 		<!--a href="javascript:$('#filename').uploadifyUpload();"><b>Upload Files</b></a-->
