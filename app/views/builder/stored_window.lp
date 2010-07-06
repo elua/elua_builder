@@ -19,16 +19,15 @@
 		</div>
 		<div class="build_components">
 			<div class="stored_window">
+				
+				<% render("upload.lp") %>
+				
 				<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
 	  				<option value="none" selected><%=locale_index.labels.default%></option>
 					<option value="only_user_files"><%=locale_index.labels.user_files%></option>
 	  				<option value="only_V07_files"><%=locale_index.labels.v07_files%></option>
 				</select>
-				<div class="upload_right">
-					<a href="javascript:void(0);" title="<%=locale_index.labels.upload%>" name="view_file_list" id="view_upload_box" onclick="box_upload_view();">
-						<img src="images/buttons/Upload.png" border='0'></b>
-					</a>
-				</div>	
+				
 						
 			</div>
 			
@@ -95,5 +94,5 @@
 	</div>
 </div>
 <script>$("#files_list").draggable({ handle: '#title_flies_list' });</script>
-<% render("upload.lp") %>
+
 <% render("help/stored_window.lp") %>

@@ -82,32 +82,8 @@ function confirmDeleteBuild(id)
 	<%=locale_index.files_title%>&nbsp;
 	<div class="help"><a id="help_stored_files" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 </div><br />
-	<input id="filename" name="filename" type="file"/>
-	<a href="javascript:$('#filename').uploadifyUpload();">Upload Files</a> | 
-	<a href="javascript:$('#filename').uploadifyClearQueue();">Clear Selected</a>
-	<% local UserModel = require("user.model")%>
 	
-	<script type="text/javascript">
-		function reload_grid(event, data)
-		{
-			ref_dataSetFiles.myDataTable.reload('filter='+this.value);
-		}
-		$(document).ready(function() {
-			$('#filename').uploadify({
-				'uploader'  : 'lib/jquery/uploadify/uploadify.swf',
-				'script'    : '<%= makeURL({control='files', act='upload'})%>',
-				'scriptData': {control:'files', act:'upload',h:'<%= current_user.user_hash %>'},
-				'cancelImg' : 'images/cancel.png',
-				'folder'    : 'lib/jquery/uploadify/uploads',
-				'sizeLimit' : '524288',
-				'auto'      : false,
-				'simUploadLimit': 10,
-				'queueSizeLimit' : 10,
-				'multi'     : true,
-				'onAllComplete' : reload_grid
-			});
-		}); 
-	</script>
+	<%= render("upload.lp")%>
 <div>
 	<br>
 	<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
@@ -138,7 +114,7 @@ function confirmDeleteBuild(id)
 									elLiner.innerHTML += " <a href=']]..makeURL({control= "files", act="download"})..[[&id="+oRecord.getData('id')+"'><img src=images/buttons/download.png border=0 title=]]..locale_index.label_download..[[></a>";
 									if (oRecord.getData('category') == 'User file')
 									{
-                                    	elLiner.innerHTML += "<a href='javascript:void(0)' onClick='confirmDeleteFile(\""+oRecord.getData('id')+"\")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
+                                    	elLiner.innerHTML += "<a href='#' onClick='confirmDeleteFile(\""+oRecord.getData('id')+"\")'><img src=images/buttons/delete.png border=0 title=]]..locale_index.label_remove..[[></a>";
 									}
 									
 									

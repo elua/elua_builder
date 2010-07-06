@@ -20,7 +20,7 @@
 		<% loadCSS('lib/jquery/bubbletip/bubbletip.css')%>
 		<% loadCSS('lib/jquery/bubbletip/bubbletip-IE.css')%>
 		<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.js')%>
-		<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.min.js')%>
+
 		<% loadJS('lib/jquery/uploadify/swfobject.js')%>
 		<% loadCSS('lib/jquery/uploadify/uploadify.css')%>
 	<% else %>
