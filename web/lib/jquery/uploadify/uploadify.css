@@ -24,18 +24,23 @@ THE SOFTWARE.
 */
 .uploadifyQueueItem {
 	font: 11px Verdana, Geneva, sans-serif;
-	border: 2px solid #E5E5E5;
-	background-color: #F5F5F5;
+	/*border: 2px solid #E5E5E5;
+	background-color: #F5F5F5;*/
 	margin-top: 5px;
 	padding: 10px;
-	width: 350px;
+	width: 270px;
+	
 }
 .uploadifyError {
-	border: 2px solid #FBCBBC !important;
-	background-color: #FDE5DD !important;
+	/*border: 2px solid #FBCBBC !important;
+	background-color: #FDE5DD !important;*/
+	color:red;
 }
 .uploadifyQueueItem .cancel {
 	float: right;
+}
+.uploadifyQueueItem .fileName {
+	float: left;
 }
 .uploadifyProgress {
 	background-color: #FFFFFF;
@@ -43,8 +48,10 @@ THE SOFTWARE.
 	border-left: 1px solid #808080;
 	border-right: 1px solid #C5C5C5;
 	border-bottom: 1px solid #C5C5C5;
-	margin-top: 10px;
-	width: 100%;
+	margin-top: 5px;
+	width: 50px;
+	float:right;
+	margin-right:5px;
 }
 .uploadifyProgressBar {
 	background-color: #0099FF;
