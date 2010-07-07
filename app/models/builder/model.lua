@@ -118,15 +118,17 @@ function setDefaultValues(build)
 end
 
 function delete(id)
-	local UserModel = require "user.model"
-	local user = UserModel.getCurrentUser()
-	local build = db:selectall("*","builds","id = "..id)
-	local build_name = build[1].title
-	local path = CONFIG.MVC_USERS..user.login.."/builds/"..id
-	os.execute("rm -r "..path)
-	if io.open(path,"r") == nil then
-		local builds = db:delete ("builds","id = "..id)
-		local files_build = db:delete ("builds_files", "build_id="..id)
+	if (tonumber(id)) then
+		local UserModel = require "user.model"
+		local user = UserModel.getCurrentUser()
+		local build = db:selectall("*","builds","id = "..id)
+		local build_name = build[1].title
+		local path = CONFIG.MVC_USERS..user.login.."/builds/"..id
+		os.execute("rm -r "..path)
+		if io.open(path,"r") == nil then
+			local builds = db:delete ("builds","id = "..id)
+			local files_build = db:delete ("builds_files", "build_id="..id)
+		end
 	end
 end
 
@@ -181,6 +183,7 @@ local function setDefaultValues(configs)
 end
 
 function generate(build_obj)
+	require "cosmo"
 	local build = getBuild(tonumber(build_obj.id))
 	local name = build.title
 	local dir = checkDir(build)
@@ -198,7 +201,9 @@ function generate(build_obj)
 	local UserModel = require "user.model"
 	local user = UserModel.getCurrentUser()
 	-- removing files
-	os.execute("rm "..dir.."/*.bin;rm "..dir.."/*.elf" )
+	--os.execute("rm "..dir.."/*.bin;rm "..dir.."/*.elf" )
+	
+	os.execute('if [ -d "'..dir..'" ]; then; cd '..dir..';rm -rf; fi;')
 	--coping elua base
 	os.execute("cp -r "..CONFIG.ELUA_BASE.."* "..dir)
 	-- removing romfs files
@@ -242,9 +247,10 @@ function generate(build_obj)
 	build.configs = change_true_false(build.configs)
 	local sconstructStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."SConstruct", {files = files},"string")
 	--error(sconstructStr)
-	local build_configs = CONFIGS
-	local platform_confStr =luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build_configs,"string")
+	
 	local platform_confStr = luaReports.makeReport(CONFIG.MVC_TEMPLATES..platform.."_platform_conf.h", build.configs,"string")
+	
+	local platform_confStr = cosmo.fill(platform_confStr,CONFIGS)
 	
 	local destination = io.open(dir.."/SConstruct", "w")
 	if destination then
