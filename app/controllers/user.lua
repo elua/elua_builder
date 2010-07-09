@@ -5,6 +5,9 @@
 --------------------------------------------------------------------
 
 function index()
+	if logged_user then
+		redirect{control='builder',act='index'}
+	end
 	render("index.lp")
 end
 

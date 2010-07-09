@@ -93,7 +93,6 @@ function getCurrentUser()
 	local cookieUser = cgilua.cookies.get(CONFIG.COOKIE_NAME)
 	if(cookieUser ~= nil)then
 		local cookieData = {}
-		
 		cookieData = string.split(cgilua.cookies.get(CONFIG.COOKIE_NAME),"#&#")
 		if (cookieData ~= nil)then
 			local ok, user = checkUser(md5.decrypt(tostring(cookieData[1]),CONFIG.MD5KEY), md5.decrypt(tostring(cookieData[2]),CONFIG.MD5KEY))
