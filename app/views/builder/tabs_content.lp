@@ -127,21 +127,21 @@
 								<%=f.text_field({class="field ip_field", name='ip0', id= "ip0",  value=build.configs.ip0, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='ip1', id= "ip1", value=build.configs.ip1, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='ip2', id= "ip2", value=build.configs.ip2, maxlength = 3})%>.
-								<%=f.text_field({class="field ip_field", name='ip3', id= "ip3", value=build.configs.ip3, maxlength = 3, onblur="verifyIP($('ip0').value, $('ip1').value, $('ip2').value, $('ip3').value, 'ip')"})%>
+								<%=f.text_field({class="field ip_field", name='ip3', id= "ip3", value=build.configs.ip3, maxlength = 3, onblur="verifyIP($('#ip0').val(), $('#ip1').val(), $('#ip2').val(), $('#ip3').val(), 'ip')"})%>
 							</div><br>
 							<div class="box_ip">
 								<%= locale_components.labels.mask %>
 								<%=f.text_field({class="field ip_field", name='mask0', value=build.configs.mask0, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='mask1', value=build.configs.mask1, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='mask2', value=build.configs.mask2, maxlength = 3})%>.
-								<%=f.text_field({class="field ip_field", name='mask3', value=build.configs.mask3, maxlength = 3, onblur="verifyIP($('mask0').value, $('mask1').value, $('mask2').value, $('mask3').value, 'mask')"})%>
+								<%=f.text_field({class="field ip_field", name='mask3', value=build.configs.mask3, maxlength = 3, onblur="verifyIP($('#mask0').val(), $('#mask1').val(), $('#mask2').val(), $('#mask3').val(), 'mask')"})%>
 							</div><br>
 							<div class="box_ip">
 								<%= locale_components.labels.gateway %>
 								<%=f.text_field({class="field ip_field", name='gateway0', id= "gateway0", value=build.configs.gateway0, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='gateway1', id= "gateway1", value=build.configs.gateway1, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='gateway2', id= "gateway2", value=build.configs.gateway2, maxlength = 3})%>.
-								<%=f.text_field({class="field ip_field", name='gateway3', id= "gateway3", value=build.configs.gateway3, maxlength = 3, onblur="verifyIP($('gateway0').value, $('gateway1').value, $('gateway2').value, $('gateway3').value, 'gateway')"})%>
+								<%=f.text_field({class="field ip_field", name='gateway3', id= "gateway3", value=build.configs.gateway3, maxlength = 3, onblur="verifyIP($('#gateway0').val(), $('#gateway1').val(), $('#gateway2').val(), $('#gateway3').val(), 'gateway')"})%>
 							</div><br>
 						</td>
 						
@@ -157,7 +157,7 @@
 								<%=f.text_field({class="field ip_field", name='dns0', id= "dns0", value=build.configs.dns0, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='dns1', id= "dns1", value=build.configs.dns1, maxlength = 3})%>.
 								<%=f.text_field({class="field ip_field", name='dns2', id= "dns2", value=build.configs.dns2, maxlength = 3})%>.
-								<%=f.text_field({class="field ip_field", name='dns3', id= "dns3", value=build.configs.dns3, maxlength = 3, onblur="verifyIP($('dns0').value, $('dns1').value, $('dns2').value, $('dns3').value, 'dns')"})%>	
+								<%=f.text_field({class="field ip_field", name='dns3', id= "dns3", value=build.configs.dns3, maxlength = 3, onblur="verifyIP($('#dns0').val(), $('#dns1').val(), $('#dns2').val(), $('#dns3').val(), 'dns')"})%>	
 							</div>	
 						</td>
 					</tr> 
