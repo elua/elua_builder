@@ -27,45 +27,42 @@ APP.action = action
 if(controller and controller ~= "")then
   if (cgilua.doif(CONFIG.MVC_CONTROL..controller..".lua"))then
   	  -- Load controller locale 
-  	  cgilua.doif(CONFIG.MVC_LOCALE..currenty_lang.."-"..controller..".lua")
-  	  
+  	  cgilua.doif(CONFIG.MVC_LOCALE..currenty_lang.."-"..controller..".lua") 	  
   	  -- Event before action
-
       env = getfenv()
-      
-      if (mvc_events.beforeAnyAction() ~= false)then
+      local ok, any_action = run_safe(mvc_events.beforeAnyAction)
+      if (ok and  any_action ~= false)then 
 	      -- Load Action
 	      local before_status = true
 	      if(env[controller..'_before'] and type(env[controller..'_before'])== "function")then
-	      	before_status = env[controller..'_before']()
-	      	if(before_status == nil)then before_status = true end
+	      	ok , before_status = run_safe(env[controller..'_before'])
+	      	before_status = before_status == nil and true or false
 	      end
 	      
 	      if(action and action ~= "") then
-		          if(before_status and env[action] and type(env[action])== "function")then
-		              local status, error = assert(pcall(env[action]))
-		          end
+	          if(before_status and env[action] and type(env[action])== "function")then
+	              run_safe(env[action])
+	          end
 	      else
 	           if(before_status and env["index"] and type(env["index"])== "function")then
 	              action = "index"
 	              APP.action = action
-	              index()
+	              run_safe(index)
 	          end   
 	      end
-	  	mvc_events.afterAnyAction()
+	  	  run_safe(mvc_events.afterAnyAction)
 	  end
-      
-     
   else
     cgilua.handlelp(CONFIG.MVC_LIB.."pages/controller_error.lp")
     
   end
 else
   -- Load default controller if none was defined in URL
-  if (mvc_events.beforeAnyAction() ~= false)then
+  local ok, any_action = run_safe(mvc_events.beforeAnyAction)
+  if (ok and  any_action ~= false)then
 	  cgilua.doif(CONFIG.MVC_CONTROL.."default.lua")
-	  index()
-	  mvc_events.afterAnyAction()
+	  run_safe(index)
+	  run_safe(mvc_events.afterAnyAction)
   end
 end
 

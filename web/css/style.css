@@ -443,3 +443,24 @@ tbody {
 }
 
 .links_right_add_files img { vertical-align: middle; }
+
+.friendly_error {
+					text-align: center;
+					width:800px; 
+}
+
+.friendly_error_msg {
+						font-size:16px;
+						font-weight:bold;
+						text-align: center;
+						width:800px; 
+}
+
+
+.browser_msg{
+				padding:20px 0px 0px 25px;
+				font-size:14px;
+				color:red;
+				text-underline-position: above;	
+}
+.browser_msg img { vertical-align: middle; }
