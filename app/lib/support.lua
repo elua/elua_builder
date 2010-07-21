@@ -92,3 +92,40 @@ function redirect(arg,external)
 		
 	end
 end
+
+local function send_message_error(msg)
+	if CONFIG.SEND_EMAIL_ON_ERRORS then
+		local UserModel = require "user.model"
+		
+		local user = (UserModel.getCurrentUser() and type(UserModel.getCurrentUser()) == "table") and UserModel.getCurrentUser().name or '-'
+		
+		local post = ""
+		if (next(cgilua.POST)) then
+			for i, v in pairs(cgilua.POST) do
+				post = post ..i.."="..v..", "
+			end
+		end
+		
+		local email_msg = "Ocorreu um erro na execução de uma página.<br /><br />Informações: <br />"
+		email_msg = email_msg.."Data e hora: "..os.date().."<br />"
+		email_msg = email_msg.."Query String: "..SAPI.Request.servervariable("QUERY_STRING").."<br />"
+		email_msg = email_msg.."Post: "..post.."<br />"
+		email_msg = email_msg.."Usuário: "..user.."<br />"
+		email_msg = email_msg.."Erro: <b>"..msg.."</b>"
+		
+		sendmail(CONFIG.MAIL_SERVER.adminMailFrom, CONFIG.MAIL_SERVER.adminMailFrom, "", "eLuaBuilder error", email_msg)
+	end
+end
+
+function run_safe(func,...)
+  if CONFIG.SHOW_FRIENDLY_ERRORS then
+  	ok, result = pcall(func,...)
+    if (not ok) then
+    	send_message_error(result)
+    	cgilua.handlelp(CONFIG.MVC_LIB.."pages/friendly_error.lp")
+    end
+  else
+  	return  assert(pcall(func,...))
+  end
+  return ok, result
+end

@@ -2,7 +2,11 @@
 <% render("header.lp","_shared") %>
 
 <div id="box_title"><%= locale_index.login_title %></div>
+<!--[if IE 6]>  
+       <div class="browser_msg"><img src="images/error_2.gif"><%=locale_index.browser_msg%></div>   
+<![endif]-->
 <div id="login_combo" class="<%= flash.get("validationMessages") == nil and "ok" or "fail" %>">
+
 	<div id="bottom_text">
 		<div id="login_box">
 			<%= f.form({action=makeURL({control='user',act='authenticate'})}) %>

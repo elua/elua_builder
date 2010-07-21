@@ -1,6 +1,7 @@
 locale_index = { 
 	login_title = "Authentication",	
 	label_back = "Back",
+	browser_msg = "We detect that you are using the Internet Explorer 6. For a perfect performance, please use a modern browser.",
 	labels = {
 				greeting = "Hello",
 				login = "Login",

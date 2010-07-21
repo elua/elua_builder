@@ -9,8 +9,7 @@ function index()
 	local BuildModel = require "builder.model"
 	UserModel.saveHash(UserModel.getCurrentUser())
 	current_user = UserModel.getCurrentUser()
-	render("index.lp")
-	
+	render("index.lp")	
 end
 
 function tabs_content()
@@ -147,4 +146,8 @@ end
 
 function upload_window()
 	render( "upload.lp")
+end
+
+function error()
+	render("error.lp")
 end
