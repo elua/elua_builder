@@ -9,6 +9,8 @@ CONFIG.LANGUAGE     = "en-us"
 -- enable this option when you want to use mapped URLs , like : "../app_name/controller/action/ID"
 -- it is recommended that a rewrite rule is used, for example: "RewriteRule ^app_name/(.*)$ /cgi-bin/cgilua.cgi/app_name/web/start.lua?route=/$1 [L]"
 CONFIG.ENABLE_MAPPED_URL = false
+CONFIG.SHOW_FRIENDLY_ERRORS = true
+CONFIG.SEND_EMAIL_ON_ERRORS = true
 
 CONFIG.LIB_PATH     = CONFIG.PATH.."/lib/"
 CONFIG.LUA_PATH     = CONFIG.LIB_PATH.."?/init.lua;"..CONFIG.LIB_PATH.."?/?.lua;"..CONFIG.LIB_PATH.."?.lua;"
