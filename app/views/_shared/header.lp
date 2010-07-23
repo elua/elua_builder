@@ -20,9 +20,11 @@
 		<% loadCSS('lib/jquery/bubbletip/bubbletip.css')%>
 		<% loadCSS('lib/jquery/bubbletip/bubbletip-IE.css')%>
 		<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.js')%>
+		<% loadJS('lib/jquery/jqModal.js') %>
 
 		<% loadJS('lib/jquery/uploadify/swfobject.js')%>
 		<% loadCSS('lib/jquery/uploadify/uploadify.css')%>
+		<% loadCSS('lib/jquery/css/jqModal.css')%>
 	<% else %>
 		<% loadJS('lib/prototype-1.6.0.2.js') %>
 		<% loadJS('lib/effects.js') %>
@@ -32,6 +34,7 @@
 <body>
 
 <div id="block">
+
 	<!-- Logo -->
 	<div class="logo"><a href="<%= makeURL({control="builder", act="index"})%>"><img src="images/logo.png" label="<%=locale_index.labels.home%>" border=0></a></div>
 	<!-- Central Box -->
@@ -45,3 +48,4 @@
 	
 	<div id="top_block"></div>
 	<div id="bg_block">
+		

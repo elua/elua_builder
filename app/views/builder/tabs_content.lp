@@ -204,4 +204,3 @@
 			</div>
 		</div>
 	</div>-->
-<% render("help/tabs_content.lp") %>

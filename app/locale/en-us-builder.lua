@@ -156,7 +156,7 @@ locale_help ={
           ]],
 
 					ROM_FS = [[
-            This section lists the files to be built to your ROM File SystemAbout ROM-FS.<br />
+            This section lists the files to be included in your ROM File System built with eLua.<br />
             Click on the top right <b>add files</b> icon to include files from your Stored Files list to the ROMFS on the build.<br />
             Click on any of the <Autorun> radio buttons to make that file an Autorun File on your build.<br />
             You can click on the column titles to sort the list by that key.<br />

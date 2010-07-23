@@ -165,14 +165,25 @@ function verifyIP(ip0, ip1, ip2, ip3, info)
 		alert (errorString);
 }
 
-function box_view(value){
+/*function box_view(value){
+	$('#files_list').show();
 	$('#background_box').show();
 }
 
 function box_close(){
+	$('#files_list').hide();
 	$('#background_box').hide();
 	$('#view_file_list').attr('checked',false);
-}
+}*/
+
+$().ready(function() {
+  $('#files_list').jqm({modal:true, toTop: true});
+  
+  if($.browser.msie)
+    $('input')
+      .focus(function(){$(this).addClass('iefocus');})
+      .blur(function(){$(this).removeClass('iefocus');});
+});
 
 </script>
 
@@ -208,7 +219,7 @@ function box_close(){
 					</div>
 				</div>
 				
-				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("ajax_request('"..makeURL({control='builder',act='tabs_content'}).."',{target:this.value}, '#tabs','loading',reload_tabs);") or nil},BuildModel.TARGETS, build.configs.target) %></div>
+				<div class="build_components"><%= f.select({name='target',class="select_field",prompt = locale_components.target_prompt,onchange=tonumber(build.id) == nil and ("unload_helps_tabs();ajax_request('"..makeURL({control='builder',act='tabs_content'}).."',{target:this.value}, '#tabs','loading',reload_tabs);") or nil},BuildModel.TARGETS, build.configs.target) %></div>
 			</div>
 			<!--Files ROMFS -->
 			<div>
@@ -219,9 +230,7 @@ function box_close(){
 					</div>		
 				</div>
 				<div class="links_right_add_files">
-					<a href="javascript:void(0);" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list" onclick="box_view();">
-						<img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b>
-					</a>
+					<a href="#" title="<%=locale_index.labels.box_view%>" class="jqModal" name="view_file_list" id="view_file_list"><img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b></a>
 				</div>	
 				<br>
 				<table id="file_list" class="table_align">
@@ -256,10 +265,9 @@ function box_close(){
 			<br>
 			<div id="tabs" class="build_components">
 			    <%= render('tabs_content.lp')%>
-			   
-				
+					
 			</div><br>
-			
+			<% render("help/tabs_content.lp") %>
 			<script type="text/javascript">
 	  			function reload_tabs(){
 					$("#tabs").tabs( "destroy" );
@@ -267,6 +275,7 @@ function box_close(){
 					checked_con_generic();
 					checked_con_tcp();						
 					checked_ip();
+					load_helps_tabs();
 				}
 				$(document).ready(function(){
 					reload_tabs();
