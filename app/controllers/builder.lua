@@ -50,7 +50,7 @@ function files()
 		if isPOST() then
 			build = cgilua.POST
 			
-			build = BuildModel.setDefaultValues(build)
+			
 			build.file_id = (build.file_id == nil) and "" or build.file_id	
 			build.configs = tableToString(build)
 				
