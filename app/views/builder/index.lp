@@ -86,11 +86,11 @@ function confirmDeleteBuild(id)
 	<%= render("upload.lp")%>
 <div>
 	<br>
-	<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
+	<!--<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
 		<option value="none" selected><%=locale_index.labels.default%></option>
 		<option value="only_user_files"><%=locale_index.labels.user_files%></option>
 		<option value="only_V07_files"><%=locale_index.labels.v07_files%></option>
-	</select>
+	</select> -->
 	<div id="notice">
 		<%= flash.get("removeSucessMessages")%>
 		<% if flash.get("removefailureMessages") ~= nil then %>

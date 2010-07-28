@@ -6,185 +6,57 @@
 <% dt.printJSheaders("lib/yui/js/") %>
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
+<% loadJS('js/files.js') %>
 <script>
-
-function checked_con_generic()
-{
-	if ($('#build_con_generic').is(':checked')) {
-		$('#build_con_tcp').attr('checked',false);
-		$('#build_term').attr('disabled',false);
-		if($('#build_term').is(':checked')){
-			$('#build_shell').attr('disabled',false);		
-			if($('#build_shell').is(':checked')){
-				$('#build_xmodem').attr('disabled',false);
+	function verifyIP(ip0, ip1, ip2, ip3, info)
+		{
+			var IPvalue = ip0 +'.' + ip1 +'.' + ip2 +'.' + ip3;
+			if (info == 'ip'){
+				message = "<%= locale_index.validator.ip_address%>";
+				valid = "<%=locale_index.validator.address_valid%>";
+				}
+			else if (info == 'gateway'){
+				message = "<%= locale_index.validator.gateway_address%>";
+				valid = "<%=locale_index.validator.address_valid%>";
 			}
-		}
-	}
-	else if(!$('#build_con_tcp').is(':checked')){
-		$('#build_term').attr('disabled',true);
-		$('#build_shell').attr('disabled',true);
-		$('#build_xmodem').attr('disabled',true);
-	}
-}
-
-function checked_con_tcp()
-{
-	if ($('#build_con_tcp').is(':checked')) {
-		$('#build_con_generic').attr('checked',false);
-		$('#build_term').attr('disabled',false);
-		if($('#build_term').is(':checked')){
-			$('#build_shell').attr('disabled',false);		
-			if($('#build_shell').is(':checked')){
-				$('#build_xmodem').attr('disabled',false);
+			else if (info == 'dns') {
+				message = "<%= locale_index.validator.dns_address%>";
+				valid = "<%=locale_index.validator.address_valid%>";
 			}
-		}	
-	}	
-	else if (!$('#build_con_generic').is(':checked')){
-		$('#build_term').attr('disabled',true);
-		$('#build_shell').attr('disabled',true);
-		$('#build_xmodem').attr('disabled',true);
-	}	
-}
-
-function checked_term()
-{
-	if($('#build_term').is(':checked')){
-		$('#build_shell').attr('disabled',false);
-	}
-	else{
-		$('#build_shell').attr('disabled',true);
-	}
-}
-
-function checked_shell()
-{
-	if ($('#build_shell').is(':checked')) {
-		$('#build_xmodem').attr('disabled',false);
-	}
-	else{
-		$('#build_xmodem').attr('disabled',true);
-	}
-}
-
-function checked_ip()
-{
-	if ($('#build_uip').is(':checked')) {
-		$('#ip_box').show();
-		$('#build_dhcpc').attr('disabled',false);
-		$('#build_dns').attr('disabled',false);
-		if ($('#build_dns').is(':checked')) 
-			$('#dns_box').show();
-		else 
-			$('#dns_box').hide();
-	}
-	else {
-		$('#ip_box').hide();
-		$('#dns_box').hide();
-		$('#build_dhcpc').attr('disabled',true);
-		$('#build_dns').attr('disabled',true);
-	}
-}
-
-function checked_dns()
-{
-	if ($('#build_dns').is(':checked')) {
-		$('#dns_box').show();
-	}
-	else{
-		$('#dns_box').hide();
-	}
-}
-
-function basic_mode(){
-	$('#tabs').hide();
-	$('#basic').attr('disabled',true);
-	$('#advanced').attr('disabled',false);
-}
-
-function advanced_mode(){
-	$('#tabs').show();
-	$('#basic').attr('disabled',false);
-	$('#advanced').attr('disabled',true);
-}
-
-function toogle_check(elem)
-{	if(elem.checked)
-		elem.checked = false;
-	else
-		elem.checked = true;
-	
-}
-
-function verifyIP(ip0, ip1, ip2, ip3, info)
-{
-	var IPvalue = ip0 +'.' + ip1 +'.' + ip2 +'.' + ip3;
-	if (info == 'ip'){
-		message = "<%= locale_index.validator.ip_address%>";
-		valid = "<%=locale_index.validator.address_valid%>";
-		}
-	else if (info == 'gateway'){
-		message = "<%= locale_index.validator.gateway_address%>";
-		valid = "<%=locale_index.validator.address_valid%>";
-	}
-	else if (info == 'dns') {
-		message = "<%= locale_index.validator.dns_address%>";
-		valid = "<%=locale_index.validator.address_valid%>";
-	}
-	
-	else if (info == 'mask') {
-		message = "<%= locale_index.validator.mask_address%>";
-		valid = "<%=locale_index.validator.address_valid%>";
-	}
-	
-	errorString = "";
-	
-	var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
-	var ipArray = IPvalue.match(ipPattern);
-	
-	if (IPvalue == "0.0.0.0")
-		errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
-	else if (IPvalue == "255.255.255.255")
-		errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
-	if (ipArray == null)
-		errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
-	else {
-		for (i = 0; i < 4; i++) {
-			thisSegment = ipArray[i];
-			if (thisSegment > 255) {
+			
+			else if (info == 'mask') {
+				message = "<%= locale_index.validator.mask_address%>";
+				valid = "<%=locale_index.validator.address_valid%>";
+			}
+			
+			errorString = "";
+			
+			var ipPattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+			var ipArray = IPvalue.match(ipPattern);
+			
+			if (IPvalue == "0.0.0.0")
 				errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
-				i = 4;
-			}
-			if ((i == 0) && (thisSegment > 255)) {
+			else if (IPvalue == "255.255.255.255")
 				errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
-				i = 4;
-	      	}
-	   	}
+			if (ipArray == null)
+				errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+			else {
+				for (i = 0; i < 4; i++) {
+					thisSegment = ipArray[i];
+					if (thisSegment > 255) {
+						errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+						i = 4;
+					}
+					if ((i == 0) && (thisSegment > 255)) {
+						errorString = errorString + message + '  ' + IPvalue + '  ' + valid;
+						i = 4;
+			      	}
+			   	}
+			}
+			extensionLength = 3;
+			if (errorString != "")
+				alert (errorString);
 	}
-	extensionLength = 3;
-	if (errorString != "")
-		alert (errorString);
-}
-
-/*function box_view(value){
-	$('#files_list').show();
-	$('#background_box').show();
-}
-
-function box_close(){
-	$('#files_list').hide();
-	$('#background_box').hide();
-	$('#view_file_list').attr('checked',false);
-}*/
-
-$().ready(function() {
-  $('#files_list').jqm({modal:true, toTop: true});
-  
-  if($.browser.msie)
-    $('input')
-      .focus(function(){$(this).addClass('iefocus');})
-      .blur(function(){$(this).removeClass('iefocus');});
-});
-
 </script>
 
 <div id='loading' style='display:none;'>Loading...</div>
@@ -230,7 +102,7 @@ $().ready(function() {
 					</div>		
 				</div>
 				<div class="links_right_add_files">
-					<a href="#" title="<%=locale_index.labels.box_view%>" class="jqModal" name="view_file_list" id="view_file_list"><img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b></a>
+					<a href="#dialog" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list"><img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b></a>
 				</div>	
 				<br>
 				<table id="file_list" class="table_align">

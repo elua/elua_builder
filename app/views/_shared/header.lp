@@ -20,11 +20,11 @@
 		<% loadCSS('lib/jquery/bubbletip/bubbletip.css')%>
 		<% loadCSS('lib/jquery/bubbletip/bubbletip-IE.css')%>
 		<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.js')%>
-		<% loadJS('lib/jquery/jqModal.js') %>
-
 		<% loadJS('lib/jquery/uploadify/swfobject.js')%>
 		<% loadCSS('lib/jquery/uploadify/uploadify.css')%>
+		<% loadJS('lib/jquery/jqModal.js') %>
 		<% loadCSS('lib/jquery/css/jqModal.css')%>
+		
 	<% else %>
 		<% loadJS('lib/prototype-1.6.0.2.js') %>
 		<% loadJS('lib/effects.js') %>

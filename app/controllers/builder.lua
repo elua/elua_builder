@@ -34,6 +34,7 @@ function files()
 	current_user = UserModel.getCurrentUser()
 	local user = UserModel.getCurrentUser()
 	BuildModel = require "builder.model"	
+			
 	for _,v in pairs(BuildModel.TARGETS) do 
 		v.option = v.value
 	end
@@ -43,6 +44,7 @@ function files()
 			build.configs = assert(loadstring("return "..build.configs)())
 		end
 		build_files = FileModel.getFilesByBuild(tonumber(id))
+		--cgilua.put(tableToString(build_files))
 		render("files.lp")
 	else		
 		if isPOST() then
@@ -51,7 +53,7 @@ function files()
 			build = BuildModel.setDefaultValues(build)
 			build.file_id = (build.file_id == nil) and "" or build.file_id	
 			build.configs = tableToString(build)
-			
+				
 			local validator = BuildModel.validate(build)
 			
 			if(validator:isValid())then
@@ -84,7 +86,6 @@ function files()
 				build = cgilua.POST or {}
 				build.configs = cgilua.POST
 				build.title = cgilua.POST.title
-				
 				build_files = FileModel.getFilesByIDs(build.file_id) or {}
 				
 				--build_files = cgilua.POST.file_id
@@ -92,7 +93,11 @@ function files()
 				render("files.lp")
 			end
 		else
-			build.configs = {}
+			build.configs = {}		
+			build.configs = {ip0 = "192", ip1 = "168", ip2 = "100", ip3 = "5",
+			mask0 = "255", mask1 = "255", mask2 = "255", mask3 = "0",
+			gateway0 = "192", gateway1 = "168", gateway2 = "100", gateway3 = "20",
+			dns0 = "192", dns1 = "168", dns2 = "100", dns3 = "20"}
 			
 			local date = os.date()
 			build.title = cgilua.QUERY.title

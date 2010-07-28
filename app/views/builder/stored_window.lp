@@ -1,19 +1,11 @@
-<!--<script>
-	function box_upload_view(value){
-		$('#upload_box').show();
-	}
-
-	function box_upload_close(){
-		$('#upload_box').hide();
-		$('#view_upload_box').attr('checked',false);
-	}
-</script>-->
-
-	<div class="box_file_list" id='files_list' style="display:none;">
+<div id="boxes">
+	<div id="dialog" class="window box_file_list">
 		<div class="box_title_build box_size">
-			<div class="box_text_build"><%= locale_index.labels.files_list %>&nbsp;
-				<a id="help_stored_files_list" href="#"><img src="images/buttons/help_2.png" border='0'></a>
-				<div class="logout_right"><a href="#" title="<%=locale_index.labels.close_box%>" class="jqmClose"><img src="images/buttons/logout.png" border=0></a></div>
+			<div class="box_text_build">
+				<div class="title"><%= locale_index.labels.files_list %>&nbsp;
+					<a id="help_stored_files_list" href="#"><img src="images/buttons/help_2.png" border='0'></a>
+				</div>
+				<a href="#" title="<%=locale_index.labels.close_box%>" class="close bt_close"><img src="images/buttons/button_close.png" border=0></a>
 			</div>
 		</div>
 		<div class="build_components">
@@ -21,11 +13,11 @@
 				
 				<% render("upload.lp") %>
 				
-				<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
+				<!--<select name="filter" id="filter" onchange="ref_dataSetFiles.myDataTable.reload('filter='+this.value);">
 	  				<option value="none" selected><%=locale_index.labels.default%></option>
 					<option value="only_user_files"><%=locale_index.labels.user_files%></option>
 	  				<option value="only_V07_files"><%=locale_index.labels.v07_files%></option>
-				</select>
+				</select> -->
 				
 						
 			</div>
@@ -91,6 +83,8 @@
 		    }
 	    </script>
 	</div> 
+</div>
+<div id="mask"></div>
 <script>//$("#files_list").draggable({ handle: '#title_flies_list' });</script>
 
 <% render("help/stored_window.lp") %>
