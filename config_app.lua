@@ -39,14 +39,14 @@ CONFIG.APP_DOMAIN = "ubuntu/carlos-elua_builder/start.lua"
 
 --MAIL Server Variables
 CONFIG.MAIL_SERVER = {
-    server = "192.168.100.105",
-    user = "gsanchez@192.168.100.105",
-    password = "Nosso lab",
-    systemMailFrom = "carlos.deodoro@gmail.com",
-    adminMailFrom = "carlos.deodoro@gmail.com",
+    server = "xxx",
+    user = "xxx",
+    password = "xxx",
+    systemMailFrom = "xxx",
+    adminMailFrom = "xxx",
     
-    devMailFrom = "carlos.deodoro@gmail.com",
-    devMailTo = "carlos.deodoro@gmail.com",
+    devMailFrom = "xxx",
+    devMailTo = "xxx",
     environment = "DEVELOPMENT" -- Accepts "DEVELOPMENT" or "PRODUCTION"
 }
 
@@ -54,9 +54,9 @@ CONFIG.MAIL_SERVER = {
 
 CONFIG.DB = {
     server = "localhost",
-    dbname = "eluabuilder",
-    username = "eluabuilder",
-    password = "eluabuilder",
+    dbname = "xxx",
+    username = "xxx",
+    password = "xxx",
     driver = "mysql"
 }
 
