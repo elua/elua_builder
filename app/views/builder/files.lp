@@ -181,7 +181,7 @@
 	<div id="progressBar" style="display: none;">
 		<img src="images/ajax-loader.gif" width="200" height ="40"/>
 	</div>
-	<h2>Build is being generated.</h2>
+	<h2><%= locale_index.generated_msg %></h2>
 </div>
 <% render("help/files.lp") %>
 <% render("footer.lp","_shared") %>

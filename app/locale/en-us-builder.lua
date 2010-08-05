@@ -14,6 +14,7 @@ locale_index = {
 	label_addfile = "Add Files",
 	label_select = "Add",
 	open_file = "The selected file does not exist.",
+	generated_msg = "Build is being generated.",
 	label_add_files = "Selected Files",
 	label_autorun = "Autorun",
 	label_remove_edit = "Remove/Edit",
@@ -23,7 +24,7 @@ locale_index = {
 	labels = {
 				greeting = "Hello",
 				filename = "File Name",
-				created_at = "Uploaded at",
+				created_at = "Generated on",
 				title = "Build Name",
 				id = "Id",
 				configs = "Scons line command",
@@ -147,8 +148,7 @@ locale_help ={
 
 				build = {
 					main_build = [[ 
-           Teste #########.<br />
-						econd line.
+					Choose the options.
 				  ]],
 
 					target_platform = [[ 
@@ -163,7 +163,7 @@ locale_help ={
           ]],
 
 					options_configuration = [[
-						<b>Basic</b> mode shows only the essential options for a simple build.<br />
+						<b>Basic</b> mode uses the defaults for all configuration options.<br />
             <b>Advanced</b> mode opens new tabs and offers more detailed options.<br />
             Click on the button of the mode you want to work with.<br />
  					]]
