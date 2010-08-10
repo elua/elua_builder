@@ -485,4 +485,12 @@ tbody {
 		float:right;
 }
 
+.elua_logo {
+			float: left;
+			font-weight:bold;
+			margin:4px 2px 4px 0px;
+			padding-right:10px; 
+			text-underline-position: above;	
+}
 
+.elua_logo img { vertical-align: middle; }
