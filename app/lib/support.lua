@@ -113,7 +113,7 @@ local function send_message_error(msg)
 		email_msg = email_msg.."Usuário: "..user.."<br />"
 		email_msg = email_msg.."Erro: <b>"..msg.."</b>"
 		
-		sendmail(CONFIG.MAIL_SERVER.adminMailFrom, CONFIG.MAIL_SERVER.adminMailFrom, "", "eLuaBuilder error", email_msg)
+		sendmail(CONFIG.MAIL_SERVER.adminMailFrom, CONFIG.MAIL_SERVER.notificationMailTo, "", "eLuaBuilder error", email_msg)
 	end
 end
 
