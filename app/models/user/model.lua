@@ -368,7 +368,7 @@ COUNTRY = {
 ORGANIZATION = {
 				{value="Academic", option ="Academic"},
 				{value="Automotive", option ="Automotive"},
-				{value="Inteligent Sensors", option ="Inteligent Sensors"},
+				{value="Intelligent Sensors", option ="Intelligent Sensors"},
 				{value="Military", option ="Military"},
 				{value="RAD e Prototyping", option ="RAD e Prototyping"},
 				{value="Robotics", option ="Robotics"},
