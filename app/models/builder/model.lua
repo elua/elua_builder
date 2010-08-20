@@ -204,6 +204,16 @@ function copy_romfs(build, build_dir)
 	return scons_files
 end
 
+function checks_bin(path)
+	for file in lfs.dir(path) do
+		if string.match(file, ".+elf$")then
+			file_elf = file
+		elseif string.match(file, ".+bin$")then
+			file_bin = file
+		end
+	end
+	return file_elf, file_bin
+end
 
 function generate(build_obj)
 	require "cosmo"
@@ -270,7 +280,23 @@ function generate(build_obj)
 	update(tableToString(configs), build.id)
 	
 	os.execute(complement..scons_str)
+	file_elf, file_bin = checks_bin(dir)
+	local mv_binary
+	if (file_bin) then
+		flash.set('copyFileMessages',locale_index.copy_file_bin)
+		local copy_bin_elf = "cd "..dir..";cp "..file_bin.." ../"
+		mv_binary = "cd "..dir..";mv ../"..file_bin.." ."
+		
+		os.execute(copy_bin_elf)
+	elseif (file_elf ~= nil or file_elf ~= ' ') then
+		flash.set('copyFileMessages',locale_index.copy_file_elf)
+		local copy_bin_elf = "cp "..dir.."/"..file_elf.." "..dir.." ../;mv ../"..dir.." ."
+		os.execute(copy_bin_elf)
+	else
+		flash.set('copyFileMessages',locale_index.error_copy_files)
+	end
 	os.execute(move_clear_str)  
+	os.execute(mv_binary)
 end
 
 PLATFORM = {}

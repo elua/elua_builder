@@ -28,7 +28,7 @@ function confirmDeleteBuild(id)
 
 </script>
 
-
+<%= flash.get("copyFileMessages")%>
 
 <div id="box_title">
 	<div style="float:left;"><%=locale_index.builds_title%> </div>&nbsp;
