@@ -204,15 +204,33 @@ function copy_romfs(build, build_dir)
 	return scons_files
 end
 
-function checks_bin(path)
+function checksAndCopyBin(path)
 	for file in lfs.dir(path) do
-		if string.match(file, ".+elf$")then
-			file_elf = file
-		elseif string.match(file, ".+bin$")then
+		if string.match(file, ".+bin$")then
 			file_bin = file
+		elseif string.match(file, ".+elf$")then
+			file_elf = file
 		end
 	end
-	return file_elf, file_bin
+	
+	local file_bin_elf = file_bin and file_bin or (file_elf and file_elf or nil)
+
+	local mv_binary
+	local mv_log_errors
+	
+	if file_bin_elf ~= nil then
+		local copy_bin_elf = "cd "..path..";cp "..file_bin_elf.." ../"
+		os.execute(copy_bin_elf)
+		mv_binary = "cd "..path..";mv ../"..file_bin_elf.." ."	
+		mv_log_errors = ''
+	else
+		local copy_log_errors = "cd "..path..";cp log_errors.txt ../"
+		os.execute(copy_log_errors)
+		mv_log_errors = "cd "..path..";mv ../log_errors.txt ."	
+		mv_binary = ''
+	end
+	
+	return mv_binary, mv_log_errors
 end
 
 function generate(build_obj)
@@ -280,23 +298,18 @@ function generate(build_obj)
 	update(tableToString(configs), build.id)
 	
 	os.execute(complement..scons_str)
-	file_elf, file_bin = checks_bin(dir)
-	local mv_binary
-	if (file_bin) then
-		flash.set('copyFileMessages',locale_index.copy_file_bin)
-		local copy_bin_elf = "cd "..dir..";cp "..file_bin.." ../"
-		mv_binary = "cd "..dir..";mv ../"..file_bin.." ."
-		
-		os.execute(copy_bin_elf)
-	elseif (file_elf ~= nil or file_elf ~= ' ') then
-		flash.set('copyFileMessages',locale_index.copy_file_elf)
-		local copy_bin_elf = "cp "..dir.."/"..file_elf.." "..dir.." ../;mv ../"..dir.." ."
-		os.execute(copy_bin_elf)
-	else
-		flash.set('copyFileMessages',locale_index.error_copy_files)
-	end
+	
+	local mv_binary, mv_log_errors = checksAndCopyBin(dir)
+	
 	os.execute(move_clear_str)  
-	os.execute(mv_binary)
+	
+	if mv_binary ~= '' then
+		os.execute(mv_binary)
+		flash.set('copyFileMessages',locale_index.file_bin_generated)
+	else
+		os.execute(mv_log_errors)
+		flash.set('copyErrorsMessages',locale_index.build_error)
+	end
 end
 
 PLATFORM = {}

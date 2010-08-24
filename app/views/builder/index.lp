@@ -8,8 +8,9 @@
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
 
+
 <br /><br />
-<script>
+<script type="text/javascript">
 function confirmDeleteFile(id)
 {
 	if(confirm("<%=locale_index.labels.confirmDeleteFile%>"))
@@ -26,9 +27,29 @@ function confirmDeleteBuild(id)
 	}
 }
 
+function msg_build_generated(){
+	$('#msg_build_generated').hide();
+}
+
 </script>
 
-<%= flash.get("copyFileMessages")%>
+<% if (flash.get("copyFileMessages") ~= nil or flash.get("copyErrorsMessages") ~= nil) then %>
+	<div class="msg_build_generated" id="msg_build_generated">
+		<div class="close_button">
+			<a href="#"><img src="images/buttons/logout.png" border='0', onclick="msg_build_generated();"></a>
+		</div>
+		<div class="close_msg_build_generated">
+			<%= flash.get("copyFileMessages")%>
+			<%= flash.get("copyErrorsMessages")%>
+		</div>
+		<div class="button_download">
+			<a href="<%= makeURL({control= "builder", act="download_binary_log"})%>">
+				<img name='download' src="images/buttons/download_binary_log.png" border='0' label='<%=locale_index.label_download%>'><br>
+				<b><%=locale_index.download_binary_log%></b>
+			</a>
+		</div>
+	</div>
+<% end %>
 
 <div id="box_title">
 	<div style="float:left;"><%=locale_index.builds_title%> </div>&nbsp;
