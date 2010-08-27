@@ -7,7 +7,7 @@
 <% dt.printJSheaders("lib/yui/js/") %>
 <% dt.printDataTableCSS("lib/yui/css/") %>
 <% dt.printYuiCSS("lib/yui/css/") %>
-
+<% loadJS('js/files.js') %>
 
 <br /><br />
 <script type="text/javascript">
@@ -26,29 +26,12 @@ function confirmDeleteBuild(id)
 		window.location.href="<%=makeURL({control= "builder", act="delete"})%>&id="+id;
 	}
 }
-
-function msg_build_generated(){
-	$('#msg_build_generated').hide();
-}
-
 </script>
-
 <% if (flash.get("copyFileMessages") ~= nil or flash.get("copyErrorsMessages") ~= nil) then %>
-	<div class="msg_build_generated" id="msg_build_generated">
-		<div class="close_button">
-			<a href="#"><img src="images/buttons/logout.png" border='0', onclick="msg_build_generated();"></a>
-		</div>
-		<div class="close_msg_build_generated">
-			<%= flash.get("copyFileMessages")%>
-			<%= flash.get("copyErrorsMessages")%>
-		</div>
-		<div class="button_download">
-			<a href="<%= makeURL({control= "builder", act="download_binary_log"})%>">
-				<img name='download' src="images/buttons/download_binary_log.png" border='0' label='<%=locale_index.label_download%>'><br>
-				<b><%=locale_index.download_binary_log%></b>
-			</a>
-		</div>
-	</div>
+	<%=render("msg_download.lp")%>
+	<script>
+		msg_download();
+	</script>
 <% end %>
 
 <div id="box_title">
@@ -158,7 +141,9 @@ function msg_build_generated(){
 	%>
 	<br>
 	<!--<h2><%= locale_index.upload_title %> </h2><br>-->
-	
+
+
+
 <% render("help/index.lp") %>
 	
 <% render("footer.lp","_shared") %>

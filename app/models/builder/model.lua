@@ -171,6 +171,41 @@ function download(id)
     	open:close()
    	end
 end
+
+function downloadBinaryLog(id, filename)
+	local UserModel = require "user.model"
+	local FileModel = require"file.model" 
+	local user = UserModel.getCurrentUser()
+	local build = db:selectall("*","builds","id = "..id)
+	local filename = string.gsub(filename,'[\/:?"<>|]','_')
+	
+	io:tmpfile(CONFIG.MVC_TMP)
+	open, errorMsg =io.open(CONFIG.MVC_USERS..user.login.."/builds/"..id.."/"..filename, "rb")
+
+   	if (open==nil) then --ops, something went wrong, file does not exists!
+    	cgilua.put("<h2>".."The selected file does not exist".."</h2>")
+   	else
+   		fileSize = FileModel.getFileSize(open)
+   		-- cgilua.header("Pragma", "public")
+   		-- cgilua.header("Cache-Control", "must-revalidate, post-check=0, pre-check=0")
+   		cgilua.header("Content-Type", "application/download")
+   		cgilua.header("Content-Type", [[application/octet-stream; name="]]..filename..'"')
+   		cgilua.header("Content-Type", [[application/octetstream; name="]]..filename..'"')
+    	cgilua.header("Content-Length", fileSize)
+    	cgilua.header("Content-Transfer-Encoding", "binary")
+    	cgilua.header("Content-Disposition",[[attachment; filename="]]..filename..'"')
+    	while true do
+    		local bytes = open:read(1024)
+       		if not bytes then 
+        		break
+        	else
+            	cgilua.put(bytes)
+        	end
+    	end
+    	open:close()
+   	end
+end
+
 function setDefaultValues(configs)
 	local defaults = {
 			ip0 = "192",ip1 = "168", ip2 = "100", ip3 = "5",
@@ -223,11 +258,13 @@ function checksAndCopyBin(path)
 		os.execute(copy_bin_elf)
 		mv_binary = "cd "..path..";mv ../"..file_bin_elf.." ."	
 		mv_log_errors = ''
+		flash.set('nfile', file_bin_elf)
 	else
 		local copy_log_errors = "cd "..path..";cp log_errors.txt ../"
 		os.execute(copy_log_errors)
 		mv_log_errors = "cd "..path..";mv ../log_errors.txt ."	
 		mv_binary = ''
+		flash.set('nfile', 'log_errors.txt')
 	end
 	
 	return mv_binary, mv_log_errors
@@ -306,9 +343,11 @@ function generate(build_obj)
 	if mv_binary ~= '' then
 		os.execute(mv_binary)
 		flash.set('copyFileMessages',locale_index.file_bin_generated)
+		flash.set('build_id', build.id)
 	else
 		os.execute(mv_log_errors)
 		flash.set('copyErrorsMessages',locale_index.build_error)
+		flash.set('build_id', build.id)
 	end
 end
 

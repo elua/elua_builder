@@ -102,7 +102,7 @@
 					</div>		
 				</div>
 				<div class="links_right_add_files">
-					<a href="#dialog" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list"><img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b></a>
+					<a href="#" title="<%=locale_index.labels.box_view%>" name="view_file_list" id="view_file_list", onclick="file_list();"><img src="images/buttons/btn_novoprojeto.gif" align="absmiddle" border=0> <b><%=locale_index.labels.box_view%></b></a>
 				</div>	
 				<br>
 				<table id="file_list" class="table_align">
@@ -159,7 +159,7 @@
 		</div>
 		<!--Form Button -->
 		<div class="build_button">
-			<%= f.submit({id='send',class="button_submit",value = locale_components.label_build, onclick="showProgress()"}) %>
+			<%= f.submit({id='send',class="button_submit",value = locale_components.label_build, onclick="generated()"}) %>
 		</div>
 	<%= f.form_close() %>
 	<div id="bottom_text" class="links">
@@ -168,20 +168,7 @@
 </div>
 <% render("stored_window.lp") %>
 
-<script>
-	function showProgress() {
-	    var pb = document.getElementById("progressBar");
-	    pb.innerHTML = '<img src="images/ajax-loader.gif" width="200" height ="40"/>';
-	    pb.style.display = '';
-}
-</script>
+<%=render("generated.lp")%>
 
-<div class="generate" style="display:none;" id='generating' >
-	<h2>Please wait.</h2><br/> 
-	<div id="progressBar" style="display: none;">
-		<img src="images/ajax-loader.gif" width="200" height ="40"/>
-	</div>
-	<h2><%= locale_index.generated_msg %></h2>
-</div>
 <% render("help/files.lp") %>
 <% render("footer.lp","_shared") %>

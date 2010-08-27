@@ -5,7 +5,7 @@
 				<div class="title"><%= locale_index.labels.files_list %>&nbsp;
 					<a id="help_stored_files_list" href="#"><img src="images/buttons/help_2.png" border='0'></a>
 				</div>
-				<a href="#" title="<%=locale_index.labels.close_box%>" class="close bt_close"><img src="images/buttons/button_close.png" border=0></a>
+				<a href="#" title="<%=locale_index.labels.close_box%>" class="close bt_close"><img src="images/buttons/button_close.png" border=0, onclick="close_file_list();"></a>
 			</div>
 		</div>
 		<div class="build_components">

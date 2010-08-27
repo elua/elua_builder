@@ -149,6 +149,13 @@ function download()
 	BuilderModel.download(id)
 end
 
+function download_binary_log()
+	local BuilderModel = require "builder.model"
+	local id = cgilua.QUERY.id
+	local filename = cgilua.QUERY.nfile
+	BuilderModel.downloadBinaryLog(id, filename)
+end
+
 function upload_window()
 	render( "upload.lp")
 end
