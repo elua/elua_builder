@@ -27,6 +27,7 @@ function confirmDeleteBuild(id)
 	}
 }
 </script>
+
 <% if (flash.get("copyFileMessages") ~= nil or flash.get("copyErrorsMessages") ~= nil) then %>
 	<%=render("msg_download.lp")%>
 	<script>
@@ -38,6 +39,7 @@ function confirmDeleteBuild(id)
 	<div style="float:left;"><%=locale_index.builds_title%> </div>&nbsp;
 	<div class="help"><a id="help_builds_title" href="#"><img src="images/buttons/help_2.png" border='0'></a></div>
 </div>
+<div class="notice"><%= flash.get('suggestionMessages') %></div>
 <br>
 <div>
 	<a href="<%= makeURL({control= "builder", act="files"})%>"> 
