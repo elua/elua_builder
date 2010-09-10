@@ -16,9 +16,10 @@ function save(values)
 end
 
 SUGGESTION_TYPE = {
-					{value="1",option="Bugs", disabled = false},
-					{value="2",option="Suggestions", disabled = false},
-					{value="3", option="Critical", disabled = false},
-					{value="4", option="Doubts", disabled = false},
-					{value="5", option="Other", disabled = false},
+					{value="1",option="Suggestion", disabled = false},
+					{value="2",option="Question", disabled = false},
+					{value="3", option="Issue", disabled = false},
+					{value="4", option="Bug report", disabled = false},
+					{value="5", option="Abuse report", disabled = false},
+					{value="6", option="Other", disabled = false},
 }

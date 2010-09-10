@@ -5,6 +5,8 @@
 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 	<META HTTP-EQUIV="Expires" CONTENT="-1">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link href='favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+	<!-- <link rel='icon' href='/animated_favicon1.gif' type='image/gif' /> -->
 	<%
 	-- loadCSS("lib/yui/css/reset.css")
 	%>
@@ -19,11 +21,18 @@
 		<% loadJS('lib/jquery/jQuery.bubbletip-1.0.6.js') %>
 		<% loadCSS('lib/jquery/bubbletip/bubbletip.css')%>
 		<% loadCSS('lib/jquery/bubbletip/bubbletip-IE.css')%>
-		<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.js')%>
+	<!--<% loadJS('lib/jquery/uploadify/jquery.uploadify.v2.1.0.js')%>
 		<% loadJS('lib/jquery/uploadify/swfobject.js')%>
-		<% loadCSS('lib/jquery/uploadify/uploadify.css')%>
+		<% loadCSS('lib/jquery/uploadify/uploadify.css')%> -->
 		<% loadJS('lib/jquery/jqModal.js') %>
 		<% loadCSS('lib/jquery/css/jqModal.css')%>
+		
+		<% loadCSS('css/plupload.css')%>
+		<% loadJS('lib/jquery/plupload/js/gears_init.js') %>
+		<% loadJS('lib/jquery/plupload/js/plupload.browserplus.min.js') %>
+		<% loadJS('lib/jquery/plupload/js/plupload.full.min.js') %>
+		<% loadJS('lib/jquery/plupload/js/jquery.plupload.queue.min.js') %>
+		
 		
 	<% else %>
 		<% loadJS('lib/prototype-1.6.0.2.js') %>

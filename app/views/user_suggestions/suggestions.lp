@@ -18,5 +18,7 @@
 	</div>
 	<%= f.form_close() %>
 </div>
-
+<div id="bottom_text" class="links">
+	<a href="<%= makeURL({control= "builder", act="index"})%>">&raquo;&nbsp;<%=locale_index.label_back%></a>
+</div>
 <% render("footer.lp","_shared") %>

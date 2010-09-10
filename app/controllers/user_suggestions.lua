@@ -18,6 +18,7 @@ function suggestion()
 	suggestion.suggestion_type_id = cgilua.POST.suggestion_type_id
 	local UserSuggestions = require "user_suggestion.model"
 	local UserModel = require "user.model"
+	local luaReports  = require "luaReports"
 	local current_user = UserModel.getCurrentUser()
 	suggestion.user_id = current_user.id
 
@@ -27,7 +28,10 @@ function suggestion()
 	validator:validate('description',locale_index.validator.description,  val.checks.isNotEmpty)
 	
 	if(validator:isValid())then
-		UserSuggestions.save(suggestion)
+		UserSuggestions.save(suggestion)	
+		data_msg = {name = current_user.name, email = current_user.email, suggestion_type = UserSuggestions.SUGGESTION_TYPE[suggestion.suggestion_type_id].option, description= suggestion.description}
+		local suggestion_message = luaReports.makeReport(CONFIG.MVC_TEMPLATES.."suggestion_message.lp", data_msg,"string")
+		sendmail(CONFIG.MAIL_SERVER.systemMailFrom, CONFIG.MAIL_SERVER.notificationMailTo, '', locale_index.labels.email_subject, suggestion_message)
 		flash.set('suggestionMessages', locale_index.validator.suggestionMessages)
 		redirect({control="builder", act="index"})
 	else

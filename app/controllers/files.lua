@@ -31,10 +31,9 @@ function repository()
 end
 
 function upload()
-	
 	local FileModel = require("file.model") 
-	local file_upload = cgilua.POST.Filedata
-    --traceLog(tableToString(cgilua.POST))
+	local file_upload = cgilua.POST.file
+    traceLog(tableToString(cgilua.POST))
     if file_upload and next(file_upload) and file_upload.filename ~= nil and file_upload.filename ~= "" then
 		local _, name = cgilua.splitonlast(file_upload.filename)
 		local file = file_upload.file

@@ -57,6 +57,7 @@ locale_index = {
 				home = "Home",
 				file_systems = "File Systems",
 				upload = "Upload Files",
+				suggestion = "Contact us",
 	},
 	validator = {
 					title_build = "The field 'Build Name' must be filled in.",

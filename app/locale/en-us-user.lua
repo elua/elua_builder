@@ -11,6 +11,7 @@ locale_index = {
 				change_passwd = "Elua Builder Password Reset Confirmation",
 				logout = "Logout",
 				edit_account = "Account",
+				suggestion = "Contact us",
 			},
 	label_submit = "Submit",
 	

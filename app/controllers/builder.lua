@@ -163,3 +163,8 @@ end
 function error()
 	render("error.lp")
 end
+
+
+function teste()
+	render("teste_upload.lp")
+end
