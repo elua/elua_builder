@@ -366,6 +366,9 @@ tbody {
 .links_right img { vertical-align: middle; }
 .logout_right{float:right;font-size:12px;margin:-3px 0px 0px 0px;padding-right:5px; }
 .logout_upload_right{float:right;font-size:12px;margin:-1px 0px 0px 0px;padding-right:5px; }
+.suggestions_icon{float:right;font-size:12px;font-weight:normal;margin:4px 2px 4px 535px;}
+.suggestions_icon img { vertical-align: middle; }
+
 #upload_box{margin-bottom:5px;}
 
 #upload_buttons{margin-top:8px;margin-bottom:6px;}
